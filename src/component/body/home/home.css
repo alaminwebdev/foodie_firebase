@@ -1,0 +1,49 @@
+#banner {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.carousel{
+    padding: 100px 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+
+.arrow {
+    /* position: absolute; */
+    top: 50% !important;
+    width: 30px !important;
+    height: 30px !important;
+    opacity: 1 !important;
+    background: transparent;
+    border-top: 5px solid #dc3545;
+    border-right: 5px solid #dc3545;
+    box-shadow: 0 0 0 lightgray;
+    transition: all 200ms ease !important;
+    border-top-right-radius: 5px;
+  }
+  .arrow.left {
+    left: 10%;
+    transform: translate3d(0, -50%, 0) rotate(-135deg);
+  }
+  .arrow.right {
+    right: 10%;
+    transform: translate3d(0, -50%, 0) rotate(45deg);
+  }
+  .arrow:hover {
+    border-color: #dc3545;
+    box-shadow: 4px -4px 0 rgb(225 83 97 / 50%);
+  }
+  .arrow:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-40%, -60%) rotate(45deg);
+    width: 200%;
+    height: 200%;
+  }

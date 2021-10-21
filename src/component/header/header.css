@@ -1,0 +1,38 @@
+.navbar {
+  position: fixed !important;
+  width: 100%;
+  top: 0px;
+  left: 0;
+  z-index: 9999999;
+  height: 70px;
+  transition: all .2s ease-out;
+  background: #fff;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;
+}
+
+.navbar-nav {
+  text-align: center;
+}
+
+.navbar-nav .nav-link {
+  color: #444;
+}
+
+.navbar-brand {
+  color: #444;
+}
+
+.navbar-brand:focus,
+.navbar-brand:hover {
+  color: aliceblue;
+}
+.navbar-expand-md .navbar-nav .nav-item{
+  padding-right: 20px;
+}
+.navbar-expand-md .navbar-nav .nav-item:last-child{
+  padding-right: 0;
+}
+
+.navbar-expand-md .navbar-nav .nav-link.active {
+  color: red !important;
+}
