@@ -8,7 +8,7 @@ import reportWebVitals from './reportWebVitals';
 
 //import using directory
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'font-awesome/css/font-awesome.min.css';
+
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

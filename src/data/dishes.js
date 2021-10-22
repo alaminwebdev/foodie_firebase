@@ -4,7 +4,7 @@ const  DISHES = [
         name:'Ginger Burger',
         image:'assets/images/chillisburger.jpg',
         category:'meal',
-        label:'hot',
+        label:'Best Deal',
         price:'199',
         description:'Lorem Ipsum has been the industrys standard dummy text ever since the 15',
         comment:[
@@ -36,7 +36,7 @@ const  DISHES = [
         name:'Lamb Burger',
         image:'assets/images/lambburger.jpg',
         category:'meal',
-        label:'hot',
+        label:'Most Favourite',
         price:'299',
         description:'Lorem Ipsum has been the industrys standard dummy text ever since the 15',
         comment:[
@@ -68,7 +68,7 @@ const  DISHES = [
         name:'Lentils Burger',
         image:'assets/images/lentils.jpg',
         category:'meal',
-        label:'hot',
+        label:'New Arival',
         price:'199',
         description:'Lorem Ipsum has been the industrys standard dummy text ever since the 15',
         comment:[
