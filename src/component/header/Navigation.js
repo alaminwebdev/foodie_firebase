@@ -1,57 +1,62 @@
-import React, { Component } from 'react';
-import {
-    Collapse,
-    Navbar,
-    NavbarToggler,
-    NavbarBrand,
-    Nav,
-    NavItem,
-    NavbarText
-  } from 'reactstrap';
+import * as React from 'react';
 
 import { NavLink } from 'react-router-dom';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import { withRouter } from 'react-router-dom';
 
+export const Navigation = props => {
+    console.log(props)
 
+    const { history } = props;
 
+    const [anchorEl, setAnchorEl] = React.useState(null);
 
-class Navigation extends Component {
-    constructor(props) {
-        super(props);
-        this.state={
-            isNavOpen :false
-        }
-    }
-    
-    toggle =()=>{
-        this.setState({
-            isNavOpen : !this.state.isNavOpen
-        });
-    }
+    const handleMenu = event => {
+        setAnchorEl(event.currentTarget);
+    };
 
-    render() {
-        return (
-            <Navbar  expand="md">
-                <NavbarBrand href="/">reactstrap</NavbarBrand>
-                <NavbarToggler onClick={this.toggle} />
-                <Collapse isOpen={this.state.isNavOpen} navbar>
-                    <Nav className="ml-auto" navbar>
-                        <NavItem>
-                            <NavLink to='/' exact className="nav-link" >Home</NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink to='/menu' exact className="nav-link" >Menu</NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink to='/about' exact className="nav-link" >About</NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink to='/contact'  exact className="nav-link" >Contact</NavLink>
-                        </NavItem>
-                    </Nav>
-                </Collapse>
-            </Navbar>
-        )
-    }
+    const handleMenuClick = pageUrl => {
+        history.push(pageUrl)
+        setAnchorEl(null);
+    };
 
+    return (
+        <div>
+            <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+            >
+                <MenuIcon />
+            </IconButton>
+            <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}
+                open={Boolean(anchorEl)}
+                onClose={() => setAnchorEl(null)}
+            >
+                <MenuItem onClick={() => handleMenuClick('/')}>Home</MenuItem>
+                <MenuItem onClick={() => handleMenuClick('/menu')}>Menu</MenuItem>
+                <MenuItem onClick={() => handleMenuClick('/about')}>About</MenuItem>
+                <MenuItem onClick={() => handleMenuClick('/contact')}>Contact</MenuItem>
+            </Menu>
+        </div>
+    )
 }
-export default Navigation
+
+export default withRouter(Navigation)

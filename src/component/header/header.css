@@ -1,26 +1,15 @@
-.navbar {
-  position: fixed !important;
-  width: 100%;
-  top: 0px;
-  left: 0;
-  z-index: 9999999;
-  height: 70px;
-  transition: all .2s ease-out;
-  background: #fff;
-  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;
+
+.navButton button{
+  margin: 0 10px;
+}
+.navButton button:first-child{
+  margin-left: 0;
 }
 
-.navbar-nav {
-  text-align: center;
+.navButton button:last-child{
+  margin-right: 0;
 }
 
-.navbar-nav .nav-link {
-  color: #444;
-}
-
-.navbar-brand {
-  color: #444;
-}
 
 .navbar-brand:focus,
 .navbar-brand:hover {
