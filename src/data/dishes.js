@@ -1,12 +1,13 @@
 const  DISHES = [
     {
         id:0,
-        name:'Ginger Burger',
-        image:'assets/images/chillisburger.jpg',
+        name:'Cheese',
+        subtitle:'Burger',
+        image:'assets/images/cheese.png',
         category:'meal',
         label:'Best Deal',
         price:'199',
-        description:'Lorem Ipsum has been the industrys standard dummy text ever since the 15',
+        description:'Lorem Ipsum has been the industrys standard dummy text ever since the 15 Lorem Ipsum has been the industrys standard dummy text ever since the Lorem Ipsum has been the industrys standard dummy text ever since the',
         comment:[
             {
                 id:0,
@@ -33,12 +34,13 @@ const  DISHES = [
     },
     {
         id:1,
-        name:'Lamb Burger',
-        image:'assets/images/lambburger.jpg',
+        name:'Lamb',
+        subtitle:'Burger',
+        image:'assets/images/hand-cheese.png',
         category:'meal',
         label:'Most Favourite',
         price:'299',
-        description:'Lorem Ipsum has been the industrys standard dummy text ever since the 15',
+        description:'Ipsum has been the industrys standard dummy text ever since the 15 Lorem Ipsum has been the industrys standard dummy text ever since the Lorem Ipsum has been the industrys standard dummy text ever since the',
         comment:[
             {
                 id:0,
@@ -65,12 +67,13 @@ const  DISHES = [
     },
     {
         id:2,
-        name:'Lentils Burger',
-        image:'assets/images/lentils.jpg',
+        name:'Beef',
+        subtitle:'Burger',
+        image:'assets/images/cheese.png',
         category:'meal',
         label:'New Arival',
         price:'199',
-        description:'Lorem Ipsum has been the industrys standard dummy text ever since the 15',
+        description:'Standard dummy text ever since the 15 Lorem Ipsum has been the industrys standard dummy text ever since the Lorem Ipsum has been the industrys standard dummy text ever since the Lorem Ipsum has been the industrys',
         comment:[
             {
                 id:0,

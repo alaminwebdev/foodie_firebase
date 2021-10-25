@@ -4,9 +4,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow: hidden;
-  justify-content: center;
-  align-items: center;
+  overflow-x: hidden;
+  box-sizing: border-box;
+
 }
 
 * {
@@ -21,7 +21,7 @@ a {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 5px;
   background-color: #F5F5F5;
 }
 
@@ -35,7 +35,7 @@ a {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  border-radius: 10px;
+  border-radius: 0px;
   background-image: -webkit-gradient(linear,
       left bottom,
       left top,

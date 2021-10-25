@@ -10,7 +10,7 @@ const MainComponent=()=>{
         <>
             <Header/>
             <Body/>
-            <Footer/>
+            {/* <Footer/> */}
         </>
     )
 }

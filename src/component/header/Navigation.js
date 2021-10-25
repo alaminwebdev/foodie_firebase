@@ -3,6 +3,7 @@ import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import Fab from '@mui/material/Fab';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { withRouter } from 'react-router-dom';
@@ -25,16 +26,22 @@ export const Navigation = props => {
 
     return (
         <div>
-            <IconButton
-                size="large"
-                aria-label="account of current user"
+
+            <Fab 
+                size="medium"
+                aria-label="Resturent"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 onClick={handleMenu}
-                color="inherit"
+                className="menuAppbar"
+                sx={{
+                    bgcolor:'#007FFF',
+                    color:'#fff',
+                    "&:hover": { bgcolor: '#007FFF'}
+                }}
             >
                 <MenuIcon />
-            </IconButton>
+            </Fab>
             <Menu
                 id="menu-appbar"
                 anchorEl={anchorEl}

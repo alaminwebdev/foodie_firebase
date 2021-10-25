@@ -1,26 +1,4 @@
 
-.navButton button{
-  margin: 0 10px;
-}
-.navButton button:first-child{
-  margin-left: 0;
-}
-
-.navButton button:last-child{
-  margin-right: 0;
-}
-
-
-.navbar-brand:focus,
-.navbar-brand:hover {
-  color: aliceblue;
-}
-.navbar-expand-md .navbar-nav .nav-item{
-  padding-right: 20px;
-}
-.navbar-expand-md .navbar-nav .nav-item:last-child{
-  padding-right: 0;
-}
 
 .navbar-expand-md .navbar-nav .nav-link.active {
   color: red !important;
