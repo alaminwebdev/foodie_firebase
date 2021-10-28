@@ -1,9 +1,18 @@
-import React from 'react'
+import React from 'react';
+import Skeleton from '@mui/material/Skeleton';
+import Container from '@mui/material/Container';
+import { Grid } from '@mui/material';
 
 export default function Loading() {
     return (
-        <div className="text-center py-5">
-            <span className="fa fa-spinner fa-5x text-success fa-fw fa-pulse"></span>
-        </div>
+        <Container maxWidth='xl'>
+            <Grid container spacing={2} sx={{ my: 5 }}>
+                <Grid item >
+                    <Skeleton />
+                    <Skeleton animation="wave" />
+                    <Skeleton animation={false} />
+                </Grid>
+            </Grid>
+        </Container >
     )
 }

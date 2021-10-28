@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import './menu.css';
 import MenuItem from './Menuitem';
-import MenuDetail from './MenuDetail';
-import { Button, Modal, ModalBody, ModalFooter } from 'reactstrap';
 import { connect } from "react-redux";
 import { fetchDishes, fetchComments } from '../../../redux/actionCreators';
-import Loading from '../Loading';
+import Container from '@mui/material/Container';
+import { Grid } from '@mui/material';
 
 
 // accept state as a props from intial state 
@@ -17,38 +16,32 @@ const mapStateToProps = state => {
 
         //Inside Reducer comments Pass two things , 1: isLoading Function 2: comments array
         Comments: state.comments.comments,
-        commentLoading:state.comments.isLoading
+        commentLoading: state.comments.isLoading
+
+
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         fetchDishes: () => dispatch(fetchDishes()),
-        fetchComments:() => dispatch(fetchComments())
+        fetchComments: () => dispatch(fetchComments())
     }
 }
 
 class Menu extends Component {
     state = {
         selectedDish: null,
-        modalOpen: false
+
+        // defalut menu item for loading
+        loadingDishes: [1, 2, 3, 4]
     }
 
     onDishselect = dish => {
         this.setState({
             selectedDish: dish,
-            modalOpen: !this.state.modalOpen
-        });
-
-        //console.log(dish)
-    }
-
-    toggleModal = () => {
-        this.setState({
-            modalOpen: !this.state.modalOpen
         });
     }
-
     componentDidMount() {
         this.props.fetchDishes();
         this.props.fetchComments();
@@ -56,54 +49,61 @@ class Menu extends Component {
 
     render() {
         document.title = "Menu"
+        console.log(this.props);
+
+
 
 
         if (this.props.dishLoading) {
             return (
-                <Loading />
+                <Container maxWidth='xl'>
+                    <Grid container spacing={2} sx={{ my: 5 }}>
+                        <MenuItem loading={this.props.dishLoading}/>
+                        <MenuItem loading={this.props.dishLoading}/>
+                        <MenuItem loading={this.props.dishLoading}/>
+                        <MenuItem loading={this.props.dishLoading}/>
+                    </Grid>
+                </Container >
             )
         } else {
-            //console.log(this.props.Dishes);
+            //console.log(this.props.Dishes); 
             const menu = this.props.Dishes.map(item => {
                 return (
-                    
                     <MenuItem
                         key={item.id}
                         name={item.name}
                         img={item.image}
+                        rating={item.rating}
+                        description={item.description}
+                        loading={this.props.dishLoading}
                         DishSelect={() => this.onDishselect(item)}
                     />
                 );
-
             })
 
-            let dishdetail = null;
             if (this.state.selectedDish != null) {
                 //console.log(this.state.comments);
                 const comments = this.props.Comments.filter(comment => {
                     return comment.dishId === this.state.selectedDish.id;
                 })
                 //console.log(comments);
-                dishdetail = <MenuDetail
-                    key={comments.id}
-                    eachdish={this.state.selectedDish}
-                    comment_arr={comments}
-                    commentLoading={this.props.commentLoading}
+                this.props.history.push({
+                    pathname: '/menudetail',
+                    state: {
+                        eachdish: this.state.selectedDish,
+                        comment_arr: comments,
+                        commentLoading: this.props.commentLoading
 
-                />;
+                    }
+                })
             }
+
             return (
-                <div className="row">
-                    {menu}
-                    <Modal isOpen={this.state.modalOpen} contentClassName="" >
-                        <ModalBody>
-                            {dishdetail}
-                        </ModalBody>
-                        <ModalFooter>
-                            <Button color="secondary" onClick={this.toggleModal}>Cancel</Button>
-                        </ModalFooter>
-                    </Modal>
-                </div>
+                <Container maxWidth='xl'>
+                    <Grid container spacing={2} sx={{ my: 5 }}>
+                        {menu}
+                    </Grid>
+                </Container >
             )
         }
     }

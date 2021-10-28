@@ -7,6 +7,7 @@ const  DISHES = [
         category:'meal',
         label:'Best Deal',
         price:'199',
+        rating:3,
         description:'Lorem Ipsum has been the industrys standard dummy text ever since the 15 Lorem Ipsum has been the industrys standard dummy text ever since the Lorem Ipsum has been the industrys standard dummy text ever since the',
         comment:[
             {
@@ -40,6 +41,7 @@ const  DISHES = [
         category:'meal',
         label:'Most Favourite',
         price:'299',
+        rating:5,
         description:'Ipsum has been the industrys standard dummy text ever since the 15 Lorem Ipsum has been the industrys standard dummy text ever since the Lorem Ipsum has been the industrys standard dummy text ever since the',
         comment:[
             {
@@ -73,6 +75,7 @@ const  DISHES = [
         category:'meal',
         label:'New Arival',
         price:'199',
+        rating:1,
         description:'Standard dummy text ever since the 15 Lorem Ipsum has been the industrys standard dummy text ever since the Lorem Ipsum has been the industrys standard dummy text ever since the Lorem Ipsum has been the industrys',
         comment:[
             {
