@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { addComment } from '../../../redux/actionCreators';
 import { connect } from 'react-redux';
 
@@ -23,13 +23,24 @@ const mapDispatchToProps = dispatch => {
 
 const CommentForm = props => {
 
-    const { register, handleSubmit, control, formState: { errors } } = useForm();
+    const { register, handleSubmit, control, reset, formState: { errors, isSubmitSuccessful } } = useForm();
 
     const onSubmit = data => {
         //console.log(props.dishId, data.author, data.rating, data.comment)
         props.addComment(props.dishId, data.author, data.rating, data.comment);
     }
-    
+
+    // Similar to componentDidMount and componentDidUpdate:
+    useEffect(() => {
+        if (isSubmitSuccessful) {
+            reset({ 
+                author: '',
+                rating:'',
+                comment:''
+             });
+        }
+    });
+
     //console.log(props);
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
