@@ -70,6 +70,7 @@ export const addComment = (dishId, author, rating, comment) => {
         comment: comment
     }
     newComment.date = new Date().toISOString();
+    //newComment.ref = 'new text';
     return dispatch => {
         axios.post(baseUrl + "Comments", newComment)
             .then(response => response.data)

@@ -1,80 +1,103 @@
-import React, { Component } from 'react';
-import { Button, FormGroup, Label } from 'reactstrap';
-import { Form, Control, Errors , actions } from 'react-redux-form';
+import React from 'react';
 import { addComment } from '../../../redux/actionCreators';
 import { connect } from 'react-redux';
+
+import { useForm, Controller } from "react-hook-form";
+
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import FormHelperText from '@mui/material/FormHelperText';
 
 
 
 const mapDispatchToProps = dispatch => {
-    return{
-        addComment: (dishId, author, rating, comment) => dispatch(addComment(dishId, author, rating, comment)),
-        resetCommentForm: () =>{
-            dispatch(actions.reset('commentValue'))
-        } 
+    return {
+        addComment: (dishId, author, rating, comment) => dispatch(addComment(dishId, author, rating, comment))
     }
 }
 
 
-class CommentForm extends Component {
-     constructor(props) {
-        super(props); 
-     }
+const CommentForm = props => {
 
-    handleSubmit = values =>{
-        //console.log(values)
-        this.props.addComment(this.props.dishId, values.author, values.rating, values.comment);
-        //commentValue.addComment();
-        this.props.resetCommentForm();
-        
+    const { register, handleSubmit, control, formState: { errors } } = useForm();
+
+    const onSubmit = data => {
+        //console.log(props.dishId, data.author, data.rating, data.comment)
+        props.addComment(props.dishId, data.author, data.rating, data.comment);
     }
-
-
     
-    render() {
-        //console.log(this.props);
-        return (
-            <div className="py-3">
-                <Form model="commentValue" onSubmit={values => this.handleSubmit(values)} >
-                    <FormGroup>
-                        <Label htmlFor="exampleText">Name</Label>
-                        <Control.text
-                            model=".author"
-                            name="author"
-                            placeholder="Write Your Name"
-                            className="form-control"
-                        />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label htmlFor="exampleText">Insert Your Rating</Label>
-                        <Control.select
-                            model=".rating"
-                            name="rating"
-                            className="form-control"
-                            
-                        >
+    //console.log(props);
+    return (
+        <form onSubmit={handleSubmit(onSubmit)}>
 
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                        </Control.select>
-                    </FormGroup>
-                    <FormGroup>
-                        <Label htmlFor="exampleText">Write Your Comments</Label>
-                        <Control.text
-                            model=".comment"
-                            name="comment"
-                            className="form-control"
-                        />
-                    </FormGroup>
-                    <Button className="mt-3">Submit</Button>
-                </Form>
-            </div>
-        )
-    }
+            <TextField
+                fullWidth
+                label="Name"
+                variant="outlined"
+                {...register("author", { required: "Name is required." })}
+                error={Boolean(errors.author)}
+                helperText={errors.name?.message}
+
+            />
+
+
+            <FormControl
+                error={Boolean(errors.rating)}
+                fullWidth
+            >
+                <InputLabel id="demo-simple-select-label">rating</InputLabel>
+                <Controller
+
+                    render={({ field }) => (
+                        <Select
+                            {...field}
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            label="rating"
+                        >
+                            <MenuItem value='1'>One</MenuItem>
+                            <MenuItem value='2'>Two</MenuItem>
+                            <MenuItem value='3'>Three</MenuItem>
+                            <MenuItem value='4'>Four</MenuItem>
+                            <MenuItem value='5'>Five</MenuItem>
+                        </Select>
+                    )}
+
+                    name="rating"
+                    control={control}
+                    defaultValue=""
+                    rules={{
+                        required: "Rating is required !"
+                    }}
+                />
+                <FormHelperText style={{ color: '#d32f2f' }}>{errors.rating?.message}</FormHelperText>
+            </FormControl>
+
+
+            <TextField
+                fullWidth
+                label="comment"
+                variant="outlined"
+                {...register("comment", { required: "Comment is required" })}
+                error={Boolean(errors.comment)}
+                helperText={errors.comment?.message}
+            />
+
+
+
+            <Button
+                type='submit'
+                variant="outlined"
+                color="primary">
+                Submit
+            </Button>
+        </form>
+    )
 }
 
-export default  connect(null, mapDispatchToProps) (CommentForm);
+export default connect(null, mapDispatchToProps)(CommentForm);
 

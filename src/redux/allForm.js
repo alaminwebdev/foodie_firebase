@@ -8,8 +8,3 @@ export const initialContactForm ={
     agree:false
 }
 
-export const initialCommentForm ={
-    author:'',
-    rating:'',
-    comment:''
-}

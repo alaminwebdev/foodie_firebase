@@ -16,7 +16,7 @@ import { Grid } from '@mui/material';
 
 
 const MenuItem = (props) => {
-    console.log(props);
+    //console.log(props);
     const loading = props.loading
     return (
         <Grid item xs={12} sm={6} md={4} lg={3} >
@@ -25,7 +25,6 @@ const MenuItem = (props) => {
                     <Skeleton sx={{ height: 194 }} animation="wave" variant="rectangular" />
                 ) : (
                     <CardMedia
-                        onClick={props.DishSelect}
                         component="img"
                         height="194"
                         image={baseUrl + props.img}

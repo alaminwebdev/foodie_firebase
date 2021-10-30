@@ -25,7 +25,7 @@ const Header = (props) => {
 
     const theme = useTheme();
     const isMobileBreakpoints = useMediaQuery(theme.breakpoints.down('sm'));
-    console.log(isMobileBreakpoints);
+    //console.log(isMobileBreakpoints);
 
 
 

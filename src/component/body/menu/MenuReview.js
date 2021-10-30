@@ -9,7 +9,7 @@ const MenuReview = props => {
     const review = props.review.map((eachreview) => {
         //console.log(eachreview.author)
         return (
-            <div className="mt-4 ">
+            <div className="mt-4 " key={eachreview.id}>
                 <Toast>
                     <ToastHeader>
                         {eachreview.author}

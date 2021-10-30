@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import * as actionTypes from "./actionTypes";
-import {initialContactForm , initialCommentForm} from './allForm';
+import {initialContactForm } from './allForm';
 import { createForms } from 'react-redux-form';
 
 
@@ -43,7 +43,7 @@ const commentReducer = (commentState = { isLoading:true, comments:[]} , action) 
             //new comment received in payload 
             let comment = action.payload
             //comment.id = commentState.length;
-            console.log(comment);
+            //console.log(comment);
             return{
                 ...commentState,
                 comments : commentState.comments.concat(comment)
@@ -58,7 +58,6 @@ export const Reducer = combineReducers({
     dishes: dishReducer,
     comments: commentReducer,
     ...createForms({
-        formValue : initialContactForm,
-        commentValue:initialCommentForm
+        formValue : initialContactForm
     })
 })

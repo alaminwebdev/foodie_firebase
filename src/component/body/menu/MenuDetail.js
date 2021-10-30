@@ -13,43 +13,42 @@ import { baseUrl } from '../../../redux/actionCreators'
 
 
 const MenuDetail = props => {
-    const dishes = props.location.state.eachdish;
-    const comments = props.location.state.comment_arr;
-    const commentLoading = props.location.state.commentLoading
+    const dishes = props.eachdish;
+    const comments = props.comment_arr;
+    const commentLoading = props.commentLoading
     //console.log(dishes);
-    console.log(props);
+    //console.log(props);
 
     return (
-        <Container maxWidth="xl">
-            <Grid container spacing={2} sx={{ my:5}}>
-                <Grid item lg={6}>
-                    <Box>
-                        <img
-                            src={baseUrl + dishes.image}
-                            alt={dishes.name}
-                            loading="lazy"
-                        />
-                    </Box>
-                </Grid>
-                <Grid item lg={6}>
-                    <Typography gutterBottom variant="h5" component="div" sx={{ cursor: 'pointer' }} onClick={props.DishSelect}>
-                        {dishes.name}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                        {dishes.description}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                        ${dishes.price}
-                    </Typography>
-
-                    <MenuReview key={dishes.id} review={comments} commentLoading={commentLoading} />
-                    <CommentForm dishId={dishes.id} />
-                    <Button variant="outlined" onClick={() => props.history.goBack()} sx={{}}>
-                        Back
-                    </Button>
-                </Grid>
+        <>
+            <Grid item lg={6} sx={{ pl:0, pt:0, alignSelf:'center' }}>
+                <Box >
+                    <img
+                        width='100%'
+                        src={baseUrl + dishes.image}
+                        alt={dishes.name}
+                        loading="lazy"
+                    />
+                </Box>
             </Grid>
-        </Container>
+            <Grid item lg={6}>
+                <Typography gutterBottom variant="h5" component="div" sx={{  }}>
+                    {dishes.name}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                    {dishes.description}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                    ${dishes.price}
+                </Typography>
+
+                <MenuReview key={dishes.id} review={comments} commentLoading={commentLoading} />
+                <CommentForm dishId={dishes.id} />
+                <Button variant="outlined" onClick={props.modalClose} sx={{}}>
+                   Close
+                </Button>
+            </Grid>
+        </>
     )
 }
 

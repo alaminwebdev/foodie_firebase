@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 import './menu.css';
 import MenuItem from './Menuitem';
+import MenuDetail from './MenuDetail';
 import { connect } from "react-redux";
 import { fetchDishes, fetchComments } from '../../../redux/actionCreators';
 import Container from '@mui/material/Container';
 import { Grid } from '@mui/material';
+
+import Backdrop from '@mui/material/Backdrop';
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+import Fade from '@mui/material/Fade';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 
 // accept state as a props from intial state 
@@ -29,19 +37,27 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
+
 class Menu extends Component {
     state = {
         selectedDish: null,
-
-        // defalut menu item for loading
-        loadingDishes: [1, 2, 3, 4]
+        modalOpen: false
     }
 
     onDishselect = dish => {
         this.setState({
             selectedDish: dish,
+            modalOpen: !this.state.modalOpen
         });
+        //console.log(this.state)
     }
+
+    handleClose = () => {
+        this.setState({
+            modalOpen: !this.state.modalOpen
+        })
+    }
+
     componentDidMount() {
         this.props.fetchDishes();
         this.props.fetchComments();
@@ -49,7 +65,7 @@ class Menu extends Component {
 
     render() {
         document.title = "Menu"
-        console.log(this.props);
+        //console.log(this.props);
 
 
 
@@ -58,10 +74,10 @@ class Menu extends Component {
             return (
                 <Container maxWidth='xl'>
                     <Grid container spacing={2} sx={{ my: 5 }}>
-                        <MenuItem loading={this.props.dishLoading}/>
-                        <MenuItem loading={this.props.dishLoading}/>
-                        <MenuItem loading={this.props.dishLoading}/>
-                        <MenuItem loading={this.props.dishLoading}/>
+                        <MenuItem loading={this.props.dishLoading} />
+                        <MenuItem loading={this.props.dishLoading} />
+                        <MenuItem loading={this.props.dishLoading} />
+                        <MenuItem loading={this.props.dishLoading} />
                     </Grid>
                 </Container >
             )
@@ -81,29 +97,53 @@ class Menu extends Component {
                 );
             })
 
+
+            let dishdetail = null;
             if (this.state.selectedDish != null) {
                 //console.log(this.state.comments);
                 const comments = this.props.Comments.filter(comment => {
                     return comment.dishId === this.state.selectedDish.id;
                 })
                 //console.log(comments);
-                this.props.history.push({
-                    pathname: '/menudetail',
-                    state: {
-                        eachdish: this.state.selectedDish,
-                        comment_arr: comments,
-                        commentLoading: this.props.commentLoading
+                dishdetail = <MenuDetail
+                    key={comments.id}
+                    eachdish={this.state.selectedDish}
+                    comment_arr={comments}
+                    commentLoading={this.props.commentLoading}
+                    modalClose={this.handleClose}
 
-                    }
-                })
+                />;
             }
 
             return (
                 <Container maxWidth='xl'>
                     <Grid container spacing={2} sx={{ my: 5 }}>
                         {menu}
+
                     </Grid>
-                </Container >
+                    <Modal
+                        sx={{ overflowY:'scroll'}}
+                        aria-labelledby="transition-modal-title"
+                        aria-describedby="transition-modal-description"
+                        open={this.state.modalOpen}
+                        closeAfterTransition
+                    >
+                        <Fade in={this.state.modalOpen}>
+                            <Container maxWidth="lg">
+                                <Grid container spacing={0} sx={{
+                                    alignSelf:'center',
+                                    bgcolor: '#fff',
+                                    p:5,
+                                    my: 5
+                                }}>
+                                    {dishdetail}
+                                </Grid>
+                            </Container>
+
+                        </Fade>
+                    </Modal>
+
+                </Container>
             )
         }
     }
