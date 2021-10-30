@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './menu.css';
-import MenuItem from './Menuitem';
+import DishItem from './DishItem';
 import MenuDetail from './MenuDetail';
+import Loading from '../Loading';
 import { connect } from "react-redux";
 import { fetchDishes, fetchComments } from '../../../redux/actionCreators';
 import Container from '@mui/material/Container';
@@ -74,10 +75,7 @@ class Menu extends Component {
             return (
                 <Container maxWidth='xl'>
                     <Grid container spacing={2} sx={{ my: 5 }}>
-                        <MenuItem loading={this.props.dishLoading} />
-                        <MenuItem loading={this.props.dishLoading} />
-                        <MenuItem loading={this.props.dishLoading} />
-                        <MenuItem loading={this.props.dishLoading} />
+                        <Loading  />
                     </Grid>
                 </Container >
             )
@@ -85,12 +83,14 @@ class Menu extends Component {
             //console.log(this.props.Dishes); 
             const menu = this.props.Dishes.map(item => {
                 return (
-                    <MenuItem
+                    <DishItem
                         key={item.id}
-                        name={item.name}
-                        img={item.image}
-                        rating={item.rating}
-                        description={item.description}
+                        dishes={item}
+                        varients={item.varients}
+                        // name={item.name}
+                        // img={item.image}
+                        // rating={item.rating}
+                        // description={item.description}
                         loading={this.props.dishLoading}
                         DishSelect={() => this.onDishselect(item)}
                     />
