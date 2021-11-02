@@ -7,14 +7,8 @@ import { connect } from "react-redux";
 import { fetchDishes, fetchComments } from '../../../redux/actionCreators';
 import Container from '@mui/material/Container';
 import { Grid } from '@mui/material';
-
-import Backdrop from '@mui/material/Backdrop';
-import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-
 
 // accept state as a props from intial state 
 const mapStateToProps = state => {
@@ -68,9 +62,6 @@ class Menu extends Component {
         document.title = "Menu"
         //console.log(this.props);
 
-
-
-
         if (this.props.dishLoading) {
             return (
                 <Container maxWidth='xl'>
@@ -91,7 +82,7 @@ class Menu extends Component {
                         // img={item.image}
                         // rating={item.rating}
                         // description={item.description}
-                        loading={this.props.dishLoading}
+                        //loading={this.props.dishLoading}
                         DishSelect={() => this.onDishselect(item)}
                     />
                 );
@@ -119,7 +110,6 @@ class Menu extends Component {
                 <Container maxWidth='xl'>
                     <Grid container spacing={2} sx={{ my: 5 }}>
                         {menu}
-
                     </Grid>
                     <Modal
                         sx={{ overflowY:'scroll'}}
@@ -142,7 +132,6 @@ class Menu extends Component {
 
                         </Fade>
                     </Modal>
-
                 </Container>
             )
         }

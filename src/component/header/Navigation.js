@@ -9,7 +9,7 @@ import Menu from '@mui/material/Menu';
 import { withRouter } from 'react-router-dom';
 
 export const Navigation = props => {
-    console.log(props)
+    //console.log(props)
 
     const { history } = props;
 
@@ -59,7 +59,7 @@ export const Navigation = props => {
             >
                 <MenuItem onClick={() => handleMenuClick('/')}>Home</MenuItem>
                 <MenuItem onClick={() => handleMenuClick('/menu')}>Menu</MenuItem>
-                <MenuItem onClick={() => handleMenuClick('/about')}>About</MenuItem>
+                <MenuItem onClick={() => handleMenuClick('/build')}>Customize Burger</MenuItem>
                 <MenuItem onClick={() => handleMenuClick('/contact')}>Contact</MenuItem>
             </Menu>
         </div>

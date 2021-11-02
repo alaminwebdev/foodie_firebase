@@ -38,10 +38,7 @@ const MenuDetail = props => {
                 <Typography variant="body2" color="text.secondary">
                     {dishes.description}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
-                    ${dishes.price}
-                </Typography>
-
+                
                 <MenuReview key={dishes.id} review={comments} commentLoading={commentLoading} />
                 <CommentForm dishId={dishes.id} />
                 <Button variant="outlined" onClick={props.modalClose} sx={{}}>

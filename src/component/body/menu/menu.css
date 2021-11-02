@@ -1,36 +1,3 @@
-.menuitem .card {
-    border: none;
-}
-
-.menuitem .card-body {
-    padding: 0;
-}
-
-.menuitem .card-img {
-    width: 100%;
-    opacity: .5;
-}
-
-.toast {
-    max-width: 100%;
-}
-
-
-.menuitem .card-title {
-    cursor: pointer;
-    text-align: center;
-    position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #000;
-    font-weight: 600;
-    font-size: 24px;
-}
-
-
-/* custom modal width */
-.modal-dialog {
-    max-width: 800px;
-    margin: 1.75rem auto;
+.css-1wroiqo-MuiCardContent-root:last-child {
+    padding-bottom: 16px !important;
 }

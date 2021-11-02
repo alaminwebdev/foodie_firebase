@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import RestaurantRoundedIcon from '@mui/icons-material/RestaurantRounded';
 import ContactPageRoundedIcon from '@mui/icons-material/ContactPageRounded';
 
 import IconButton from '@mui/material/IconButton';
@@ -50,9 +51,9 @@ const NavigationMain = props => {
                 </IconButton>
             </Tooltip>
 
-            <Tooltip title="Know About Us" TransitionComponent={Zoom}  sx={{ ...navButtonStyle}}>
-                <IconButton onClick={() => handleMenuClick('/about')}>
-                    <AccountCircleIcon />
+            <Tooltip title="Customize Burger" TransitionComponent={Zoom}  sx={{ ...navButtonStyle}}>
+                <IconButton onClick={() => handleMenuClick('/build')}>
+                    <RestaurantRoundedIcon />
                 </IconButton>
             </Tooltip>
 

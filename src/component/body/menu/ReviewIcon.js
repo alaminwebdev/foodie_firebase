@@ -30,9 +30,9 @@ const labels = {
 
 const ReviewIcon = props => {
 
-    const [value, setValue] = React.useState(props.rating);
-    const [hover, setHover] = React.useState(-1);
-    //console.log(value)
+    const [value, setValue] = useState(1);
+    const [hover, setHover] = useState(-1);
+    console.log(value)
     return (
         <Box
             sx={{
