@@ -37,7 +37,7 @@ const Control = props => {
                 })}
             </Box>
             <Typography variant="h3" color="#fff" sx={{ bgcolor: '#007FFF', py: 1 }} >Price {props.price} BDT</Typography>
-            <Button variant="outlined" onClick={props.modalOpen} sx={{}}>
+            <Button disabled={!props.purchasable} variant="outlined" onClick={props.modalOpen} sx={{}}>
                 Order Now
             </Button>
         </Box>

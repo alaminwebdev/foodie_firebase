@@ -21,8 +21,6 @@ const Summery = props => {
                 <TableCell align="right">{props.ingredientPrice[item.type] * item.amount}</TableCell>
             </TableRow>
         )
-
-
     })
     //console.log(props.ingredientPrice['salad'])
     return (

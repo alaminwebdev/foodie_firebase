@@ -1,8 +1,7 @@
 import React from 'react';
 import { baseUrl } from '../../../../redux/actionCreators';
-import Control from './Control';
-import { Box, textAlign } from '@mui/system';
-import { Grid, Container } from '@mui/material';
+import { Box } from '@mui/system';
+
 
 
 const BurgerTop = baseUrl + 'assets/images/burger-top.png';

@@ -46,7 +46,6 @@ const Varients = (props) => {
                         value={varient}
                         onChange={(e) => { setVarient(e.target.value) }}
                     >
-
                         {vari}
                     </Select>
                 </FormControl>

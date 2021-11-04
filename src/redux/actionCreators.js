@@ -77,3 +77,25 @@ export const addComment = (dishId, author, rating, comment) => {
             .then(comment => dispatch(commentConcat(comment)))
     }
 }
+
+
+
+//action for custom burger builder
+
+export const addIngredient = ingredientType => {
+    return {
+        type: actionTypes.ADD_INGREDIENT,
+        payload: ingredientType
+    }
+}
+export const removeIngredient = ingredientType => {
+    return {
+        type: actionTypes.REMOVE_INGREDIENT,
+        payload: ingredientType
+    }
+}
+export const updatePurchasable = () => {
+    return {
+        type: actionTypes.PURCHASABLE
+    }
+}
