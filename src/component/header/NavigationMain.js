@@ -7,6 +7,7 @@ import FastfoodIcon from '@mui/icons-material/Fastfood';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import RestaurantRoundedIcon from '@mui/icons-material/RestaurantRounded';
 import ContactPageRoundedIcon from '@mui/icons-material/ContactPageRounded';
+import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
 
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
@@ -54,6 +55,12 @@ const NavigationMain = props => {
             <Tooltip title="Customize Burger" TransitionComponent={Zoom}  sx={{ ...navButtonStyle}}>
                 <IconButton onClick={() => handleMenuClick('/build')}>
                     <RestaurantRoundedIcon />
+                </IconButton>
+            </Tooltip>
+
+            <Tooltip title="Orders" TransitionComponent={Zoom}  sx={{ ...navButtonStyle}}>
+                <IconButton onClick={() => handleMenuClick('/orders')}>
+                    <ShoppingCartRoundedIcon />
                 </IconButton>
             </Tooltip>
 

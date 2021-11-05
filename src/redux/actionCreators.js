@@ -99,3 +99,8 @@ export const updatePurchasable = () => {
         type: actionTypes.PURCHASABLE
     }
 }
+export const resetIngredient = () => {
+    return {
+        type: actionTypes.RESET_INGREDIENT
+    }
+}

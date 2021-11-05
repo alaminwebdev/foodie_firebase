@@ -52,8 +52,8 @@ const Summery = props => {
                 </TableContainer>
             </CardContent>
             <CardActions sx={{ justifyContent: 'center' }}>
-                <Button size="small" onClick={props.modalClose}>Close</Button>
-                <Button size="small">Checkout</Button>
+                <Button size="small"  variant="outlined"  onClick={props.modalClose} >Close</Button>
+                <Button size="small"  variant="outlined"  onClick={props.handleCheckout}>Checkout</Button>
             </CardActions>
         </Card>
     )

@@ -40,7 +40,7 @@ const style = {
 };
 
 
-const BurgerBuilder =  props  => {
+const BurgerBuilder = props => {
     const [modalOpen, setModalOpen] = useState(false)
     //modal funtionality
     const handleClose = () => setModalOpen(!modalOpen)
@@ -55,7 +55,19 @@ const BurgerBuilder =  props  => {
         props.removeIngredient(type);
         props.updatePurchasable()
     }
-    console.log(props)
+    //handleCheckout
+    const handleCheckout = () => {
+        // props.history.push({
+        //     pathname: '/checkout',
+        //     state: {
+        //         demo:'demostate',
+        //         ingredients: props.ingredients,
+        //         totalPrice: props.totalPrice,
+        //     }
+        // })
+        props.history.push('/checkout')
+    }
+    //console.log(props)
     return (
         <Container maxWidth="xl" >
             <Grid container sx={{ my: 5 }} spacing={2}>
@@ -91,6 +103,7 @@ const BurgerBuilder =  props  => {
                             totalPrice={props.totalPrice}
                             ingredients={props.ingredients}
                             ingredientPrice={props.ingredientPrice}
+                            handleCheckout={handleCheckout}
                         />
                     </Box>
 

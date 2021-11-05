@@ -107,6 +107,18 @@ const burgerbuildReducer = (buildState = initialState, action) => {
                 purchasAble: sum > 0
 
             }
+        case actionTypes.RESET_INGREDIENT:
+            return {
+                ...buildState,
+                ingredients: [
+                    { type: 'salad', amount: 0 },
+                    { type: 'cheese', amount: 0 },
+                    { type: 'meat', amount: 0 }
+                ],
+                totalPrice: 80,
+                purchasAble: false
+                
+            }
         default:
             return buildState
     }
