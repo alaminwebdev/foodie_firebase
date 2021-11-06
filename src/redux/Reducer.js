@@ -119,6 +119,22 @@ const burgerbuildReducer = (buildState = initialState, action) => {
                 purchasAble: false
                 
             }
+        case actionTypes.LOAD_ORDER:
+            //console.log(action.payload)
+            let orders = [];
+            for (const orderKey in action.payload) {
+                //console.log(action.payload[orderKey])
+                orders.push({
+                   ...action.payload[orderKey],
+                   id:orderKey 
+                })
+            }
+            //console.log(orders)
+            return {
+                ...buildState,
+                orders:orders,
+                orderLoading:false
+            }
         default:
             return buildState
     }

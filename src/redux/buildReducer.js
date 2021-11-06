@@ -10,7 +10,10 @@ export const initialState = {
         meat: 90
     },
     totalPrice: 80,
-    purchasAble: false
+    purchasAble: false,
+    orders:[],
+    orderLoading:true,
+    orderError:false
 }
 
 

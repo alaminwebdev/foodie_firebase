@@ -104,3 +104,28 @@ export const resetIngredient = () => {
         type: actionTypes.RESET_INGREDIENT
     }
 }
+
+//action for fetch order
+
+const loadOrder = orders => {
+    return {
+        type: actionTypes.LOAD_ORDER,
+        payload: orders
+    }
+}
+const loadFaild = () => {
+    return {
+        type: actionTypes.LOAD_FAILD,
+    }
+}
+
+export const fetchOrder = () => dispatch => {
+    axios.get('https://burgereact-94221-default-rtdb.firebaseio.com/customorders.json')
+        .then(response => {
+            //console.log(response)
+            dispatch(loadOrder(response.data));
+        })
+        .catch(error => {
+            console.log(error)
+        })
+}

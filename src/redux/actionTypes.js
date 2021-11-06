@@ -12,3 +12,8 @@ export const ADD_INGREDIENT = "ADD_INGREDIENT";
 export const REMOVE_INGREDIENT = "REMOVE_INGREDIENT";
 export const RESET_INGREDIENT = "RESET_INGREDIENT";
 export const PURCHASABLE = "PURCHASABLE";
+
+//for order fetch
+
+export const LOAD_ORDER ="LOAD_ORDER";
+export const LOAD_FAILD ="LOAD_FAILD";
