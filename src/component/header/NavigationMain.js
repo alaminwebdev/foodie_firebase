@@ -8,6 +8,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import RestaurantRoundedIcon from '@mui/icons-material/RestaurantRounded';
 import ContactPageRoundedIcon from '@mui/icons-material/ContactPageRounded';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
+import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
 
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
@@ -67,6 +68,12 @@ const NavigationMain = props => {
             <Tooltip title="Contact For Query" TransitionComponent={Zoom} sx={{ ...navButtonStyle, mr:0}}>
                 <IconButton onClick={() => handleMenuClick('/contact')}>
                     <ContactPageRoundedIcon />
+                </IconButton>
+            </Tooltip>
+
+            <Tooltip title="Login" TransitionComponent={Zoom} sx={{ ...navButtonStyle, mr:0}}>
+                <IconButton onClick={() => handleMenuClick('/login')}>
+                    <LoginRoundedIcon />
                 </IconButton>
             </Tooltip>
 
