@@ -2,7 +2,6 @@ import { combineReducers } from 'redux';
 import * as actionTypes from "./actionTypes";
 import { initialContactForm } from './allForm';
 import { createForms } from 'react-redux-form';
-import { initialState } from './buildReducer';
 
 // reducer for deafult dish menu
 const dishReducer = (dishState = { isLoading: false, dishes: [] }, action) => {
@@ -54,7 +53,27 @@ const commentReducer = (commentState = { isLoading: true, comments: [] }, action
 }
 
 // reducer for custom burger builder
-//console.log(ingredientPrice ,initialState)
+
+const initialState = {
+    ingredients: [
+        { type: 'salad', amount: 0 },
+        { type: 'cheese', amount: 0 },
+        { type: 'meat', amount: 0 }
+    ],
+    ingredientPrice: {
+        salad: 20,
+        cheese: 40,
+        meat: 90
+    },
+
+    totalPrice: 80,
+    purchasAble: false,
+
+    orders: [],
+    orderLoading: true,
+    orderError: false
+}
+
 
 const burgerbuildReducer = (buildState = initialState, action) => {
     const ingredients = [...buildState.ingredients]
@@ -86,18 +105,6 @@ const burgerbuildReducer = (buildState = initialState, action) => {
                 totalPrice: buildState.totalPrice - buildState.ingredientPrice[action.payload]
             }
         case actionTypes.PURCHASABLE:
-            //this will allow when all item are selected
-            // for (const item of ingredients) {
-            //     if (item.amount == 0) {
-            //         this.setState({
-            //             purchasable: false
-            //         })
-            //     } else {
-            //         this.setState({
-            //             purchasable: true
-            //         })
-            //     }
-            // }
             //this will allow when at least one item are selected
             const sum = ingredients.reduce((sum, item) => {
                 return sum + item.amount;
@@ -117,7 +124,7 @@ const burgerbuildReducer = (buildState = initialState, action) => {
                 ],
                 totalPrice: 80,
                 purchasAble: false
-                
+
             }
         case actionTypes.LOAD_ORDER:
             //console.log(action.payload)
@@ -125,22 +132,21 @@ const burgerbuildReducer = (buildState = initialState, action) => {
             for (const orderKey in action.payload) {
                 //console.log(action.payload[orderKey])
                 orders.push({
-                   ...action.payload[orderKey],
-                   id:orderKey 
+                    ...action.payload[orderKey],
+                    id: orderKey
                 })
             }
             //console.log(orders)
             return {
                 ...buildState,
-                orders:orders,
-                orderLoading:false
+                orders: orders,
+                orderLoading: false
             }
         default:
             return buildState
     }
 
 }
-
 
 
 // main reducer 

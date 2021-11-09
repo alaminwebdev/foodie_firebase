@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './contact.css';
-import { Button, FormGroup, Label, Alert } from 'reactstrap';
 import { Form, Control, Errors, actions } from 'react-redux-form';
 import { connect } from 'react-redux';
 import { baseUrl } from '../../../redux/actionCreators';
@@ -74,7 +73,7 @@ class Contact extends Component {
                     <h1 className="pt-5">Send Your Feedback</h1>
                 </div>
                 <div className="col-lg-8 m-auto py-5">
-                    <Alert isOpen={this.state.alertShow} color={this.state.alertType}>
+                    {/* <Alert isOpen={this.state.alertShow} color={this.state.alertType}>
                         {this.state.alertText}
                     </Alert>
                     <Form model="formValue" onSubmit={values => this.handleSubmit(values)} >
@@ -213,7 +212,7 @@ class Contact extends Component {
                             </Label>
                         </FormGroup>
                         <Button className="mt-3">Submit</Button>
-                    </Form >
+                    </Form > */}
                 </div>
             </div>
 
