@@ -11,8 +11,8 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from '@firebase/auth';
-import { auth } from '../../../firebaseConfig';
+//import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from '@firebase/auth';
+//import { auth } from '../../../firebaseConfig';
 import axios from 'axios';
 
 
@@ -29,7 +29,7 @@ const Auth = props => {
     const handleAuthMode = (event, newauthMode) => {
         setauthMode(newauthMode);
     };
-
+    
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -67,89 +67,89 @@ const Auth = props => {
 
         //submit values from firebase
         onSubmit: (values) => {
-            // set the url
-            // const signupUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAKKwgO3vNhb5mGnz2IujjaTGHBmapDVW8';
+            //set the url
+            const signupUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAKKwgO3vNhb5mGnz2IujjaTGHBmapDVW8';
 
-            // const loginUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAKKwgO3vNhb5mGnz2IujjaTGHBmapDVW8' ;
+            const loginUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAKKwgO3vNhb5mGnz2IujjaTGHBmapDVW8' ;
 
-            // // set the headers
-            // const config = {
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
-            // };
+            // set the headers
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            };
 
-            // const authData = {
-            //     email: values.email,
-            //     password: values.password,
-            //     returnSecureToken: true,
-            // }
+            const authData = {
+                email: values.email,
+                password: values.password,
+                returnSecureToken: true,
+            }
 
             if (authMode === 'signup') {
                
-                // axios.post(signupUrl, authData, config)
-                //     .then(
-                //         (userCredential) => {
-                //             //const user = userCredential.user;
-                //             //const email = userCredential.user.email;
-                //             const userInfo = userCredential._tokenResponse;
-                //             console.log(userCredential.data)
-                //             console.log(userInfo)
-                //         }
-                //     )
-                //     .catch((error) => {
-                //         console.log(error)
-                //         console.log(error.message)
-                //     })
-
-
-                createUserWithEmailAndPassword(auth, values.email, values.password)
-                    .then((userCredential) => {
-                        // Signed in 
-                        console.log(userCredential)
-                        const user = userCredential.user;
-                        // ...
-                    })
+                axios.post(signupUrl, authData, config)
+                    .then(
+                        (userCredential) => {
+                            //const user = userCredential.user;
+                            //const email = userCredential.user.email;
+                            const userInfo = userCredential._tokenResponse;
+                            console.log(userCredential.data)
+                            console.log(userInfo)
+                        }
+                    )
                     .catch((error) => {
-                        const errorCode = error.code;
-                        const errorMessage = error.message;
+                        console.log(error)
                         console.log(error.message)
-                        // ..
-                    });
+                    })
+
+
+                // createUserWithEmailAndPassword(auth, values.email, values.password)
+                //     .then((userCredential) => {
+                //         // Signed in 
+                //         console.log(userCredential)
+                //         const user = userCredential.user;
+                //         // ...
+                //     })
+                //     .catch((error) => {
+                //         const errorCode = error.code;
+                //         const errorMessage = error.message;
+                //         console.log(error.message)
+                //         // ..
+                //     });
 
             } else if (authMode === 'login') {
 
-                // axios.post(loginUrl, authData, config)
-                //     .then(
-                //         (userCredential) => {
-                //             //const user = userCredential.user;
-                //             //const email = userCredential.user.email;
-                //             const userInfo = userCredential._tokenResponse;
-                //             console.log(userCredential.data)
-                //             //console.log(userInfo)
-                //         }
-                //     )
-                //     .catch((error) => {
-                //         console.log(error)
-                //         console.log(error.message)
-                //     })
-
-                signInWithEmailAndPassword(auth, values.email, values.password)
-                    .then((userCredential) => {
-                        // Signed in 
-                        const user = userCredential.user;
-                        const email = userCredential.user.email;
-                        const userInfo = userCredential._tokenResponse;
-                        console.log(userCredential)
-                        console.log(userInfo)
-                        // ...
-                    })
+                axios.post(loginUrl, authData, config)
+                    .then(
+                        (userCredential) => {
+                            //const user = userCredential.user;
+                            //const email = userCredential.user.email;
+                            const userInfo = userCredential._tokenResponse;
+                            console.log(userCredential.data)
+                            //console.log(userInfo)
+                        }
+                    )
                     .catch((error) => {
-                        const errorCode = error.code;
-                        const errorMessage = error.message;
+                        console.log(error)
                         console.log(error.message)
-                    });
-                console.log(authMode)
+                    })
+
+                // signInWithEmailAndPassword(auth, values.email, values.password)
+                //     .then((userCredential) => {
+                //         // Signed in 
+                //         const user = userCredential.user;
+                //         const email = userCredential.user.email;
+                //         const userInfo = userCredential._tokenResponse;
+                //         console.log(userCredential)
+                //         console.log(userInfo)
+                //         // ...
+                //     })
+                //     .catch((error) => {
+                //         const errorCode = error.code;
+                //         const errorMessage = error.message;
+                //         console.log(error.message)
+                //     });
+                // console.log(authMode)
             }
             //console.log("values", values)
             //alert(JSON.stringify(values, null, 2));
