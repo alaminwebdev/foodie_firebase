@@ -1,27 +1,22 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 
-import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
-import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
-
-//import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from '@firebase/auth';
-//import { auth } from '../../../firebaseConfig';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import { authAction } from '../../../redux/authActionCreators';
 
 
-const style = {
-    mt: 5
+const mapDispatchToProps = dispatch => {
+    return {
+        authAction: (email, password, mode) => dispatch(authAction(email, password, mode)),
+    }
 }
-
-
-
 
 const Auth = props => {
 
@@ -29,7 +24,10 @@ const Auth = props => {
     const handleAuthMode = (event, newauthMode) => {
         setauthMode(newauthMode);
     };
+
+
     
+
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -60,104 +58,26 @@ const Auth = props => {
                     errors.passwordConfirm = 'Password does not match';
                 }
             }
-
             //console.log("errors", errors)
             return errors;
         },
 
-        //submit values from firebase
+        //submit values
         onSubmit: (values) => {
-            //set the url
-            const signupUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAKKwgO3vNhb5mGnz2IujjaTGHBmapDVW8';
-
-            const loginUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAKKwgO3vNhb5mGnz2IujjaTGHBmapDVW8' ;
-
-            // set the headers
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            };
-
-            const authData = {
-                email: values.email,
-                password: values.password,
-                returnSecureToken: true,
-            }
-
-            if (authMode === 'signup') {
-               
-                axios.post(signupUrl, authData, config)
-                    .then(
-                        (userCredential) => {
-                            //const user = userCredential.user;
-                            //const email = userCredential.user.email;
-                            const userInfo = userCredential._tokenResponse;
-                            console.log(userCredential.data)
-                            console.log(userInfo)
-                        }
-                    )
-                    .catch((error) => {
-                        console.log(error)
-                        console.log(error.message)
-                    })
-
-
-                // createUserWithEmailAndPassword(auth, values.email, values.password)
-                //     .then((userCredential) => {
-                //         // Signed in 
-                //         console.log(userCredential)
-                //         const user = userCredential.user;
-                //         // ...
-                //     })
-                //     .catch((error) => {
-                //         const errorCode = error.code;
-                //         const errorMessage = error.message;
-                //         console.log(error.message)
-                //         // ..
-                //     });
-
-            } else if (authMode === 'login') {
-
-                axios.post(loginUrl, authData, config)
-                    .then(
-                        (userCredential) => {
-                            //const user = userCredential.user;
-                            //const email = userCredential.user.email;
-                            const userInfo = userCredential._tokenResponse;
-                            console.log(userCredential.data)
-                            //console.log(userInfo)
-                        }
-                    )
-                    .catch((error) => {
-                        console.log(error)
-                        console.log(error.message)
-                    })
-
-                // signInWithEmailAndPassword(auth, values.email, values.password)
-                //     .then((userCredential) => {
-                //         // Signed in 
-                //         const user = userCredential.user;
-                //         const email = userCredential.user.email;
-                //         const userInfo = userCredential._tokenResponse;
-                //         console.log(userCredential)
-                //         console.log(userInfo)
-                //         // ...
-                //     })
-                //     .catch((error) => {
-                //         const errorCode = error.code;
-                //         const errorMessage = error.message;
-                //         console.log(error.message)
-                //     });
-                // console.log(authMode)
-            }
-            //console.log("values", values)
-            //alert(JSON.stringify(values, null, 2));
+            props.authAction(values.email, values.password, authMode)
+            console.log("values", values)
+            //alert(JSON.stringify(values, null, 2))
             //props.auth(values.email, values.password)
         },
 
 
     });
+
+    const style = {
+        mt: 5
+    }
+
+    //console.log(props)
     return (
         <Container maxWidth="md">
             <ToggleButtonGroup
@@ -221,9 +141,6 @@ const Auth = props => {
                     />
                 </> : null}
 
-
-
-
                 <Button
 
                     type="submit"
@@ -238,4 +155,4 @@ const Auth = props => {
     )
 }
 
-export default Auth
+export default connect(null, mapDispatchToProps)(Auth)
