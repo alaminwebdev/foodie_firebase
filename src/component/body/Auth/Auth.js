@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from '@firebase/auth';
-import { auth } from '../../../firebaseConfig';
+import { connect } from 'react-redux';
+import { authAction } from '../../../redux/authActionCreators';
 
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button'
@@ -12,15 +12,19 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 
+const mapDispatchToProps = dispatch => {
+    return {
+        authAction: (email, password, mode) => dispatch(authAction(email, password, mode)),
+    }
+}
+
+
 const Auth = props => {
 
     const [authMode, setauthMode] = useState('login');
     const handleAuthMode = (event, newauthMode) => {
         setauthMode(newauthMode);
     };
-
-
-
 
     const formik = useFormik({
         initialValues: {
@@ -32,7 +36,6 @@ const Auth = props => {
         //custom validation using formik validate
         validate: (values) => {
             const errors = {};
-
             if (!values.email) {
                 errors.email = 'Required';
             } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
@@ -58,48 +61,10 @@ const Auth = props => {
 
         //submit values
         onSubmit: (values) => {
-            //props.authAction(values.email, values.password, authMode)
-            console.log("values", values)
-            
-            if (authMode === 'signup') {
-                createUserWithEmailAndPassword(auth, values.email, values.password)
-                    .then((userCredential) => {
-                        // Signed in 
-                        console.log(userCredential)
-                        const user = userCredential.user;
-                        // ...
-                    })
-                    .catch((error) => {
-                        const errorCode = error.code;
-                        const errorMessage = error.message;
-                        console.log(error.message)
-                        // ..
-                    });
-
-
-            } else if (authMode === 'login') {
-
-                signInWithEmailAndPassword(auth, values.email, values.password)
-                    .then((userCredential) => {
-                        // Signed in 
-                        const user = userCredential.user;
-                        const email = userCredential.user.email;
-                        const userInfo = userCredential._tokenResponse;
-                        console.log(userCredential)
-                        console.log(userInfo)
-                        // ...
-                    })
-                    .catch((error) => {
-                        const errorCode = error.code;
-                        const errorMessage = error.message;
-                        console.log(error.message)
-                    });
-
-            }
+            props.authAction(values.email, values.password, authMode)
+            //console.log("values", values)
             //alert(JSON.stringify(values, null, 2))
-            //props.auth(values.email, values.password)
         },
-
 
     });
 
@@ -185,4 +150,4 @@ const Auth = props => {
     )
 }
 
-export default Auth
+export default connect(null, mapDispatchToProps)(Auth)

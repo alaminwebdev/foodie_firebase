@@ -3,6 +3,32 @@ import * as actionTypes from "./actionTypes";
 import { initialContactForm } from './allForm';
 import { createForms } from 'react-redux-form';
 
+
+
+const authInitialState = {
+    token: null,
+    userId: null
+}
+
+// reducer for authentication
+const authReducer = (authState = authInitialState, action) => {
+    switch (action.type) {
+        //auth case   
+        case actionTypes.AUTH_SUCCESS:
+            //console.log(action.payload)
+            return {
+                ...authState,
+                token: action.payload.token,
+                userId: action.payload.userId,
+
+            }
+        default:
+            return authState
+    }
+
+}
+
+
 // reducer for deafult dish menu
 const dishReducer = (dishState = { isLoading: false, dishes: [] }, action) => {
     switch (action.type) {
@@ -71,7 +97,7 @@ const initialState = {
 
     orders: [],
     orderLoading: true,
-    orderError: false
+    orderError: false,
 }
 
 
@@ -149,11 +175,13 @@ const burgerbuildReducer = (buildState = initialState, action) => {
 }
 
 
+
 // main reducer 
 export const Reducer = combineReducers({
     dishes: dishReducer,
     comments: commentReducer,
     customBurger: burgerbuildReducer,
+    authState: authReducer,
     ...createForms({
         formValue: initialContactForm
     })
