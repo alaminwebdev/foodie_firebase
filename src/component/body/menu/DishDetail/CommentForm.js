@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import { addComment } from '../../../redux/actionCreators';
+import { addComment } from '../../../../redux/actionCreators';
 import { connect } from 'react-redux';
 
 import { useForm, Controller } from "react-hook-form";

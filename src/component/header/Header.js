@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import { connect } from 'react-redux'
+
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
@@ -16,6 +18,11 @@ import Fab from '@mui/material/Fab';
 
 import './header.css'
 
+const mapStateToProps = state => {
+    return {
+        token: state.authState.token
+    }
+}
 
 
 
@@ -45,9 +52,9 @@ const Header = (props) => {
                         aria-label="Resturent"
                         href='/'
                         sx={{
-                            color:'#fff',
-                            bgcolor:'#007FFF',
-                            "&:hover": { bgcolor: '#007FFF'}
+                            color: '#fff',
+                            bgcolor: '#007FFF',
+                            "&:hover": { bgcolor: '#007FFF' }
                         }}
                     >
                         <RestaurantMenuRoundedIcon />
@@ -55,7 +62,7 @@ const Header = (props) => {
                 </Typography>
 
                 <div>
-                    {isMobileBreakpoints ? (<> <Navigation /> </>) : (<> <NavigationMain /> </>)
+                    {isMobileBreakpoints ? (<> <Navigation  key={props.token} token={props.token} /> </>) : (<> <NavigationMain key={props.token} token={props.token}  /> </>)
                     }
                 </div>
             </Toolbar>
@@ -64,4 +71,4 @@ const Header = (props) => {
     );
 }
 
-export default Header
+export default connect(mapStateToProps, null)(Header)

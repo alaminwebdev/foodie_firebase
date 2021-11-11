@@ -1,5 +1,5 @@
 import React from 'react';
-import { baseUrl } from '../../../redux/actionCreators';
+import { baseUrl } from '../../../../redux/actionCreators';
 import Varients from './Varients';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';

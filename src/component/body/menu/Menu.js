@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import './menu.css';
-import DishItem from './DishItem';
-import MenuDetail from './MenuDetail';
+
+import DishItem from './Dishes/DishItem';
+import DishDetail from './DishDetail/DishDetail';
+
 import Loading from '../Loading';
+
 import { connect } from "react-redux";
 import { fetchDishes, fetchComments } from '../../../redux/actionCreators';
+
 import Container from '@mui/material/Container';
 import { Grid } from '@mui/material';
 import Modal from '@mui/material/Modal';
@@ -96,7 +100,7 @@ class Menu extends Component {
                     return comment.dishId === this.state.selectedDish.id;
                 })
                 //console.log(comments);
-                dishdetail = <MenuDetail
+                dishdetail = <DishDetail
                     key={comments.id}
                     eachdish={this.state.selectedDish}
                     comment_arr={comments}

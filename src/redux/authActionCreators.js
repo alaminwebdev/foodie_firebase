@@ -2,7 +2,7 @@ import * as actionTypes from './actionTypes';
 import axios from 'axios';
 
 
-export const authSuccess = (token, userId) => {
+const authSuccess = (token, userId) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
         payload: {
@@ -38,6 +38,13 @@ export const authAction = (email, password, mode) => dispatch => {
             (userCredential) => {
                 //console.log(userCredential)
                 if (userCredential.status === 200) {
+
+                    //set token into localStorage 
+                    localStorage.setItem('token', userCredential.data.idToken);
+                    localStorage.setItem('userId', userCredential.data.localId);
+                    const expirationTime = new Date( new Date().getTime() + userCredential.data.expiresIn * 1000) ;
+                    localStorage.setItem('expirationTime', expirationTime);
+                    //dispatch action
                     dispatch(authSuccess(userCredential.data.idToken, userCredential.data.localId))
                 }
             }
@@ -48,3 +55,34 @@ export const authAction = (email, password, mode) => dispatch => {
         })
 
 }
+
+
+export const logOut =()=>{
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId')
+    localStorage.removeItem('expirationTime');
+    return{
+        type:actionTypes.AUTH_LOGOUT
+    }
+
+}
+
+export const authCheck = () => dispatch =>{
+    const token = localStorage.getItem('token')
+    if (!token) {
+       //logout
+       dispatch(logOut())
+    }else{
+        const expirationTime = new Date(localStorage.getItem('expirationTime'));
+        if (expirationTime <= new Date()) {
+            //logout 
+            dispatch(logOut())
+        }else{
+            //login
+            const userId = localStorage.getItem('userId')
+            dispatch(authSuccess(token, userId));
+        }
+    }
+}
+
+

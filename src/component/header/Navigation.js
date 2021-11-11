@@ -8,7 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { withRouter } from 'react-router-dom';
 
-export const Navigation = props => {
+const Navigation = props => {
     //console.log(props)
 
     const { history } = props;
@@ -24,10 +24,26 @@ export const Navigation = props => {
         setAnchorEl(null);
     };
 
+    let nav = null;
+    if (props.token == null) {
+        nav = (
+            <MenuItem onClick={() => handleMenuClick('/login')}>Login</MenuItem>
+        )
+    } else {
+        nav = (
+            <div>
+                <MenuItem onClick={() => handleMenuClick('/')}>Home</MenuItem>
+                <MenuItem onClick={() => handleMenuClick('/menu')}>Menu</MenuItem>
+                <MenuItem onClick={() => handleMenuClick('/build')}>Customize Burger</MenuItem>
+                <MenuItem onClick={() => handleMenuClick('/contact')}>Contact</MenuItem>
+            </div>
+        )
+    }
+
     return (
         <div>
 
-            <Fab 
+            <Fab
                 size="medium"
                 aria-label="Resturent"
                 aria-controls="menu-appbar"
@@ -35,9 +51,9 @@ export const Navigation = props => {
                 onClick={handleMenu}
                 className="menuAppbar"
                 sx={{
-                    bgcolor:'#007FFF',
-                    color:'#fff',
-                    "&:hover": { bgcolor: '#007FFF'}
+                    bgcolor: '#007FFF',
+                    color: '#fff',
+                    "&:hover": { bgcolor: '#007FFF' }
                 }}
             >
                 <MenuIcon />
@@ -57,10 +73,7 @@ export const Navigation = props => {
                 open={Boolean(anchorEl)}
                 onClose={() => setAnchorEl(null)}
             >
-                <MenuItem onClick={() => handleMenuClick('/')}>Home</MenuItem>
-                <MenuItem onClick={() => handleMenuClick('/menu')}>Menu</MenuItem>
-                <MenuItem onClick={() => handleMenuClick('/build')}>Customize Burger</MenuItem>
-                <MenuItem onClick={() => handleMenuClick('/contact')}>Contact</MenuItem>
+                {nav}
             </Menu>
         </div>
     )

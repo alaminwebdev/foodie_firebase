@@ -5,10 +5,10 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import MenuReview from './MenuReview';
 import CommentForm from './CommentForm';
-import { baseUrl } from '../../../redux/actionCreators'
+import { baseUrl } from '../../../../redux/actionCreators';
 
 
-const MenuDetail = props => {
+const DishDetail = props => {
     const dishes = props.eachdish;
     const comments = props.comment_arr;
     const commentLoading = props.commentLoading
@@ -45,4 +45,4 @@ const MenuDetail = props => {
     )
 }
 
-export default MenuDetail;
+export default DishDetail;
