@@ -20,7 +20,8 @@ import './header.css'
 
 const mapStateToProps = state => {
     return {
-        token: state.authState.token
+        token: state.authState.token,
+        cartLength: state.dishes.cartItems.length
     }
 }
 
@@ -62,7 +63,7 @@ const Header = (props) => {
                 </Typography>
 
                 <div>
-                    {isMobileBreakpoints ? (<> <Navigation  key={props.token} token={props.token} /> </>) : (<> <NavigationMain key={props.token} token={props.token}  /> </>)
+                    {isMobileBreakpoints ? (<> <Navigation  key={props.token} token={props.token} /> </>) : (<> <NavigationMain key={props.token} token={props.token} cartLength={props.cartLength}  /> </>)
                     }
                 </div>
             </Toolbar>

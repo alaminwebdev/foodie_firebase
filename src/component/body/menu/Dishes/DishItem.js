@@ -30,7 +30,7 @@ const DishItem = (props) => {
                     <Typography gutterBottom variant="h6" component="div" sx={{ cursor: 'pointer' }} onClick={props.DishSelect}>
                         {dishes.name}
                     </Typography>
-                    <Varients varients={dishes.varients} price={price} dishID={dishes.id} />
+                    <Varients varients={dishes.varients} price={price} dishID={dishes.id} dishItem={dishes.name} />
                 </CardContent>
 
                 {/* <CardActions>

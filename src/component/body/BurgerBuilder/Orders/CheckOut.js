@@ -21,7 +21,9 @@ const mapStateToProps = state => {
     return {
         ingredients: state.customBurger.ingredients,
         orderPrice: state.customBurger.totalPrice,
-        purchasable: state.customBurger.purchasAble
+        purchasable: state.customBurger.purchasAble,
+        token: state.authState.token,
+        userId: state.authState.userId,
     }
 }
 const mapDispatchToProps = dispatch => {
@@ -43,9 +45,10 @@ const CheckOut = props => {
             customerInfo: data,
             ingredients: props.ingredients,
             orderPrice: props.orderPrice,
-            orderTime: new Date().toISOString()
+            orderTime: new Date().toISOString(),
+            userId:props.userId
         }
-        axios.post('https://burgereact-94221-default-rtdb.firebaseio.com/customorders.json', customOrder)
+        axios.post('https://foodie-7bd7e-default-rtdb.firebaseio.com/customorders.json?auth='+ props.token, customOrder)
             .then(response => {
                 if (response.status === 200) {
                     setResponse(true);

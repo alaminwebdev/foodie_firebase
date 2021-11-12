@@ -7,13 +7,16 @@ export const COMMENT_LOADING= "COMMENT_LOADING"
 export const LOAD_DISHES = "LOAD_DISHES";
 export const DISHES_LOADING = "DISHES_LOADING";
 
+//for default menu
+export const ADD_TO_CART =  "ADD_TO_CART"
+
 //for custom burger builder
 export const ADD_INGREDIENT = "ADD_INGREDIENT";
 export const REMOVE_INGREDIENT = "REMOVE_INGREDIENT";
 export const RESET_INGREDIENT = "RESET_INGREDIENT";
 export const PURCHASABLE = "PURCHASABLE";
 
-//for order fetch
+//for custom order fetch
 
 export const LOAD_ORDER ="LOAD_ORDER";
 export const LOAD_FAILD ="LOAD_FAILD";

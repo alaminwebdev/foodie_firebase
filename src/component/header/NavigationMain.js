@@ -1,11 +1,11 @@
 import React from 'react';
 
 
-
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import RestaurantRoundedIcon from '@mui/icons-material/RestaurantRounded';
+import ViewListRoundedIcon from '@mui/icons-material/ViewListRounded';
 import ContactPageRoundedIcon from '@mui/icons-material/ContactPageRounded';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
 import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
@@ -13,6 +13,9 @@ import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Zoom from '@mui/material/Zoom';
+
+import Badge from '@mui/material/Badge';
+import { styled } from '@mui/material/styles';
 
 import { withRouter } from 'react-router-dom';
 
@@ -28,6 +31,16 @@ const navButtonStyle = {
 
     //backgroundColor: { xs: "secondary.light", sm: "#0000ff" },
 };
+
+// mui style for cart badge
+const StyledBadge = styled(Badge)(({ theme }) => ({
+    '& .MuiBadge-badge': {
+        right: -3,
+        top: 13,
+        border: `2px solid ${theme.palette.background.paper}`,
+        padding: '0 4px',
+    },
+}));
 
 
 
@@ -74,8 +87,17 @@ const NavigationMain = props => {
 
                 <Tooltip title="Orders" TransitionComponent={Zoom} sx={{ ...navButtonStyle }}>
                     <IconButton onClick={() => handleMenuClick('/orders')}>
-                        <ShoppingCartRoundedIcon />
+                        <ViewListRoundedIcon />
                     </IconButton>
+                </Tooltip>
+
+                <Tooltip title="Your Cart" TransitionComponent={Zoom} sx={{ ...navButtonStyle, mr: 0 }}>
+                    <IconButton onClick={() => handleMenuClick('/cart')}>
+                        <StyledBadge badgeContent={props.cartLength} color="primary">
+                            <ShoppingCartRoundedIcon />
+                        </StyledBadge>
+                    </IconButton>
+
                 </Tooltip>
 
                 <Tooltip title="Contact For Query" TransitionComponent={Zoom} sx={{ ...navButtonStyle, mr: 0 }}>

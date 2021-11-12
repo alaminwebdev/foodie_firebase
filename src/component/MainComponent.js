@@ -7,6 +7,7 @@ import Home from './body/home/Home';
 
 import Menu from './body/menu/Menu'
 import DishDetail from './body/menu/DishDetail/DishDetail';
+import Cart from './body/menu/Cart/Cart';
 
 import BurgerBuilder from './body/BurgerBuilder/BurgerBuilder';
 import Orders from './body/BurgerBuilder/Orders/Orders';
@@ -60,6 +61,7 @@ const MainComponent = (props) => {
 
                 <Route path="/menu" exact component={Menu} />
                 <Route path="/dishdetail" exact component={DishDetail} />
+                <Route path="/cart" exact component={Cart} />
 
                 <Route path="/build" exact component={BurgerBuilder} />
                 <Route path="/checkout" exact component={CheckOut} />

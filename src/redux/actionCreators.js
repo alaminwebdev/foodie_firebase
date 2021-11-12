@@ -78,6 +78,30 @@ export const addComment = (dishId, author, rating, comment) => {
     }
 }
 
+//action for default menu order
+
+const cartConcat = cartItem => {
+    return {
+        type: actionTypes.ADD_TO_CART,
+        payload: cartItem
+    }
+}
+
+export const addToCart = (dishItem,  quantity, varient, price) => dispatch => {
+    const newCart = {
+        dishItem:dishItem,
+        quantity: quantity,
+        varient: varient,
+        price: price
+    }
+    newCart.date = new Date().toISOString();
+    //newComment.ref = 'new text';
+    console.log(newCart)
+    dispatch(cartConcat(newCart))
+    
+}
+
+
 
 
 //action for custom burger builder
@@ -119,13 +143,14 @@ const loadFaild = () => {
     }
 }
 
-export const fetchOrder = () => dispatch => {
-    axios.get('https://burgereact-94221-default-rtdb.firebaseio.com/customorders.json')
+export const fetchOrder = (token,userId) => dispatch => {
+    const queryParams = ' &orderBy="userId"&equalTo="' + userId + '" ';
+    axios.get('https://foodie-7bd7e-default-rtdb.firebaseio.com/customorders.json?auth=' + token + queryParams )
         .then(response => {
             //console.log(response)
             dispatch(loadOrder(response.data));
         })
         .catch(error => {
-            console.log(error)
+            console.log(error.message)
         })
 }

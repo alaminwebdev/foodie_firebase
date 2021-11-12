@@ -54,7 +54,7 @@ const authReducer = (authState = authInitialState, action) => {
 
 
 // reducer for deafult dish menu
-const dishReducer = (dishState = { isLoading: false, dishes: [] }, action) => {
+const dishReducer = (dishState = { isLoading: false, dishes: [], cartItems:[] }, action) => {
     switch (action.type) {
         case actionTypes.DISHES_LOADING:
             return {
@@ -67,6 +67,12 @@ const dishReducer = (dishState = { isLoading: false, dishes: [] }, action) => {
                 ...dishState,
                 isLoading: false,
                 dishes: action.payload
+            }
+        case actionTypes.ADD_TO_CART:
+            let newCart = action.payload;
+            return {
+                ...dishState,
+                cartItems:dishState.cartItems.concat(newCart),   
             }
         default:
             return dishState

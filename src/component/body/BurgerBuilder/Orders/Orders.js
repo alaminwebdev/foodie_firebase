@@ -9,19 +9,21 @@ import { Grid, Typography } from '@mui/material';
 const mapStateToProps = state => {
     return {
         orders: state.customBurger.orders,
-        orderLoading: state.customBurger.orderLoading
+        orderLoading: state.customBurger.orderLoading,
+        token: state.authState.token,
+        userId: state.authState.userId,
     }
 }
 const mapDispatchToProps = dispatch => {
     return {
-        fetchOrder: () => dispatch(fetchOrder()),
+        fetchOrder: (token, userId) => dispatch(fetchOrder(token, userId)),
     }
 }
 
 
 export class Orders extends Component {
     componentDidMount() {
-        this.props.fetchOrder();
+        this.props.fetchOrder(this.props.token, this.props.userId);
     }
 
     render() {
