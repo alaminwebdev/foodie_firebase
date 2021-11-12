@@ -4,7 +4,11 @@ import { useFormik } from 'formik';
 import { connect } from 'react-redux';
 import { authAction } from '../../../redux/authActionCreators';
 
+import Collapse from '@mui/material/Collapse';
+import Alert from '@mui/material/Alert';
 import TextField from '@mui/material/TextField';
+import CircularProgress from '@mui/material/CircularProgress';
+import SendIcon from '@mui/icons-material/Send';
 import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
@@ -18,13 +22,21 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        authLoading: state.authState.authLoading,
+        authMessage: state.authState.authMessage
+    }
+}
+
 
 const Auth = props => {
-
+    //console.log(props);
     const [authMode, setauthMode] = useState('login');
     const handleAuthMode = (event, newauthMode) => {
         setauthMode(newauthMode);
     };
+    const [response, setResponse] = useState(false)
 
     const formik = useFormik({
         initialValues: {
@@ -71,10 +83,17 @@ const Auth = props => {
     const style = {
         mt: 5
     }
-
-    //console.log(props)
+    let error = null;
+    if (props.authMessage !== null) {
+        error =
+            //this will close alert box
+            setTimeout(() => {
+                setResponse(false);
+            }, 2000)
+    }
     return (
         <Container maxWidth="md">
+            
             <ToggleButtonGroup
                 value={authMode}
                 exclusive
@@ -89,7 +108,13 @@ const Auth = props => {
                     <Typography variant="subtitle2" color="initial">Sign Up</Typography>
                 </ToggleButton>
             </ToggleButtonGroup>
+
             <form onSubmit={formik.handleSubmit}>
+
+                <Collapse in={Boolean(props.authMessage)}>
+                    <Alert severity='error' sx={{ mt: 3 }}>{props.authMessage}</Alert>
+                </Collapse>
+
                 <TextField
                     name='email'
                     value={formik.values.email}
@@ -142,12 +167,17 @@ const Auth = props => {
                     variant="outlined"
                     color="primary"
                     sx={{ ...style }}
+                    endIcon={<SendIcon />}
+
                 >
+                    {props.authLoading ? (<CircularProgress size='15px' sx={{ color: "#007FFF", mr: 1, }} />) : (null)}
                     {authMode === 'login' ? 'Login' : 'Sign Up'}
+
                 </Button>
+
             </form>
         </Container>
     )
 }
 
-export default connect(null, mapDispatchToProps)(Auth)
+export default connect(mapStateToProps, mapDispatchToProps)(Auth)

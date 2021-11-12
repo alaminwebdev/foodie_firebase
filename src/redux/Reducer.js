@@ -7,7 +7,9 @@ import { createForms } from 'react-redux-form';
 
 const authInitialState = {
     token: null,
-    userId: null
+    userId: null,
+    authLoading:false,
+    authMessage:null
 }
 
 // reducer for authentication
@@ -20,7 +22,7 @@ const authReducer = (authState = authInitialState, action) => {
                 ...authState,
                 token: action.payload.token,
                 userId: action.payload.userId,
-
+                authLoading:false
             }
         case actionTypes.AUTH_LOGOUT:
             //console.log(action.payload)
@@ -28,6 +30,21 @@ const authReducer = (authState = authInitialState, action) => {
                 ...authState,
                 token: null,
                 userId: null,
+            }
+        case actionTypes.AUTH_LOADING:
+            //console.log(action.payload)
+            return {
+                ...authState,
+                authLoading: true,
+                
+            }
+        case actionTypes.AUTH_FAILED:
+            //console.log(action.payload)
+            return {
+                ...authState,
+                authLoading: false,
+                authMessage: action.payload
+                
             }
         default:
             return authState

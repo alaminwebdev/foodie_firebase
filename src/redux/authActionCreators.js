@@ -13,8 +13,23 @@ const authSuccess = (token, userId) => {
     }
 }
 
+export const authLoading =()=>{
+    return{
+        type: actionTypes.AUTH_LOADING,
+        //payload:isLoading
+    }
+}
+
+export const authFailed = errorMessage =>{
+    return{
+        type: actionTypes.AUTH_FAILED,
+        payload:errorMessage
+    }
+}
+
 
 export const authAction = (email, password, mode) => dispatch => {
+
     //set the url
     let authUrl = null;
     if (mode === 'signup') {
@@ -33,6 +48,8 @@ export const authAction = (email, password, mode) => dispatch => {
         password: password,
         returnSecureToken: true,
     }
+    //call authLoading 
+    dispatch(authLoading())
     axios.post(authUrl, authData, config)
         .then(
             (userCredential) => {
@@ -50,8 +67,9 @@ export const authAction = (email, password, mode) => dispatch => {
             }
         )
         .catch((error) => {
-            console.log(error)
-            console.log(error.message)
+            //console.log(error.response)
+            //console.log(error.response.data.error.message)
+            dispatch(authFailed(error.response.data.error.message))
         })
 
 }
