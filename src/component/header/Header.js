@@ -21,7 +21,7 @@ import './header.css'
 const mapStateToProps = state => {
     return {
         token: state.authState.token,
-        cartLength: state.dishes.cartItems.length
+        cartItems: state.dishes.cartItems
     }
 }
 
@@ -63,7 +63,7 @@ const Header = (props) => {
                 </Typography>
 
                 <div>
-                    {isMobileBreakpoints ? (<> <Navigation  key={props.token} token={props.token} /> </>) : (<> <NavigationMain key={props.token} token={props.token} cartLength={props.cartLength}  /> </>)
+                    {isMobileBreakpoints ? (<> <Navigation  key={props.token} token={props.token} /> </>) : (<> <NavigationMain key={props.token} token={props.token} cartLength={props.cartItems? props.cartItems.length : null}  /> </>)
                     }
                 </div>
             </Toolbar>

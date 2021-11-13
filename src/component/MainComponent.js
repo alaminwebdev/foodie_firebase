@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { authCheck } from '../redux/authActionCreators';
+import { cartCheck } from '../redux/actionCreators';
 
 import Header from './header/Header';
 import Home from './body/home/Home';
@@ -25,14 +26,16 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 
 const mapStateToProps = state => {
     return {
-        token: state.authState.token
+        token: state.authState.token,
+        //cartItems: JSON.parse(localStorage.getItem("cartItems"))
     }
 }
 
 
 const mapDispatchToProps = dispatch => {
     return {
-        authCheck: () => dispatch(authCheck())
+        authCheck: () => dispatch(authCheck()),
+        cartCheck: () => dispatch(cartCheck())
     }
 }
 
@@ -41,9 +44,12 @@ const mapDispatchToProps = dispatch => {
 
 
 const MainComponent = (props) => {
+    //const cartItems = JSON.parse(localStorage.getItem("cartItems"))
+    //console.log(cartItems)
     // Similar to componentDidMount and componentDidUpdate:
     useEffect(() => {
-        props.authCheck()
+        props.authCheck();
+        props.cartCheck();
     });
 
     let routes = null;

@@ -8,7 +8,9 @@ export const LOAD_DISHES = "LOAD_DISHES";
 export const DISHES_LOADING = "DISHES_LOADING";
 
 //for default menu
-export const ADD_TO_CART =  "ADD_TO_CART"
+export const ADD_TO_CART =  "ADD_TO_CART";
+export const ADD_TO_LOCALSTORAGE =  "ADD_TO_LOCALSTORAGE";
+export const FETCH_CART =  "FETCH_CART";
 
 //for custom burger builder
 export const ADD_INGREDIENT = "ADD_INGREDIENT";

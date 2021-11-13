@@ -8,8 +8,8 @@ import { createForms } from 'react-redux-form';
 const authInitialState = {
     token: null,
     userId: null,
-    authLoading:false,
-    authMessage:null
+    authLoading: false,
+    authMessage: null
 }
 
 // reducer for authentication
@@ -22,7 +22,7 @@ const authReducer = (authState = authInitialState, action) => {
                 ...authState,
                 token: action.payload.token,
                 userId: action.payload.userId,
-                authLoading:false
+                authLoading: false
             }
         case actionTypes.AUTH_LOGOUT:
             //console.log(action.payload)
@@ -36,7 +36,7 @@ const authReducer = (authState = authInitialState, action) => {
             return {
                 ...authState,
                 authLoading: true,
-                
+
             }
         case actionTypes.AUTH_FAILED:
             //console.log(action.payload)
@@ -44,7 +44,7 @@ const authReducer = (authState = authInitialState, action) => {
                 ...authState,
                 authLoading: false,
                 authMessage: action.payload
-                
+
             }
         default:
             return authState
@@ -54,7 +54,7 @@ const authReducer = (authState = authInitialState, action) => {
 
 
 // reducer for deafult dish menu
-const dishReducer = (dishState = { isLoading: false, dishes: [], cartItems:[] }, action) => {
+const dishReducer = (dishState = { isLoading: false, dishes: [], cartItems: [] }, action) => {
     switch (action.type) {
         case actionTypes.DISHES_LOADING:
             return {
@@ -70,10 +70,32 @@ const dishReducer = (dishState = { isLoading: false, dishes: [], cartItems:[] },
             }
         case actionTypes.ADD_TO_CART:
             let newCart = action.payload;
+
+            //dishState.cartItems.concat(newCart)
+            //localStorage.setItem("cartItems", JSON.stringify(dishState.cartItems))
             return {
                 ...dishState,
-                cartItems:dishState.cartItems.concat(newCart),   
+                cartItems: dishState.cartItems.concat(newCart),
             }
+
+        case actionTypes.ADD_TO_LOCALSTORAGE:
+            localStorage.setItem("cartItems", JSON.stringify(dishState.cartItems))
+            return {
+                ...dishState,
+            }
+
+        case actionTypes.FETCH_CART:
+            let cartItems = action.payload;
+            if (cartItems == null) {
+                return dishState
+            } else {
+                return {
+                    ...dishState,
+                    cartItems: cartItems
+                }
+            }
+
+
         default:
             return dishState
     }

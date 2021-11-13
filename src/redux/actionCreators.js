@@ -87,20 +87,52 @@ const cartConcat = cartItem => {
     }
 }
 
-export const addToCart = (dishItem,  quantity, varient, price) => dispatch => {
+const addToLocalStorage = () => {
+    return {
+        type: actionTypes.ADD_TO_LOCALSTORAGE,
+    }
+}
+
+export const addToCart = (dishItem, quantity, varient, price) => dispatch => {
     const newCart = {
-        dishItem:dishItem,
+        dishItem: dishItem,
         quantity: quantity,
         varient: varient,
         price: price
     }
     newCart.date = new Date().toISOString();
-    //newComment.ref = 'new text';
-    console.log(newCart)
-    dispatch(cartConcat(newCart))
-    
+    newCart.userId = localStorage.getItem('userId')
+    //console.log(newCart)
+    dispatch(cartConcat(newCart));
+    dispatch(addToLocalStorage())
+
 }
 
+
+const fetchCart = (cartItems) => {
+    return {
+        type: actionTypes.FETCH_CART,
+        payload: cartItems
+    }
+}
+
+export const cartCheck = () => dispatch => {
+    const token = localStorage.getItem('token')
+    if (!token) {
+        //logout
+        //dispatch(logOut())
+     }else{
+         const expirationTime = new Date(localStorage.getItem('expirationTime'));
+         if (expirationTime <= new Date()) {
+             //logout 
+             //dispatch(logOut())
+         }else{
+            const cartItems = JSON.parse(localStorage.getItem("cartItems"))
+            dispatch(fetchCart(cartItems))
+            //console.log(cartItems)
+         }
+     }
+}
 
 
 
@@ -143,9 +175,9 @@ const loadFaild = () => {
     }
 }
 
-export const fetchOrder = (token,userId) => dispatch => {
+export const fetchOrder = (token, userId) => dispatch => {
     const queryParams = ' &orderBy="userId"&equalTo="' + userId + '" ';
-    axios.get('https://foodie-7bd7e-default-rtdb.firebaseio.com/customorders.json?auth=' + token + queryParams )
+    axios.get('https://foodie-7bd7e-default-rtdb.firebaseio.com/customorders.json?auth=' + token + queryParams)
         .then(response => {
             //console.log(response)
             dispatch(loadOrder(response.data));

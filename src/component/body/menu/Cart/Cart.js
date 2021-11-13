@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Component, useEffect } from 'react';
 
 import { connect } from 'react-redux';
+import { cartCheck } from '../../../../redux/actionCreators';
 
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -16,18 +17,31 @@ const mapStateToProps = state => {
     return {
         token: state.authState.token,
         userId: state.authState.userId,
-        cartItems: state.dishes.cartItems
+        //cartItems: state.dishes.cartItems,
+    }
+}
 
+
+const mapDispatchToProps = dispatch => {
+    return {
+        //cartCheck: () => dispatch(cartCheck())
     }
 }
 
 
 
 const Cart = (props) => {
-    const cartItem = props.cartItems.map((item) => {
+    // Similar to componentDidMount and componentDidUpdate:
+    useEffect(() => {
+        //props.cartCheck();
+    });
+
+    console.log(props)
+    const cartItems=  JSON.parse(localStorage.getItem("cartItems") || "[]")
+    const cartItem = cartItems.map((item) => {
         //console.log(item)
         return (
-            <Grid item lg={3}>
+            <Grid item lg={3} key={Math.random()}>
                 <Card sx={{ mt: 3, }}>
                     <CardContent>
                         <Typography variant="h6" component="div">
@@ -56,7 +70,7 @@ const Cart = (props) => {
     return (
         <Container maxWidth="xl">
             <Grid container spacing={2}>
-                <Grid item lg={12} md={12} sm={12} sx={{textAlign:"center" , mt:3}} >
+                <Grid item lg={12} md={12} sm={12} sx={{ textAlign: "center", mt: 3 }} >
                     <Typography variant="h3" color="initial" >
                         Your Cart
                     </Typography>
@@ -68,4 +82,4 @@ const Cart = (props) => {
     )
 }
 
-export default connect(mapStateToProps, null)(Cart)
+export default connect(mapStateToProps, mapDispatchToProps)(Cart)
