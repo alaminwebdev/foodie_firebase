@@ -54,7 +54,7 @@ const authReducer = (authState = authInitialState, action) => {
 
 
 // reducer for deafult dish menu
-const dishReducer = (dishState = { isLoading: false, dishes: [], cartItems: [] }, action) => {
+const dishReducer = (dishState = { isLoading: false, dishes: [] }, action) => {
     switch (action.type) {
         case actionTypes.DISHES_LOADING:
             return {
@@ -68,39 +68,56 @@ const dishReducer = (dishState = { isLoading: false, dishes: [], cartItems: [] }
                 isLoading: false,
                 dishes: action.payload
             }
-        case actionTypes.ADD_TO_CART:
-            let newCart = action.payload;
-
-            //dishState.cartItems.concat(newCart)
-            //localStorage.setItem("cartItems", JSON.stringify(dishState.cartItems))
-            return {
-                ...dishState,
-                cartItems: dishState.cartItems.concat(newCart),
-            }
-
-        case actionTypes.ADD_TO_LOCALSTORAGE:
-            localStorage.setItem("cartItems", JSON.stringify(dishState.cartItems))
-            return {
-                ...dishState,
-            }
-
-        case actionTypes.FETCH_CART:
-            let cartItems = action.payload;
-            if (cartItems == null) {
-                return dishState
-            } else {
-                return {
-                    ...dishState,
-                    cartItems: cartItems
-                }
-            }
-
 
         default:
             return dishState
     }
 
 }
+
+// reducer for cart functionality 
+
+const cartReducer = (cartState = { cartItems: [] }, action) => {
+    switch (action.type) {
+        case actionTypes.ADD_TO_CART:
+            let newCart = action.payload;
+            const newcartItems = cartState.cartItems.concat(newCart)
+            localStorage.setItem("cartItems", JSON.stringify(newcartItems))
+            return {
+                ...cartState,
+                cartItems: newcartItems,
+            }
+
+        case actionTypes.FETCH_CART:
+            let cartItems = action.payload;
+
+            if (cartItems == null) {
+                return cartState
+            } else {
+                return {
+                    ...cartState,
+                    cartItems: cartItems
+                }
+            }
+
+        case actionTypes.DELETE_CART:
+            //console.log(action.payload)
+            const updatedcartItems = [...cartState.cartItems];
+            updatedcartItems.splice(action.payload, 1);
+
+            localStorage.setItem("cartItems", JSON.stringify(updatedcartItems))
+
+            return {
+                ...cartState,
+                cartItems: updatedcartItems
+            }
+
+        default:
+            return cartState
+    }
+}
+
+//ruducer for dish comment funtionality 
 const commentReducer = (commentState = { isLoading: true, comments: [] }, action) => {
     //console.log(action);
     switch (action.type) {
@@ -129,6 +146,8 @@ const commentReducer = (commentState = { isLoading: true, comments: [] }, action
             return commentState
     }
 }
+
+
 
 // reducer for custom burger builder
 
@@ -232,6 +251,7 @@ const burgerbuildReducer = (buildState = initialState, action) => {
 export const Reducer = combineReducers({
     dishes: dishReducer,
     comments: commentReducer,
+    cartState: cartReducer,
     customBurger: burgerbuildReducer,
     authState: authReducer,
     ...createForms({

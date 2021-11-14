@@ -21,7 +21,7 @@ import './header.css'
 const mapStateToProps = state => {
     return {
         token: state.authState.token,
-        cartItems: state.dishes.cartItems
+        cartItems: state.cartState.cartItems
     }
 }
 

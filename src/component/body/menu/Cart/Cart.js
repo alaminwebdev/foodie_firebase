@@ -1,7 +1,7 @@
 import React, { Component, useEffect } from 'react';
 
 import { connect } from 'react-redux';
-import { cartCheck } from '../../../../redux/actionCreators';
+import { deleteCart } from '../../../../redux/actionCreators';
 
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -17,28 +17,30 @@ const mapStateToProps = state => {
     return {
         token: state.authState.token,
         userId: state.authState.userId,
-        //cartItems: state.dishes.cartItems,
+        cartItems: state.cartState.cartItems,
     }
 }
 
 
 const mapDispatchToProps = dispatch => {
     return {
-        //cartCheck: () => dispatch(cartCheck())
+        deleteCart: (index) => dispatch(deleteCart(index))
     }
 }
 
 
 
 const Cart = (props) => {
-    // Similar to componentDidMount and componentDidUpdate:
-    useEffect(() => {
-        //props.cartCheck();
-    });
 
-    console.log(props)
-    const cartItems=  JSON.parse(localStorage.getItem("cartItems") || "[]")
-    const cartItem = cartItems.map((item) => {
+    const deleteItem =(index)=>{
+        //const cartItems = [...props.cartItems]
+        //console.log(index, cartItems);
+        props.deleteCart(index);
+    }
+
+    //console.log(props)
+    //const cartItems=  JSON.parse(localStorage.getItem("cartItems") || "[]")
+    const cartItem = props.cartItems.map((item, index) => {
         //console.log(item)
         return (
             <Grid item lg={3} key={Math.random()}>
@@ -56,7 +58,7 @@ const Cart = (props) => {
                         <Chip label={'Varient: ' + item.varient} variant="outlined" />
                         <Chip label={'Quantity: ' + item.quantity} variant="outlined" />
 
-                        <IconButton aria-label="delete">
+                        <IconButton aria-label="delete" onClick={ ()=>deleteItem(index)}>
                             <DeleteIcon />
                         </IconButton>
                     </CardActions>

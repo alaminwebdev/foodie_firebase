@@ -87,11 +87,6 @@ const cartConcat = cartItem => {
     }
 }
 
-const addToLocalStorage = () => {
-    return {
-        type: actionTypes.ADD_TO_LOCALSTORAGE,
-    }
-}
 
 export const addToCart = (dishItem, quantity, varient, price) => dispatch => {
     const newCart = {
@@ -104,35 +99,28 @@ export const addToCart = (dishItem, quantity, varient, price) => dispatch => {
     newCart.userId = localStorage.getItem('userId')
     //console.log(newCart)
     dispatch(cartConcat(newCart));
-    dispatch(addToLocalStorage())
-
 }
 
 
-const fetchCart = (cartItems) => {
+
+export const deleteCart = (index) => {
+    return {
+        type: actionTypes.DELETE_CART,
+        payload: index
+    }
+}
+
+
+// dispatch from authcheck file from autoActionCreators folder 
+export const fetchCart = (cartItems) => {
     return {
         type: actionTypes.FETCH_CART,
         payload: cartItems
     }
 }
 
-export const cartCheck = () => dispatch => {
-    const token = localStorage.getItem('token')
-    if (!token) {
-        //logout
-        //dispatch(logOut())
-     }else{
-         const expirationTime = new Date(localStorage.getItem('expirationTime'));
-         if (expirationTime <= new Date()) {
-             //logout 
-             //dispatch(logOut())
-         }else{
-            const cartItems = JSON.parse(localStorage.getItem("cartItems"))
-            dispatch(fetchCart(cartItems))
-            //console.log(cartItems)
-         }
-     }
-}
+
+
 
 
 

@@ -1,6 +1,8 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
 
+import { fetchCart } from './actionCreators';
+
 
 const authSuccess = (token, userId) => {
     return {
@@ -99,6 +101,9 @@ export const authCheck = () => dispatch =>{
             //login
             const userId = localStorage.getItem('userId')
             dispatch(authSuccess(token, userId));
+            //cart check and dispatch to authaction creators 
+            const cartItems = JSON.parse(localStorage.getItem("cartItems"))
+            dispatch(fetchCart(cartItems))
         }
     }
 }

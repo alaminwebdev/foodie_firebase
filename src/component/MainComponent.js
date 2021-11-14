@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { authCheck } from '../redux/authActionCreators';
-import { cartCheck } from '../redux/actionCreators';
 
 import Header from './header/Header';
 import Home from './body/home/Home';
@@ -34,8 +33,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        authCheck: () => dispatch(authCheck()),
-        cartCheck: () => dispatch(cartCheck())
+        authCheck: () => dispatch(authCheck())
     }
 }
 
@@ -48,8 +46,7 @@ const MainComponent = (props) => {
     //console.log(cartItems)
     // Similar to componentDidMount and componentDidUpdate:
     useEffect(() => {
-        props.authCheck();
-        props.cartCheck();
+        props.authCheck()
     });
 
     let routes = null;
