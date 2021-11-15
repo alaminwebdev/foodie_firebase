@@ -54,7 +54,7 @@ const authReducer = (authState = authInitialState, action) => {
 
 
 // reducer for deafult dish menu
-const dishReducer = (dishState = { isLoading: false, dishes: [] }, action) => {
+const dishReducer = (dishState = { isLoading: false, dishes: [], defaultOrders:[] }, action) => {
     switch (action.type) {
         case actionTypes.DISHES_LOADING:
             return {
@@ -67,6 +67,21 @@ const dishReducer = (dishState = { isLoading: false, dishes: [] }, action) => {
                 ...dishState,
                 isLoading: false,
                 dishes: action.payload
+            }
+        case actionTypes.DEFAULT_ORDER:
+            console.log(action.payload);
+            const  defaultOrders= [] ;
+            for (const orderKey in action.payload) {
+                //console.log(action.payload[orderKey])
+                defaultOrders.push({
+                    ...action.payload[orderKey],
+                    id: orderKey
+                })
+            }
+            //console.log(defaultOrders)
+            return {
+                ...dishState,
+                defaultOrders:defaultOrders
             }
 
         default:
@@ -111,7 +126,15 @@ const cartReducer = (cartState = { cartItems: [] }, action) => {
                 ...cartState,
                 cartItems: updatedcartItems
             }
-
+        case actionTypes.RESET_CART:
+            let resetCartItems = cartState.cartItems
+            resetCartItems=[];
+            
+            localStorage.setItem("cartItems", JSON.stringify(resetCartItems))
+            return {
+                ...cartState,
+                cartItems: resetCartItems
+            }
         default:
             return cartState
     }

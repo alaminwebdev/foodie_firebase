@@ -8,10 +8,12 @@ import Home from './body/home/Home';
 import Menu from './body/menu/Menu'
 import DishDetail from './body/menu/DishDetail/DishDetail';
 import Cart from './body/menu/Cart/Cart';
+import Departure from './body/menu/Cart/Departure';
 
 import BurgerBuilder from './body/BurgerBuilder/BurgerBuilder';
-import Orders from './body/BurgerBuilder/Orders/Orders';
-import CheckOut from './body/BurgerBuilder/Orders/CheckOut';
+import CheckOut from './body/BurgerBuilder/CustomCheckOut/CheckOut';
+
+import Orders from './body/Orders/Orders';
 
 import Auth from './body/Auth/Auth';
 import Logout from './body/Auth/Logout';
@@ -65,6 +67,7 @@ const MainComponent = (props) => {
                 <Route path="/menu" exact component={Menu} />
                 <Route path="/dishdetail" exact component={DishDetail} />
                 <Route path="/cart" exact component={Cart} />
+                <Route path="/departure" exact component={Departure} />
 
                 <Route path="/build" exact component={BurgerBuilder} />
                 <Route path="/checkout" exact component={CheckOut} />

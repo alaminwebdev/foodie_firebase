@@ -95,7 +95,6 @@ export const addToCart = (dishItem, quantity, varient, price) => dispatch => {
         varient: varient,
         price: price
     }
-    newCart.date = new Date().toISOString();
     newCart.userId = localStorage.getItem('userId')
     //console.log(newCart)
     dispatch(cartConcat(newCart));
@@ -110,12 +109,27 @@ export const deleteCart = (index) => {
     }
 }
 
+export const resetCart = () => {
+    return {
+        type: actionTypes.RESET_CART
+    }
+}
+
+
 
 // dispatch from authcheck file from autoActionCreators folder 
 export const fetchCart = (cartItems) => {
     return {
         type: actionTypes.FETCH_CART,
         payload: cartItems
+    }
+}
+
+// dispatch from fetchOrder functoin from this folder 
+export const defaultOrder = (orders) => {
+    return {
+        type: actionTypes.DEFAULT_ORDER,
+        payload: orders
     }
 }
 
@@ -149,7 +163,7 @@ export const resetIngredient = () => {
     }
 }
 
-//action for fetch order
+//action for fetch order default and custom burger
 
 const loadOrder = orders => {
     return {
@@ -165,6 +179,7 @@ const loadFaild = () => {
 
 export const fetchOrder = (token, userId) => dispatch => {
     const queryParams = ' &orderBy="userId"&equalTo="' + userId + '" ';
+    //fetch for custom burger
     axios.get('https://foodie-7bd7e-default-rtdb.firebaseio.com/customorders.json?auth=' + token + queryParams)
         .then(response => {
             //console.log(response)
@@ -173,4 +188,14 @@ export const fetchOrder = (token, userId) => dispatch => {
         .catch(error => {
             console.log(error.message)
         })
+    //fetch for default burger
+    axios.get('https://foodie-7bd7e-default-rtdb.firebaseio.com/orders.json?auth=' + token + queryParams)
+        .then(response => {
+            //console.log(response)
+            dispatch(defaultOrder(response.data));
+        })
+        .catch(error => {
+            console.log(error.message)
+        })
+
 }

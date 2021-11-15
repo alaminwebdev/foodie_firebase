@@ -9,7 +9,11 @@ import CardContent from '@mui/material/CardContent';
 import Chip from '@mui/material/Chip';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Container, Grid, Typography } from '@mui/material';
+import { Container, Grid, Typography, Box } from '@mui/material';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+import Button from '@mui/material/Button';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 
 // accept state as a props from intial state 
@@ -32,56 +36,83 @@ const mapDispatchToProps = dispatch => {
 
 const Cart = (props) => {
 
-    const deleteItem =(index)=>{
+    const deleteItem = (index) => {
         //const cartItems = [...props.cartItems]
         //console.log(index, cartItems);
         props.deleteCart(index);
     }
+     const handleCheckout = ()=> {
+        props.history.push('/departure')
+     }
 
     //console.log(props)
     //const cartItems=  JSON.parse(localStorage.getItem("cartItems") || "[]")
-    const cartItem = props.cartItems.map((item, index) => {
-        //console.log(item)
+    if (props.cartItems.length > 0) {
+        const cartItem = props.cartItems.map((item, index) => {
+            //console.log(item)
+            return (
+                <Grid item lg={3} key={Math.random()}>
+                    <Card sx={{ mt: 3, }}>
+                        <CardContent>
+                            <Typography variant="h6" component="div">
+                                {item.dishItem}
+                            </Typography>
+                            <Typography color="text.secondary">
+                                Price : {item.price}
+                            </Typography>
+                        </CardContent>
+                        <CardActions sx={{ justifyContent: 'space-around', pb: 2 }}>
+
+                            <Chip label={'Varient: ' + item.varient} variant="outlined" />
+                            <Chip label={'Quantity: ' + item.quantity} variant="outlined" />
+
+                            <IconButton aria-label="delete" onClick={() => deleteItem(index)}>
+                                <DeleteIcon />
+                            </IconButton>
+                        </CardActions>
+                    </Card>
+                </Grid>
+
+
+            )
+        })
+
         return (
-            <Grid item lg={3} key={Math.random()}>
-                <Card sx={{ mt: 3, }}>
-                    <CardContent>
-                        <Typography variant="h6" component="div">
-                            {item.dishItem}
+            <Container maxWidth="xl">
+                <Grid container spacing={2}>
+                    <Grid item lg={12} md={12} sm={12} sx={{ textAlign: "center", mt: 3 }} >
+                        <Typography variant="h3" color="initial" >
+                            Your Cart
                         </Typography>
-                        <Typography color="text.secondary">
-                            Price : {item.price}
-                        </Typography>
-                    </CardContent>
-                    <CardActions sx={{ justifyContent: 'space-around', pb: 2 }}>
+                    </Grid>
+                    {cartItem}
+                </Grid>
+                <Box sx={{ textAlign:'center', mt: 3}}>
+                    <Button variant="contained" sx={{ ml: 1, mt: 2, bgcolor: '#007FFF' }} endIcon={<AddShoppingCartIcon />} onClick={handleCheckout}>
+                        Checkout
+                    </Button>
+                </Box>
 
-                        <Chip label={'Varient: ' + item.varient} variant="outlined" />
-                        <Chip label={'Quantity: ' + item.quantity} variant="outlined" />
-
-                        <IconButton aria-label="delete" onClick={ ()=>deleteItem(index)}>
-                            <DeleteIcon />
-                        </IconButton>
-                    </CardActions>
-                </Card>
-            </Grid>
-
+            </Container>
 
         )
-    })
-
-    return (
-        <Container maxWidth="xl">
-            <Grid container spacing={2}>
-                <Grid item lg={12} md={12} sm={12} sx={{ textAlign: "center", mt: 3 }} >
-                    <Typography variant="h3" color="initial" >
-                        Your Cart
-                    </Typography>
+    } else {
+        return (
+            <Container maxWidth="lg">
+                <Grid container spacing={2}>
+                    <Grid item lg={12} md={12} sm={12} sx={{ mt: 3 }} >
+                        <Alert severity="warning" variant="filled">
+                            <AlertTitle>Empty</AlertTitle>
+                            Sorry! Your have no Cart. — <strong>Go to Menu </strong>
+                        </Alert>
+                    </Grid>
                 </Grid>
-                {cartItem}
-            </Grid>
-        </Container>
+            </Container>
+        )
+    }
 
-    )
+
+
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)
