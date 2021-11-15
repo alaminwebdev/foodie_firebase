@@ -17,29 +17,35 @@ const DishDetail = props => {
 
     return (
         <>
-            <Grid item lg={6} sx={{ pl:0, pt:0, alignSelf:'center' }}>
-                <Box >
+            <Grid item lg={6} md={6} sm={12} sx={{ pl: 0, pt: 0, alignSelf: 'center' }}>
+                <Box sx={{ borderRadius: '32px', overflow:'hidden'}} >
                     <img
                         width='100%'
                         src={baseUrl + dishes.image}
                         alt={dishes.name}
                         loading="lazy"
+
                     />
                 </Box>
             </Grid>
-            <Grid item lg={6}>
-                <Typography gutterBottom variant="h5" component="div" sx={{  }}>
+            <Grid item lg={6} md={6} sm={12} sx={{ pr:2 }}>
+                <Typography  variant="h4" component="div" >
                     {dishes.name}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
                     {dishes.description}
                 </Typography>
-                
+
                 <MenuReview key={dishes.id} review={comments} commentLoading={commentLoading} />
+
                 <CommentForm dishId={dishes.id} />
-                <Button variant="outlined" onClick={props.modalClose} sx={{}}>
-                   Close
-                </Button>
+
+                <Box sx={{ textAlign:'center' }}>
+                    <Button variant="outlined" onClick={props.modalClose} sx={{ my: 2 }}>
+                        Close
+                    </Button>
+                </Box>
+
             </Grid>
         </>
     )

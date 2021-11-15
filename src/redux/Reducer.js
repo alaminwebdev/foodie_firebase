@@ -54,7 +54,7 @@ const authReducer = (authState = authInitialState, action) => {
 
 
 // reducer for deafult dish menu
-const dishReducer = (dishState = { isLoading: false, dishes: [], defaultOrders:[] }, action) => {
+const dishReducer = (dishState = { isLoading: false, dishes: [], defaultOrders:[], orderLoading:true }, action) => {
     switch (action.type) {
         case actionTypes.DISHES_LOADING:
             return {
@@ -81,7 +81,13 @@ const dishReducer = (dishState = { isLoading: false, dishes: [], defaultOrders:[
             //console.log(defaultOrders)
             return {
                 ...dishState,
+                orderLoading:false,
                 defaultOrders:defaultOrders
+            }
+        case actionTypes.ORDER_LOADING:
+            return {
+                ...dishState,
+                isLoading:true
             }
 
         default:

@@ -10,9 +10,10 @@ import { Grid, Typography } from '@mui/material';
 const mapStateToProps = state => {
     return {
         orders: state.customBurger.orders,
-        orderLoading: state.customBurger.orderLoading,
+        customOrderLoading: state.customBurger.orderLoading,
 
         defaultOrders: state.dishes.defaultOrders,
+        defaultOrderLoading: state.dishes.orderLoading,
 
         token: state.authState.token,
         userId: state.authState.userId,
@@ -33,25 +34,43 @@ export class Orders extends Component {
     }
 
     render() {
-        let customOrders = this.props.orders.map((order, index) => {
-            return <CustomOrder order={order} key={index} id={order.id} ingredientPrice={this.props.ingredientPrice} />
-        }).reverse(); //this reverse show the last order in first 
 
-        let defaultOrders = this.props.defaultOrders.map((order, index) => {
-            return <Order order={order} key={index} id={order.id} />
-        }).reverse(); //this reverse show the last order in first 
 
-        console.log(this.props.defaultOrders)
+        // let customOrders = this.props.orders.map((order, index) => {
+        //     return <CustomOrder order={order} key={index} id={order.id} ingredientPrice={this.props.ingredientPrice} />
+        // }).reverse(); //this reverse show the last order in first 
+
+
+        let customOrders = null;
+        if (this.props.customOrderLoading) {
+            customOrders = <CustomOrder loading={true} />
+        } else {
+            customOrders = this.props.orders.map((order, index) => {
+                return <CustomOrder order={order} key={index} id={order.id} ingredientPrice={this.props.ingredientPrice} />
+            }).reverse(); //this reverse show the last order in first 
+        }
+
+        let defaultOrders = null;
+        if (this.props.defaultOrderLoading) {
+            defaultOrders = <Order loading={true} />
+        } else {
+            defaultOrders = this.props.defaultOrders.map((order, index) => {
+                return <Order order={order} key={index} id={order.id} />
+            }).reverse(); //this reverse show the last order in first 
+        }
+
+
+        //console.log(this.props.defaultOrders)
         return (
-            <Container maxWidth="xl" sx={{my:4}}>
-                <Typography variant="h3" color="initial" sx={{ textAlign: "center", mt: 3 }}>
+            <Container maxWidth="xl" sx={{ my: 4 }}>
+                <Typography variant="h4" color="initial" sx={{ textAlign: "center", mt: 3 }}>
                     Custom Order
                 </Typography>
                 <Grid container spacing={2}>
                     {customOrders}
                 </Grid>
 
-                <Typography variant="h3" color="initial" sx={{ textAlign: "center", mt: 3 }}>
+                <Typography variant="h4" color="initial" sx={{ textAlign: "center", mt: 3 }}>
                     Default Order
                 </Typography>
                 <Grid container spacing={2}>

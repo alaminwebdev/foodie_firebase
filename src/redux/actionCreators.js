@@ -171,6 +171,11 @@ const loadOrder = orders => {
         payload: orders
     }
 }
+const orderLoading = () => {
+    return {
+        type: actionTypes.ORDER_LOADING,
+    }
+}
 const loadFaild = () => {
     return {
         type: actionTypes.LOAD_FAILD,
@@ -179,6 +184,8 @@ const loadFaild = () => {
 
 export const fetchOrder = (token, userId) => dispatch => {
     const queryParams = ' &orderBy="userId"&equalTo="' + userId + '" ';
+    //dispatch for order loading
+    //dispatch(orderLoading());
     //fetch for custom burger
     axios.get('https://foodie-7bd7e-default-rtdb.firebaseio.com/customorders.json?auth=' + token + queryParams)
         .then(response => {

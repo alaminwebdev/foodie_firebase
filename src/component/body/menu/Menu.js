@@ -124,11 +124,11 @@ class Menu extends Component {
                     >
                         <Fade in={this.state.modalOpen}>
                             <Container maxWidth="lg">
-                                <Grid container spacing={0} sx={{
+                                <Grid container spacing={2} sx={{
                                     alignSelf:'center',
                                     bgcolor: '#fff',
-                                    p:5,
-                                    my: 5
+                                    my: 5,
+                                    borderRadius:2
                                 }}>
                                     {dishdetail}
                                 </Grid>

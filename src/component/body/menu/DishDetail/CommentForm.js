@@ -41,6 +41,10 @@ const CommentForm = props => {
         }
     });
 
+    const style ={
+        mt:2
+    }
+
     //console.log(props);
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -52,6 +56,7 @@ const CommentForm = props => {
                 {...register("author", { required: "Name is required." })}
                 error={Boolean(errors.author)}
                 helperText={errors.name?.message}
+                sx={{...style}}
 
             />
 
@@ -59,6 +64,7 @@ const CommentForm = props => {
             <FormControl
                 error={Boolean(errors.rating)}
                 fullWidth
+                sx={{...style}}
             >
                 <InputLabel id="demo-simple-select-label">rating</InputLabel>
                 <Controller
@@ -96,11 +102,13 @@ const CommentForm = props => {
                 {...register("comment", { required: "Comment is required" })}
                 error={Boolean(errors.comment)}
                 helperText={errors.comment?.message}
+                sx={{...style}}
             />
 
 
 
             <Button
+                sx={{...style}}
                 type='submit'
                 variant="outlined"
                 color="primary">

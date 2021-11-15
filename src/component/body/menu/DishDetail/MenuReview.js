@@ -1,6 +1,8 @@
 import React from 'react';
 import Loading from '../../Loading';
 import dateFormat from 'dateformat';
+import { Box, Card, Slider, Avatar, Typography } from '@mui/material';
+
 
 
 const MenuReview = props => {
@@ -8,21 +10,30 @@ const MenuReview = props => {
     const review = props.review.map((eachreview) => {
         //console.log(eachreview.author)
         return (
-            <div className="mt-4 " key={eachreview.id}>
-                {eachreview.author}
-                <p className="my-0">
-                    <small>Rating: {eachreview.rating + "*"}</small>
-                </p>
 
+            <Box className="mt-4 " key={eachreview.id} sx={{}}>
+                <Card 
+                    sx={{
+                        display:'flex',
+                        padding: 2,
+                        my:2,
+                        boxShadow: '0 2px 4px 0 rgba(138, 148, 159, 0.2)',
+                    }}
+                >
+                    <Avatar src="" sx={{ bgcolor: '#1565c0' }}> {eachreview.author[0]} </Avatar>
+                    <Box sx={{ml:1, width:'100%' , color:'#fff',}}>
+                        <Typography variant="h6" color="initial"  sx={{lineHeight:1}}>{eachreview.author}</Typography>
+                        <Typography variant="caption" color="initial">Rating: {eachreview.rating + "*"}</Typography>
+                        
+                        <Box sx={{display: 'flex', justifyContent:'space-between', mt:1}}>
+                            <Typography variant="subtitle2" color="initial">{eachreview.comment}</Typography>
+                            <Typography variant="caption" color="initial">{dateFormat(eachreview.date, "dddd, mmmm dS, yyyy")}</Typography>
+                        </Box>
+                    </Box>
 
-                {eachreview.comment}
-                <p className="my-0">
-                    <small>
-                        {dateFormat(eachreview.date, "dddd, mmmm dS, yyyy")}
-                    </small>
-                </p>
+                </Card>
 
-            </div>
+            </Box>
 
         )
     })

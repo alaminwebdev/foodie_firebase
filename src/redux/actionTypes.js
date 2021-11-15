@@ -18,6 +18,7 @@ export const DEFAULT_ORDER = "DEFAULT_ORDER";
 //for custom order fetch
 
 export const LOAD_ORDER ="LOAD_ORDER";
+export const ORDER_LOADING ="ORDER_LOADING";
 
 export const LOAD_FAILD ="LOAD_FAILD";
 
