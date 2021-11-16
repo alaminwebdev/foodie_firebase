@@ -11,7 +11,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Skeleton from '@mui/material/Skeleton';
-
+import Chip from '@mui/material/Chip';
+import dateFormat from 'dateformat';
 
 
 const Order = props => {
@@ -30,8 +31,8 @@ const Order = props => {
     }
 
     return (
-        <Grid item lg={4}>
-            <Card sx={{ mt: 3, }}>
+        <Grid item lg={3} md={4} sm={6} xs={12}>
+            <Card sx={{ mt: 3,  }}>
                 <CardContent>
                     <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                         {props.loading ? (<Skeleton animation="wave" />) : (
@@ -47,12 +48,12 @@ const Order = props => {
                             </>
                         )}
                     </Typography>
-                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                        Default Burger
+                    <Typography sx={{ mb: 1.5 }} variant="caption" color="text.secondary">
+                        Order Placed: {dateFormat(props.order.orderTime, "dd mmm , h:MM tt")}
                     </Typography>
 
-                    <TableContainer key={Math.random()}>
-                        <Table sx={{}} aria-label="spanning table">
+                    <TableContainer key={Math.random()} >
+                        <Table sx={{}} size="small" aria-label="a dense table">
                             <TableHead>
                                 <TableRow>
                                     <TableCell >Item</TableCell>
@@ -78,8 +79,8 @@ const Order = props => {
                     <CardActions><Skeleton animation="wave" width='100%' /></CardActions>
                 ) : (
                     <CardActions sx={{ justifyContent: 'space-evenly', mb: 1 }}>
-                        <Button variant="outlined" size="small">Price :{props.order.totalPrice} tk </Button>
-                        <Button variant="outlined" size="small">Payment :{props.order.customerInfo.payment} </Button>
+                        <Chip label={'Price: ' + props.order.totalPrice + 'tk'} variant="outlined" />
+                        <Chip label={'Payment: ' + props.order.customerInfo.payment} variant="outlined" />
                     </CardActions>
                 )}
 

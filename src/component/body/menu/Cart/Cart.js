@@ -41,9 +41,9 @@ const Cart = (props) => {
         //console.log(index, cartItems);
         props.deleteCart(index);
     }
-     const handleCheckout = ()=> {
+    const handleCheckout = () => {
         props.history.push('/departure')
-     }
+    }
 
     //console.log(props)
     //const cartItems=  JSON.parse(localStorage.getItem("cartItems") || "[]")
@@ -87,7 +87,7 @@ const Cart = (props) => {
                     </Grid>
                     {cartItem}
                 </Grid>
-                <Box sx={{ textAlign:'center', mt: 3}}>
+                <Box sx={{ textAlign: 'center', mt: 3 }}>
                     <Button variant="contained" sx={{ ml: 1, mt: 2, bgcolor: '#007FFF' }} endIcon={<AddShoppingCartIcon />} onClick={handleCheckout}>
                         Checkout
                     </Button>
@@ -98,15 +98,19 @@ const Cart = (props) => {
         )
     } else {
         return (
-            <Container maxWidth="lg">
-                <Grid container spacing={2}>
-                    <Grid item lg={12} md={12} sm={12} sx={{ mt: 3 }} >
+            <Container maxWidth="md" sx={{ my: 4 }}>
+                <Alert severity="warning" variant="filled" sx={{mx:4,}}>
+                    <AlertTitle>Empty</AlertTitle>
+                    Sorry! Your have no Cart. — <strong>Go to Menu </strong>
+                </Alert>
+                {/* <Grid container spacing={2}>
+                    <Grid item lg={12} md={12} sm={12} sx={{ m: 4 }} >
                         <Alert severity="warning" variant="filled">
                             <AlertTitle>Empty</AlertTitle>
                             Sorry! Your have no Cart. — <strong>Go to Menu </strong>
                         </Alert>
                     </Grid>
-                </Grid>
+                </Grid> */}
             </Container>
         )
     }
