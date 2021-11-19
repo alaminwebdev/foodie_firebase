@@ -9,6 +9,7 @@ import ViewListRoundedIcon from '@mui/icons-material/ViewListRounded';
 import ContactPageRoundedIcon from '@mui/icons-material/ContactPageRounded';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
 import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
+import AdminPanelSettingsRoundedIcon from '@mui/icons-material/AdminPanelSettingsRounded';
 
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
@@ -57,11 +58,18 @@ const NavigationMain = props => {
     if (props.token == null) {
         nav = (
             <>
+                <Tooltip title="Admin" TransitionComponent={Zoom} sx={{ ...navButtonStyle, mr: 0 }}>
+                    <IconButton onClick={() => handleMenuClick('/admin')}>
+                        <AdminPanelSettingsRoundedIcon />
+                    </IconButton>
+                </Tooltip>
+
                 <Tooltip title="Login" TransitionComponent={Zoom} sx={{ ...navButtonStyle, mr: 0 }}>
                     <IconButton onClick={() => handleMenuClick('/login')}>
                         <LoginRoundedIcon />
                     </IconButton>
                 </Tooltip>
+
             </>
         )
     } else {

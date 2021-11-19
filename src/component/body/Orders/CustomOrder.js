@@ -52,7 +52,12 @@ const CustomOrder = props => {
 
                     </Typography>
                     <Typography sx={{ mb: 1.5 }} color="text.secondary" variant="caption">
-                        Order Placed: {dateFormat(props.order.orderTime, "dd mmm , h:MM tt")}
+                        {props.loading ? (<Skeleton animation="wave" />) : (
+                            <>
+                                Order Placed: {dateFormat(props.order.orderTime, "dd mmm , h:MM tt")}
+                            </>
+                        )}
+                        
                     </Typography>
                     <TableContainer>
                         <Table size="small" aria-label="a dense table">
@@ -66,9 +71,9 @@ const CustomOrder = props => {
                             <TableBody>
                                 {props.loading ? (
                                     <TableRow>
-                                        <TableCell><Skeleton animation="wave"  /></TableCell>
-                                        <TableCell align="right"><Skeleton animation="wave"  /></TableCell>
-                                        <TableCell align="right"><Skeleton animation="wave"  /></TableCell>
+                                        <TableCell><Skeleton animation="wave" /></TableCell>
+                                        <TableCell align="right"><Skeleton animation="wave" /></TableCell>
+                                        <TableCell align="right"><Skeleton animation="wave" /></TableCell>
                                     </TableRow>
                                 ) : (ingrdientDetails)}
                             </TableBody>

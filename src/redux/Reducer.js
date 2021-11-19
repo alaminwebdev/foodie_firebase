@@ -54,7 +54,7 @@ const authReducer = (authState = authInitialState, action) => {
 
 
 // reducer for deafult dish menu
-const dishReducer = (dishState = { isLoading: false, dishes: [], defaultOrders:[], orderLoading:true }, action) => {
+const dishReducer = (dishState = { isLoading: false, dishes: [], defaultOrders: [], orderLoading: true }, action) => {
     switch (action.type) {
         case actionTypes.DISHES_LOADING:
             return {
@@ -70,7 +70,7 @@ const dishReducer = (dishState = { isLoading: false, dishes: [], defaultOrders:[
             }
         case actionTypes.DEFAULT_ORDER:
             console.log(action.payload);
-            const  defaultOrders= [] ;
+            const defaultOrders = [];
             for (const orderKey in action.payload) {
                 //console.log(action.payload[orderKey])
                 defaultOrders.push({
@@ -81,13 +81,13 @@ const dishReducer = (dishState = { isLoading: false, dishes: [], defaultOrders:[
             //console.log(defaultOrders)
             return {
                 ...dishState,
-                orderLoading:false,
-                defaultOrders:defaultOrders
+                orderLoading: false,
+                defaultOrders: defaultOrders
             }
         case actionTypes.ORDER_LOADING:
             return {
                 ...dishState,
-                isLoading:true
+                isLoading: true
             }
 
         default:
@@ -134,8 +134,8 @@ const cartReducer = (cartState = { cartItems: [] }, action) => {
             }
         case actionTypes.RESET_CART:
             let resetCartItems = cartState.cartItems
-            resetCartItems=[];
-            
+            resetCartItems = [];
+
             localStorage.setItem("cartItems", JSON.stringify(resetCartItems))
             return {
                 ...cartState,
@@ -275,6 +275,47 @@ const burgerbuildReducer = (buildState = initialState, action) => {
 }
 
 
+//reducer for admin add item functionality
+
+const itemInitialState = {
+    name: '',
+    image: '',
+    varients: [
+        "small",
+        "medium",
+        "large"
+    ],
+    price: [
+        {
+            "small": 200,
+            "medium": 300,
+            "large": 400
+        }
+    ],
+    label: '',
+    description: ''
+}
+
+const itemReducer = (itemState = itemInitialState, action) => {
+    //console.log(action);
+    switch (action.type) {
+        case actionTypes.ADD_DISH:
+            let itemName= action.payload.name;
+            console.log(itemName)
+            return {
+               ...itemState,
+               name: action.payload.name,
+               label: action.payload.label,
+               description: action.payload.description,
+
+            }
+        default:
+            return itemState
+    }
+}
+
+
+
 
 // main reducer 
 export const Reducer = combineReducers({
@@ -283,6 +324,7 @@ export const Reducer = combineReducers({
     cartState: cartReducer,
     customBurger: burgerbuildReducer,
     authState: authReducer,
+    itemState:itemReducer,
     ...createForms({
         formValue: initialContactForm
     })

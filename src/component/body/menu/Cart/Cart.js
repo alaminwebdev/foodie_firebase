@@ -103,14 +103,6 @@ const Cart = (props) => {
                     <AlertTitle>Empty</AlertTitle>
                     Sorry! Your have no Cart. — <strong>Go to Menu </strong>
                 </Alert>
-                {/* <Grid container spacing={2}>
-                    <Grid item lg={12} md={12} sm={12} sx={{ m: 4 }} >
-                        <Alert severity="warning" variant="filled">
-                            <AlertTitle>Empty</AlertTitle>
-                            Sorry! Your have no Cart. — <strong>Go to Menu </strong>
-                        </Alert>
-                    </Grid>
-                </Grid> */}
             </Container>
         )
     }

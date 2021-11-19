@@ -16,7 +16,7 @@ import dateFormat from 'dateformat';
 
 
 const Order = props => {
-    //console.log(props)
+    console.log(props)
     let cartDetailsRow = null;
     if (!props.loading) {
         cartDetailsRow = props.order.cartItems.map((item) => {
@@ -32,7 +32,8 @@ const Order = props => {
 
     return (
         <Grid item lg={3} md={4} sm={6} xs={12}>
-            <Card sx={{ mt: 3,  }}>
+            
+            <Card sx={{ mt: 3, }}>
                 <CardContent>
                     <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                         {props.loading ? (<Skeleton animation="wave" />) : (
@@ -49,7 +50,12 @@ const Order = props => {
                         )}
                     </Typography>
                     <Typography sx={{ mb: 1.5 }} variant="caption" color="text.secondary">
-                        Order Placed: {dateFormat(props.order.orderTime, "dd mmm , h:MM tt")}
+                        {props.loading ? (<Skeleton animation="wave" />) : (
+                            <>
+                                Order Placed: {dateFormat(props.order.orderTime, "dd mmm , h:MM tt")}
+                            </>
+                        )}
+
                     </Typography>
 
                     <TableContainer key={Math.random()} >
