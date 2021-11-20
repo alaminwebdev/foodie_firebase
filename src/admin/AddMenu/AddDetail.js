@@ -1,97 +1,92 @@
-import React, { useState } from 'react';
-import { useForm, Controller } from "react-hook-form";
-
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
-import Alert from '@mui/material/Alert';
-import TextField from '@mui/material/TextField';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormLabel from '@mui/material/FormLabel';
+import Checkbox from '@mui/material/Checkbox';
 import SendIcon from '@mui/icons-material/Send';
 import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
+
 import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import FormHelperText from '@mui/material/FormHelperText';
 
 
 
 
 const AddDetail = props => {
-    //console.log(props);
+    const [variants, setVarients] = useState([]);
 
-    const { register, handleSubmit, control, reset, formState: { errors, isSubmitSuccessful } } = useForm();
+    const [state, setState] = useState({
+        small: false,
+        medium: false,
+        large: false,
+    });
+    const { small, medium, large } = state;
 
-    const onSubmit = data => {
-        console.log(data);
-        props.next();
+
+    const getValue = e => {
+        // console.log(e.target.value)
+        //set the varient checked true or false
+        setState({
+            ...state,
+            [e.target.name]: e.target.checked,
+        });
+
+        //fetch the varient name which are matched from varient name array 
+        let selectdVarient = variants.filter(item => item === e.target.name);
+        //console.log(selectdVarient[0]);
+
+        let varient = variants;
+        if (e.target.checked === true) {
+            if (e.target.name === selectdVarient[0]) {
+                console.log('item exist')
+            } else {
+                varient.push(e.target.value);
+                setVarients(varient);
+            }
+
+        } else {
+            if (e.target.name === selectdVarient[0]) {
+                let newVarient = variants.filter(item => item !== selectdVarient[0])
+                setVarients(newVarient);
+            } else {
+                console.log('nothing')
+            }
+        }
+
     }
 
-    const [response, setResponse] = useState(false);
-    
+
     const style = {
         mt: 3
     }
 
+    const handleSubmit = e => {
+        if (variants.length > 0 ) {
+            console.log(variants)
+            props.next();
+        }
+        
+        e.preventDefault();
+    }
+
+
+    // Similar to componentDidMount and componentDidUpdate:
+    useEffect(() => {
+        console.log(state)
+    });
+
     return (
         <Container maxWidth="md">
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <TextField
-                    fullWidth
-                    label="Item name"
-                    variant="outlined"
-                    {...register("name", { required: "Item name is required." })}
-                    error={Boolean(errors.name)}
-                    helperText={errors.name?.message}
-                    sx={{ ...style }}
-
-                />
-
-
-                <FormControl
-                    error={Boolean(errors.label)}
-                    fullWidth
-                    sx={{ ...style }}
-                >
-                    <InputLabel id="demo-simple-select-label">Choose Label</InputLabel>
-                    <Controller
-
-                        render={({ field }) => (
-                            <Select
-                                {...field}
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                label="Choose Label"
-                            >
-                                <MenuItem value='1'>Hot</MenuItem>
-                                <MenuItem value='2'>New Arrival</MenuItem>
-                                <MenuItem value='3'>Top Rated</MenuItem>
-                                
-                            </Select>
-                        )}
-
-                        name="label"
-                        control={control}
-                        defaultValue=""
-                        rules={{
-                            required: "Labal is required !"
-                        }}
-                    />
-                    <FormHelperText style={{ color: '#d32f2f' }}>{errors.label?.message}</FormHelperText>
+            <form onSubmit={handleSubmit}>
+                <FormControl>
+                    <FormLabel component="legend">Varients: </FormLabel>
+                    <FormGroup>
+                        <FormControlLabel control={<Checkbox checked={small} name="small" value="small" onChange={(e) => getValue(e)} />} label="Small" />
+                        <FormControlLabel control={<Checkbox checked={medium} name="medium" value="medium" onChange={(e) => getValue(e)} />} label="Medium" />
+                        <FormControlLabel control={<Checkbox checked={large} name="large" value="large" onChange={(e) => getValue(e)} />} label="Large" />
+                    </FormGroup>
                 </FormControl>
-
-
-                <TextField
-                    fullWidth
-                    label="Description"
-                    variant="outlined"
-                    {...register("description", { required: "Description is required" })}
-                    error={Boolean(errors.description)}
-                    helperText={errors.description?.message}
-                    sx={{ ...style }}
-                />
-
-
 
                 <Box sx={{ mb: 2 }}>
                     <div>
