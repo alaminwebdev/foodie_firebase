@@ -19,3 +19,30 @@ export const addIntro = (name, label, description) => {
         dispatch(itemConcat(newItem))
     }
 }
+
+const varientConcat = varients => {
+    return {
+        type: actionTypes.ADD_VARIENT,
+        payload: varients
+    }
+}
+
+export const addVarient = (varients) => {
+    //newComment.ref = 'new text';
+    return dispatch => {
+        dispatch(varientConcat(varients))
+    }
+}
+const priceConcat = price => {
+    return {
+        type: actionTypes.ADD_PRICE,
+        payload: price
+    }
+}
+
+export const addPrice = (price) => {
+    //newComment.ref = 'new text';
+    return dispatch => {
+        dispatch(priceConcat(price))
+    }
+}

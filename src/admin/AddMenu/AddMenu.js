@@ -7,14 +7,16 @@ import StepContent from '@mui/material/StepContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import AddIntro from './AddIntro';
-import AddDetail from './AddDetail';
+import AddVarient from './AddVarient';
+import AddPrice from './AddPrice';
+
 
 
 const AddMenu = () => {
     const [activeStep, setActiveStep] = React.useState(0);
 
     const handleNext = () => {
-        if (activeStep < 2 ) {
+        if (activeStep < 3 ) {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
         }
         //setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -34,21 +36,31 @@ const AddMenu = () => {
         <Box>
             <Stepper activeStep={activeStep} orientation="vertical">
                 <Step >
-                    <StepLabel>First</StepLabel>
+                    <StepLabel>Item Name</StepLabel>
                     <StepContent>
                         <AddIntro  back={handleBack} next={handleNext}  step={activeStep}/>
                     </StepContent>
                 </Step>
                 <Step >
-                    <StepLabel>Second</StepLabel>
+                    <StepLabel>Item Varients</StepLabel>
                     <StepContent>
-                        <AddDetail  back={handleBack} next={handleNext}  step={activeStep}/>
+                        <AddVarient  back={handleBack} next={handleNext}  step={activeStep}/>
                     </StepContent>
                 </Step>
                 <Step >
-                    <StepLabel>Third</StepLabel>
+                    <StepLabel>Item Price</StepLabel>
+                    <StepContent>
+                        <AddPrice  back={handleBack} next={handleNext}  step={activeStep}/>
+                    </StepContent>
+                </Step>
+                <Step >
+                    <StepLabel>Item Image</StepLabel>
+                    <StepContent>
+                        <Typography variant="h4" color="initial">Image</Typography>
+                    </StepContent>
                 </Step>
             </Stepper>
+
             <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
@@ -61,7 +73,7 @@ const AddMenu = () => {
                 </Button>
                 <Box sx={{ flex: '1 1 auto' }} />
                 <Button onClick={handleNext} variant="outlined">
-                    {activeStep === 2 ? 'Finish' : 'Next'}
+                    {activeStep === 3 ? 'Finish' : 'Next'}
                 </Button>
             </Box>
         </Box>

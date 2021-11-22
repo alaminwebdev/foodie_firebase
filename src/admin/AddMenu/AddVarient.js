@@ -10,11 +10,20 @@ import Container from '@mui/material/Container'
 
 import FormControl from '@mui/material/FormControl';
 
+import { addVarient } from '../../redux/adminActionCreators';
+import { connect } from 'react-redux';
 
 
 
-const AddDetail = props => {
-    const [variants, setVarients] = useState([]);
+const mapDispatchToProps = dispatch => {
+    return {
+        addVarient: (varients) => dispatch(addVarient(varients))
+    }
+}
+
+
+const AddVarient = props => {
+    const [varients, setVarients] = useState([]);
 
     const [state, setState] = useState({
         small: false,
@@ -33,10 +42,10 @@ const AddDetail = props => {
         });
 
         //fetch the varient name which are matched from varient name array 
-        let selectdVarient = variants.filter(item => item === e.target.name);
+        let selectdVarient = varients.filter(item => item === e.target.name);
         //console.log(selectdVarient[0]);
 
-        let varient = variants;
+        let varient = varients;
         if (e.target.checked === true) {
             if (e.target.name === selectdVarient[0]) {
                 console.log('item exist')
@@ -47,7 +56,7 @@ const AddDetail = props => {
 
         } else {
             if (e.target.name === selectdVarient[0]) {
-                let newVarient = variants.filter(item => item !== selectdVarient[0])
+                let newVarient = varients.filter(item => item !== selectdVarient[0])
                 setVarients(newVarient);
             } else {
                 console.log('nothing')
@@ -62,11 +71,11 @@ const AddDetail = props => {
     }
 
     const handleSubmit = e => {
-        if (variants.length > 0 ) {
-            console.log(variants)
+        if (varients.length > 0 ) {
+            //console.log(variants)
+            props.addVarient(varients);
             props.next();
         }
-        
         e.preventDefault();
     }
 
@@ -115,4 +124,4 @@ const AddDetail = props => {
     )
 }
 
-export default AddDetail
+export default connect(null, mapDispatchToProps) (AddVarient)

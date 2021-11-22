@@ -38,3 +38,5 @@ export const AUTH_LOGOUT ="AUTH_LOGOUT";
 
 //admin section 
 export const ADD_DISH ="ADD_DISH";
+export const ADD_VARIENT ="ADD_VARIENT";
+export const ADD_PRICE ="ADD_PRICE";

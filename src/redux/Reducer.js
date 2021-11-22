@@ -309,6 +309,27 @@ const itemReducer = (itemState = itemInitialState, action) => {
                description: action.payload.description,
 
             }
+        case actionTypes.ADD_VARIENT:
+            //sorting in reverse order 
+            let updateVarients = action.payload;
+            // First sort the array
+            updateVarients.sort(); 
+            // Then reverse it:
+            updateVarients.reverse();
+            return {
+               ...itemState,
+               
+               varients: action.payload
+
+            }
+        case actionTypes.ADD_PRICE:
+
+            let updatePrice = action.payload;
+            return {
+               ...itemState,
+               price: [updatePrice]
+
+            }
         default:
             return itemState
     }
