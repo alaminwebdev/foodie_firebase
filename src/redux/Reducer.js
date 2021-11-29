@@ -330,6 +330,12 @@ const itemReducer = (itemState = itemInitialState, action) => {
                price: [updatePrice]
 
             }
+        case actionTypes.ADD_IMAGE:
+            let url = action.payload;
+            return {
+               ...itemState,
+               image: url
+            }
         default:
             return itemState
     }

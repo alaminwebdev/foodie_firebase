@@ -10,7 +10,7 @@ import Container from '@mui/material/Container'
 
 import FormControl from '@mui/material/FormControl';
 
-import { addVarient } from '../../redux/adminActionCreators';
+import { addVarient } from '../../../redux/adminActionCreators';
 import { connect } from 'react-redux';
 
 

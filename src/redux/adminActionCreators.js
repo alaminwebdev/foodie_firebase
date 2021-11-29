@@ -46,3 +46,15 @@ export const addPrice = (price) => {
         dispatch(priceConcat(price))
     }
 }
+const imageConcat = imageUrl => {
+    return {
+        type: actionTypes.ADD_IMAGE,
+        payload: imageUrl
+    }
+}
+
+export const addImage = imageUrl => {
+    return dispatch => {
+        dispatch(imageConcat(imageUrl))
+    }
+}

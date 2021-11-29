@@ -6,9 +6,10 @@ import StepLabel from '@mui/material/StepLabel';
 import StepContent from '@mui/material/StepContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import AddIntro from './AddIntro';
-import AddVarient from './AddVarient';
-import AddPrice from './AddPrice';
+import AddIntro from './/AddItem/AddIntro';
+import AddVarient from './AddItem/AddVarient';
+import AddPrice from './AddItem/AddPrice';
+import AddImage from './AddItem/AddImage';
 
 
 
@@ -24,11 +25,6 @@ const AddMenu = () => {
 
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
-
-
-    const handleReset = () => {
-        setActiveStep(0);
     };
 
 
@@ -56,7 +52,7 @@ const AddMenu = () => {
                 <Step >
                     <StepLabel>Item Image</StepLabel>
                     <StepContent>
-                        <Typography variant="h4" color="initial">Image</Typography>
+                        <AddImage back={handleBack} next={handleNext}  step={activeStep}/>
                     </StepContent>
                 </Step>
             </Stepper>
