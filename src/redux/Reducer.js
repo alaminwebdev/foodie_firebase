@@ -287,8 +287,8 @@ const itemInitialState = {
     ],
     price: [
         {
-            "small": 200,
-            "medium": 300,
+            "small": 100,
+            "medium": 200,
             "large": 400
         }
     ],

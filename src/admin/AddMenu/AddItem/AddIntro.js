@@ -16,7 +16,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 
 const mapStateToProps = state => {
     return {
-        authIntro :  state.itemState
+        itemValue :  state.itemState
     }
 }
 
@@ -55,7 +55,7 @@ const AddIntro = props => {
                     error={Boolean(errors.name)}
                     helperText={errors.name?.message}
                     sx={{ ...style }}
-                    defaultValue={props.authIntro.name}
+                    defaultValue={props.itemValue.name}
 
                 />
 
@@ -84,7 +84,7 @@ const AddIntro = props => {
 
                         name="label"
                         control={control}
-                        defaultValue={props.authIntro.label}
+                        defaultValue={props.itemValue.label}
                         rules={{
                             required: "Labal is required !"
                         }}
@@ -101,9 +101,8 @@ const AddIntro = props => {
                     error={Boolean(errors.description)}
                     helperText={errors.description?.message}
                     sx={{ ...style }}
-                    defaultValue={props.authIntro.description}
+                    defaultValue={props.itemValue.description}
                 />
-
 
 
                 <Box sx={{ mb: 2 }}>

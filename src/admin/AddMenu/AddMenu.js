@@ -10,6 +10,7 @@ import AddIntro from './/AddItem/AddIntro';
 import AddVarient from './AddItem/AddVarient';
 import AddPrice from './AddItem/AddPrice';
 import AddImage from './AddItem/AddImage';
+import ReviewItem from './AddItem/ReviewItem';
 
 
 
@@ -17,7 +18,7 @@ const AddMenu = () => {
     const [activeStep, setActiveStep] = React.useState(0);
 
     const handleNext = () => {
-        if (activeStep < 3 ) {
+        if (activeStep < 4 ) {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
         }
         //setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -55,23 +56,15 @@ const AddMenu = () => {
                         <AddImage back={handleBack} next={handleNext}  step={activeStep}/>
                     </StepContent>
                 </Step>
+                <Step >
+                    <StepLabel>Review</StepLabel>
+                    <StepContent>
+                        <ReviewItem back={handleBack} next={handleNext}  step={activeStep}/>
+                    </StepContent>
+                </Step>
             </Stepper>
 
             <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
-            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                <Button
-                    disabled={activeStep === 0}
-                    onClick={handleBack}
-                    sx={{ mr: 1 }}
-                    variant="outlined"
-                >
-                    Back
-                </Button>
-                <Box sx={{ flex: '1 1 auto' }} />
-                <Button onClick={handleNext} variant="outlined">
-                    {activeStep === 3 ? 'Finish' : 'Next'}
-                </Button>
-            </Box>
         </Box>
 
     )
