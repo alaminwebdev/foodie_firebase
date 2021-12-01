@@ -55,7 +55,6 @@ const Order = props => {
                                 Order Placed: {dateFormat(props.order.orderTime, "dd mmm , h:MM tt")}
                             </>
                         )}
-
                     </Typography>
 
                     <TableContainer key={Math.random()} >
