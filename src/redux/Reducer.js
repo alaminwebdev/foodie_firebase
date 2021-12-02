@@ -63,10 +63,21 @@ const dishReducer = (dishState = { isLoading: false, dishes: [], defaultOrders: 
                 dishes: []
             }
         case actionTypes.LOAD_DISHES:
+            //console.log(action.payload)
+            const updateDish = [];
+            for (const dishKey in action.payload) {
+                //console.log(action.payload[dishKey])
+                updateDish.push({
+                    ...action.payload[dishKey],
+                    id:dishKey
+                })
+                
+            }
+            //console.log(dish)
             return {
                 ...dishState,
                 isLoading: false,
-                dishes: action.payload
+                dishes: updateDish
             }
         case actionTypes.DEFAULT_ORDER:
             console.log(action.payload);
@@ -300,41 +311,61 @@ const itemReducer = (itemState = itemInitialState, action) => {
     //console.log(action);
     switch (action.type) {
         case actionTypes.ADD_DISH:
-            let itemName= action.payload.name;
+            let itemName = action.payload.name;
             console.log(itemName)
             return {
-               ...itemState,
-               name: action.payload.name,
-               label: action.payload.label,
-               description: action.payload.description,
+                ...itemState,
+                name: action.payload.name,
+                label: action.payload.label,
+                description: action.payload.description,
 
             }
         case actionTypes.ADD_VARIENT:
             //sorting in reverse order 
             let updateVarients = action.payload;
             // First sort the array
-            updateVarients.sort(); 
+            updateVarients.sort();
             // Then reverse it:
             updateVarients.reverse();
             return {
-               ...itemState,
-               
-               varients: action.payload
+                ...itemState,
+
+                varients: action.payload
 
             }
         case actionTypes.ADD_PRICE:
 
             let updatePrice = action.payload;
             return {
-               ...itemState,
-               price: [updatePrice]
+                ...itemState,
+                price: [updatePrice]
 
             }
         case actionTypes.ADD_IMAGE:
             let url = action.payload;
             return {
-               ...itemState,
-               image: url
+                ...itemState,
+                image: url
+            }
+        case actionTypes.RESET_MENU:
+            return {
+                ...itemState,
+                name: '',
+                image: '',
+                varients: [
+                    "small",
+                    "medium",
+                    "large"
+                ],
+                price: [
+                    {
+                        "small": 100,
+                        "medium": 200,
+                        "large": 400
+                    }
+                ],
+                label: '',
+                description: ''
             }
         default:
             return itemState
@@ -351,7 +382,7 @@ export const Reducer = combineReducers({
     cartState: cartReducer,
     customBurger: burgerbuildReducer,
     authState: authReducer,
-    itemState:itemReducer,
+    itemState: itemReducer,
     ...createForms({
         formValue: initialContactForm
     })

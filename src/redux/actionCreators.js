@@ -12,6 +12,7 @@ const loadDishes = dishes => {
         type: actionTypes.LOAD_DISHES,
         payload: dishes
     }
+
 }
 
 // Another Use of same return function Using () , to create a another dispatch action
@@ -24,9 +25,17 @@ const dishesLoading = () => ({
 export const fetchDishes = () => {
     return dispatch => {
         dispatch(dishesLoading());
-        axios.get(baseUrl + "Dishes")
+        // axios.get(baseUrl + "Dishes")
+        //     .then(response => response.data)
+        //     .then(dishes => dispatch(loadDishes(dishes)))
+
+        //fetch for menu
+        axios.get('https://foodie-7bd7e-default-rtdb.firebaseio.com/menus.json')
             .then(response => response.data)
             .then(dishes => dispatch(loadDishes(dishes)))
+            .catch(error => {
+                console.log(error.message)
+            })
     }
 }
 

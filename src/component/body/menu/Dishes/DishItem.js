@@ -22,7 +22,7 @@ const DishItem = (props) => {
                 <CardMedia
                     component="img"
                     height="194"
-                    image={baseUrl + dishes.image}
+                    image={dishes.image}
                     alt=""
                 />
 

@@ -21,7 +21,7 @@ const DishDetail = props => {
                 <Box sx={{ borderRadius: '32px', overflow:'hidden'}} >
                     <img
                         width='100%'
-                        src={baseUrl + dishes.image}
+                        src={dishes.image}
                         alt={dishes.name}
                         loading="lazy"
 

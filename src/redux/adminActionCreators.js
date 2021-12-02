@@ -59,5 +59,11 @@ export const addImage = imageUrl => {
     }
 }
 
+export const resetMenu = () => {
+    return {
+        type: actionTypes.RESET_MENU,
+    }
+}
+
 
 

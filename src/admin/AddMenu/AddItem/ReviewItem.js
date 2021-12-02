@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { resetMenu } from '../../../redux/adminActionCreators'
 
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
@@ -16,8 +17,9 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Skeleton from '@mui/material/Skeleton';
 import Chip from '@mui/material/Chip';
+import axios from 'axios';
+
 
 
 const mapStateToProps = state => {
@@ -28,15 +30,33 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        //addIntro: (name, label, description) => dispatch(addIntro(name, label, description))
+        resetMenu: () => dispatch(resetMenu())
     }
 }
 
 
 const ReviewItem = props => {
-    console.log(props);
+    //console.log(props);
+
     const style = {
         mt: 3
+    }
+
+    const handleDish = () => {
+        const menu = { ...props.item }
+        //console.log(menu)
+        axios.post('https://foodie-7bd7e-default-rtdb.firebaseio.com/menus.json', menu)
+            .then(response => {
+                if (response.status === 200) {
+                    props.initialStep("success", "Item added Successfully !");
+                    props.resetMenu();
+                }
+                //console.log(response);
+            })
+            .catch(error => {
+                //console.log(error)
+                props.getError("error", error.message)
+            })
     }
 
     const varients = props.item.varients.map((item) => {
@@ -56,7 +76,7 @@ const ReviewItem = props => {
                     <Card >
                         <CardMedia
                             component="img"
-                            height="194"
+                            height="250"
                             image={props.item.image}
                             alt=""
                         />
@@ -64,9 +84,9 @@ const ReviewItem = props => {
                         <CardContent sx={{ pb: 1 }}>
                             <Typography variant="h6" component="div" >
                                 Item Name: {props.item.name}
-                                <Chip label={props.item.label} sx={{ml:1, fontWeight:400, lineHeight: 1}} size="small" variant="outlined" />
+                                <Chip label={props.item.label} sx={{ ml: 1, fontWeight: 400, lineHeight: 1 }} size="small" variant="outlined" />
                             </Typography>
-                            
+
                             <Typography sx={{ mb: 1.5 }} variant="caption" color="text.secondary">
                                 {props.item.description}
                             </Typography>
@@ -95,6 +115,7 @@ const ReviewItem = props => {
                     color="primary"
                     sx={{ ...style }}
                     endIcon={<SendIcon />}
+                    onClick={handleDish}
                 >
                     {props.step === 4 ? 'Finish' : 'Next'}
                 </Button>

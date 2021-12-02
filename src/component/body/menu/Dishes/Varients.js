@@ -32,11 +32,11 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 const Varients = (props) => {
     const [quantity, setQuantity] = useState(1)
-    const [varient, setVarient] = useState('small')
+    const [varient, setVarient] = useState(props.varients[0])
     const [snackOpen, setsnackOpen] = useState(false);
 
-    //console.log(snackOpen)
-    //console.log(quantity, varient)
+    //console.log(props)
+    console.log(quantity, varient)
 
     const vari = props.varients.map((varient, index) => {
         //console.log(varient)
