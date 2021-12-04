@@ -25,10 +25,6 @@ const dishesLoading = () => ({
 export const fetchDishes = () => {
     return dispatch => {
         dispatch(dishesLoading());
-        // axios.get(baseUrl + "Dishes")
-        //     .then(response => response.data)
-        //     .then(dishes => dispatch(loadDishes(dishes)))
-
         //fetch for menu
         axios.get('https://foodie-7bd7e-default-rtdb.firebaseio.com/menus.json')
             .then(response => response.data)

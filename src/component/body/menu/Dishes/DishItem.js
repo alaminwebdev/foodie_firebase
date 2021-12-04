@@ -36,7 +36,6 @@ const DishItem = (props) => {
                 {/* <CardActions>
                     <ReviewIcon rating={dishes.rating} />
                 </CardActions> */}
-
             </Card>
         </Grid>
     )

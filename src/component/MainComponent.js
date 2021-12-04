@@ -21,6 +21,8 @@ import Logout from './body/Auth/Logout';
 import Contact from './body/contact/Contact';
 
 import Admin from '../admin/Admin';
+import AddMenu from '../admin/AddMenu/AddMenu';
+import ManageMenu from '../admin/ManageMenu/ManageMenu';
 
 
 import { Route, Switch, Redirect } from 'react-router-dom';
@@ -59,6 +61,8 @@ const MainComponent = (props) => {
             <Switch>
                 <Route path="/login" exact component={Auth} />
                 <Route path="/admin" exact component={Admin} />
+                <Route path="/addmenu" exact component={AddMenu} />
+                <Route path="/managemenu" exact component={ManageMenu} />
                 <Redirect to="/login" />
             </Switch>
         )

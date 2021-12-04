@@ -1,6 +1,7 @@
-import React, { useState, useEffect  } from 'react';
+import React, { useState, useEffect } from 'react';
 
-
+import Container from '@mui/material/Container'
+import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -16,6 +17,9 @@ import ReviewItem from './AddItem/ReviewItem';
 import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
 
+
+
+//import fireDB from '../../firebase/config'
 
 
 
@@ -67,47 +71,52 @@ const AddMenu = props => {
     }
 
 
+
     return (
-        <Box>
-            <Collapse in={response}>
-                <Alert severity={responseType} sx={{ mt: 3 }}>{responseText}</Alert>
-            </Collapse>
+        <Container maxWidth="lg">
+            
+            <Box>
+                <Collapse in={response}>
+                    <Alert severity={responseType} sx={{ mt: 3 }}>{responseText}</Alert>
+                </Collapse>
 
-            <Stepper activeStep={activeStep} orientation="vertical">
-                <Step >
-                    <StepLabel>Item Name</StepLabel>
-                    <StepContent>
-                        <AddIntro back={handleBack} next={handleNext} step={activeStep} />
-                    </StepContent>
-                </Step>
-                <Step >
-                    <StepLabel>Item Varients</StepLabel>
-                    <StepContent>
-                        <AddVarient back={handleBack} next={handleNext} step={activeStep} />
-                    </StepContent>
-                </Step>
-                <Step >
-                    <StepLabel>Item Price</StepLabel>
-                    <StepContent>
-                        <AddPrice back={handleBack} next={handleNext} step={activeStep} />
-                    </StepContent>
-                </Step>
-                <Step >
-                    <StepLabel>Item Image</StepLabel>
-                    <StepContent>
-                        <AddImage back={handleBack} next={handleNext} step={activeStep} />
-                    </StepContent>
-                </Step>
-                <Step >
-                    <StepLabel>Review</StepLabel>
-                    <StepContent>
-                        <ReviewItem back={handleBack} next={handleNext} step={activeStep} initialStep={stepAfterSubmut} getError={stepAfterGettingError} />
-                    </StepContent>
-                </Step>
-            </Stepper>
+                <Stepper activeStep={activeStep} orientation="vertical">
+                    <Step >
+                        <StepLabel>Item Name</StepLabel>
+                        <StepContent>
+                            <AddIntro back={handleBack} next={handleNext} step={activeStep} />
+                        </StepContent>
+                    </Step>
+                    <Step >
+                        <StepLabel>Item Varients</StepLabel>
+                        <StepContent>
+                            <AddVarient back={handleBack} next={handleNext} step={activeStep} />
+                        </StepContent>
+                    </Step>
+                    <Step >
+                        <StepLabel>Item Price</StepLabel>
+                        <StepContent>
+                            <AddPrice back={handleBack} next={handleNext} step={activeStep} />
+                        </StepContent>
+                    </Step>
+                    <Step >
+                        <StepLabel>Item Image</StepLabel>
+                        <StepContent>
+                            <AddImage back={handleBack} next={handleNext} step={activeStep} />
+                        </StepContent>
+                    </Step>
+                    <Step >
+                        <StepLabel>Review</StepLabel>
+                        <StepContent>
+                            <ReviewItem back={handleBack} next={handleNext} step={activeStep} initialStep={stepAfterSubmut} getError={stepAfterGettingError} />
+                        </StepContent>
+                    </Step>
+                </Stepper>
 
-            <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
-        </Box>
+                <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
+            </Box>
+        </Container>
+
 
     )
 }
