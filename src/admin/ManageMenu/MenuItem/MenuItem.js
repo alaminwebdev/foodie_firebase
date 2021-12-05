@@ -1,11 +1,19 @@
 import React, { useState } from 'react';
 
+import DialogContentForm from './DialogContentForm';
 
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
+
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 import Typography from '@mui/material/Typography';
+
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -15,20 +23,26 @@ import TableRow from '@mui/material/TableRow';
 import Chip from '@mui/material/Chip';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
-import { Button } from '@mui/material';
-import axios from 'axios';
+
+
 import { Grid } from '@mui/material';
 
 
-const ReviewItem = props => {
-    console.log(props);
 
-    const style = {
-        mt: 3
-    }
-    const handleDelete = () => {
-        console.info('You clicked the delete icon.');
-      };
+
+const MenuItem = props => {
+    //console.log(props);
+
+    const [open, setOpen] = useState(false);
+
+    const handleClickOpen = id => {
+        setOpen(true);
+        //console.log(id);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     const varients = props.item.varients.map((item) => {
         return (
@@ -49,10 +63,9 @@ const ReviewItem = props => {
                     image={props.item.image}
                     alt=""
                 />
-
                 <CardContent sx={{ pb: 1 }}>
                     <Typography variant="h6" component="div" >
-                        Item Name: {props.item.name}
+                        Name: {props.item.name}
                         <Chip label={props.item.label} sx={{ ml: 1, fontWeight: 400, lineHeight: 1 }} size="small" variant="outlined" />
                     </Typography>
 
@@ -74,24 +87,36 @@ const ReviewItem = props => {
                         </Table>
                     </TableContainer>
                 </CardContent>
-                <CardActions sx={{justifyContent:'space-evenly',  pb: 2 }}>
+                <CardActions sx={{ justifyContent: 'space-evenly', pb: 2 }}>
                     <Chip
                         label="Edit Item"
-                        onClick={ ()=> props.remove(props.item.id)}
+                        onClick={() => handleClickOpen(props.item.id)}
                         icon={<EditRoundedIcon />}
                         variant="outlined"
                     />
                     <Chip
                         label="Delete Item"
-                        onClick={ ()=> props.remove(props.item.id)}
+                        onClick={() => props.remove(props.item.id)}
                         icon={<DeleteIcon />}
                         variant="outlined"
                     />
                 </CardActions>
             </Card>
+
+            <Dialog open={open} fullWidth>
+                <DialogTitle>{props.item.name}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText sx={{ mb: 2 }}>
+                        {props.item.description}
+                    </DialogContentText>
+
+                    <DialogContentForm item={props.item} close={handleClose} update={props.update} />
+                </DialogContent>
+            </Dialog>
+            {/* <MenuDialog open={open} handleClose={handleClose} item={props.item} update={props.update} /> */}
         </Grid>
 
     )
 }
 
-export default ReviewItem
+export default MenuItem

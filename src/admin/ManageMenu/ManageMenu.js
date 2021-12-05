@@ -4,7 +4,6 @@ import { fetchDishes } from '../../redux/actionCreators';
 import { getDatabase, ref, set, push, child, update, remove } from "firebase/database";
 
 import { Grid } from '@mui/material';
-import Box from '@mui/material/Box';
 
 import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
@@ -44,66 +43,67 @@ const ManageMenu = props => {
 
     const [fetch, setFetch] = useState(false)
 
+    // const addData = () => {
+    //     console.log('clicked')
+    //     // A post entry.
+    //     const db = getDatabase();
+    //     const postData = {
+    //         author: 'hasnaian hasib ',
+    //         uid: 'jhjhjhj',
+    //         body: 'its a body',
+    //         title: 'hgfgfhfghgh'
+    //     };
+    //     //generate a new key for one object data
+    //     const postKey = push(child(ref(db), 'contacts')).key;
+    //     //add postkey as id into object
+    //     //postData.id = postKey
+    //     set(ref(db, 'contacts/' + postKey), postData)
+    //         .then(() => {
+    //             // Data saved successfully!
+    //             //console.log('data saved succesfully')
+    //             setResponse(true);
+    //             setResponseType('success')
+    //             setResponseText('Data added successfully')
+    //             setFetch(!fetch);
 
-    const addData = () => {
-        console.log('clicked')
-        // A post entry.
+    //             setTimeout(() => {
+    //                 setResponse(false)
+    //             }, 2000)
+    //         })
+    //         .catch((error) => {
+    //             // The write failed...
+    //             console.log(error)
+    //             setResponse(true);
+    //             setResponseType('error')
+    //             setResponseText('Sorry ! Something Wrong.')
+    //             setFetch(!fetch);
+
+    //         });
+
+    // }
+    const updateData = (id, oldData, updateData) => {
+        //console.log(id, oldData, updateData)
         const db = getDatabase();
-        const postData = {
-            author: 'hasnaian hasib ',
-            uid: 'jhjhjhj',
-            body: 'its a body',
-            title: 'hgfgfhfghgh'
-        };
-        //generate a new key for one object data
-        const postKey = push(child(ref(db), 'contacts')).key;
-        //add postkey as id into object
-        //postData.id = postKey
-        set(ref(db, 'contacts/' + postKey), postData)
-            .then(() => {
-                // Data saved successfully!
-                //console.log('data saved succesfully')
-                setResponse(true);
-                setResponseType('success')
-                setResponseText('Data added successfully')
-                setFetch(!fetch);
+        const postData = oldData;
 
-                setTimeout(() => {
-                    setResponse(false)
-                }, 2000)
-            })
-            .catch((error) => {
-                // The write failed...
-                console.log(error)
-                setResponse(true);
-                setResponseType('error')
-                setResponseText('Sorry ! Something Wrong.')
-                setFetch(!fetch);
-
-            });
-
-    }
-    const updateData = id => {
-        //console.log(id)
-        const db = getDatabase();
-        const postData = {
-            author: 'alamin',
-            uid: 'hjjjj',
-            body: 'gfhfghfgh',
-            title: 'title'
-        };
-
-        // 
-
-        update(ref(db, 'contacts/' + id), {
+        update(ref(db, 'menus/' + id), {
             ...postData,
-            body: 'gfhhngfj'
+            name: updateData.name,
+            price: [
+                {
+                    "small": updateData.small,
+                    "medium": updateData.medium,
+                    "large": updateData.large
+                }
+            ],
+            label: updateData.label,
+            description: updateData.description
         })
             .then(() => {
                 // Data saved successfully!
                 setResponse(true);
                 setResponseType('success')
-                console.log(postData.author, 'data updated succesfully')
+                console.log(postData, 'data updated succesfully')
                 setResponseText('Data updated successfully')
                 setFetch(!fetch);
 
@@ -122,17 +122,15 @@ const ManageMenu = props => {
     }
 
     const deleteData = id => {
-        console.log(id)
+        //console.log(id)
         const db = getDatabase();
         remove(ref(db, 'menus/' + id))
             .then(() => {
-                // Data saved successfully!
-                //console.log('data saved succesfully')
                 setResponse(true);
                 setResponseType('success')
                 setResponseText('Data Deleted successfully')
                 setFetch(!fetch);
-                
+
                 setTimeout(() => {
                     setResponse(false)
                 }, 2000)
@@ -153,7 +151,7 @@ const ManageMenu = props => {
     //Runs on the first render
     //And any time any dependency value changes
     useEffect(() => {
-        console.log(fetch)
+        //console.log(fetch)
         //console.log(props)
         props.fetchDishes()
     }, [fetch]);
@@ -173,7 +171,6 @@ const ManageMenu = props => {
             return (
                 <MenuItem
                     key={item.id}
-                    id={item.id}
                     item={item}
                     remove={deleteData}
                     update={updateData}
@@ -182,20 +179,16 @@ const ManageMenu = props => {
         })
         return (
             <Container maxWidth="xl">
-
-                <Button variant="contained" color="primary" onClick={() => addData()}>
+                {/* <Button variant="contained" color="primary" onClick={() => addData()}>
                     Post Data
-                </Button>
-
-                <Button variant="contained" color="primary" onClick={() => updateData('-Mq3svEUOy5lNC7sHA2m')}>
-                    Update Data
-                </Button>
+                </Button> */}
                 <Collapse in={response}>
                     <Alert severity={responseType} sx={{ mt: 3 }}>{responseText}</Alert>
                 </Collapse>
                 <Grid container spacing={2} sx={{ my: 5 }}>
                     {menu}
                 </Grid>
+
             </Container>
         )
     }

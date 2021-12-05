@@ -19,7 +19,7 @@ import Typography from '@mui/material/Typography';
 
 const mapStateToProps = (state) => {
     return {
-        itemImage: state.itemState.image,
+        itemImage: state.adminState.image,
     };
 };
 

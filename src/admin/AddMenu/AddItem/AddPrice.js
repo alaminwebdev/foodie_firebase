@@ -16,7 +16,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 
 const mapStateToProps = state => {
     return {
-        itemPrice :  state.itemState.price[0]
+        itemPrice :  state.adminState.price[0]
     }
 }
 

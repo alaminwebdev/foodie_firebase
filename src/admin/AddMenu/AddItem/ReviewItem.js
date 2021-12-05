@@ -24,7 +24,7 @@ import axios from 'axios';
 
 const mapStateToProps = state => {
     return {
-        item: state.itemState
+        item: state.adminState
     }
 }
 

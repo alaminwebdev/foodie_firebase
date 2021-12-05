@@ -307,14 +307,14 @@ const itemInitialState = {
     description: ''
 }
 
-const itemReducer = (itemState = itemInitialState, action) => {
+const adminReducer = ( adminState = itemInitialState,  action) => {
     //console.log(action);
     switch (action.type) {
         case actionTypes.ADD_DISH:
             let itemName = action.payload.name;
-            console.log(itemName)
+            //console.log(itemName)
             return {
-                ...itemState,
+                ...adminState,
                 name: action.payload.name,
                 label: action.payload.label,
                 description: action.payload.description,
@@ -328,8 +328,7 @@ const itemReducer = (itemState = itemInitialState, action) => {
             // Then reverse it:
             updateVarients.reverse();
             return {
-                ...itemState,
-
+                ...adminState,
                 varients: action.payload
 
             }
@@ -337,19 +336,19 @@ const itemReducer = (itemState = itemInitialState, action) => {
 
             let updatePrice = action.payload;
             return {
-                ...itemState,
+                ...adminState,
                 price: [updatePrice]
 
             }
         case actionTypes.ADD_IMAGE:
             let url = action.payload;
             return {
-                ...itemState,
+                ...adminState,
                 image: url
             }
         case actionTypes.RESET_MENU:
             return {
-                ...itemState,
+                ...adminState,
                 name: '',
                 image: '',
                 varients: [
@@ -368,12 +367,12 @@ const itemReducer = (itemState = itemInitialState, action) => {
                 description: ''
             }
         default:
-            return itemState
+            return adminState
     }
 }
 
 
-
+//reudcer for admin manage order functionality
 
 // main reducer 
 export const Reducer = combineReducers({
@@ -382,7 +381,7 @@ export const Reducer = combineReducers({
     cartState: cartReducer,
     customBurger: burgerbuildReducer,
     authState: authReducer,
-    itemState: itemReducer,
+    adminState: adminReducer,
     ...createForms({
         formValue: initialContactForm
     })

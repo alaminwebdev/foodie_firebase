@@ -42,3 +42,4 @@ export const ADD_VARIENT ="ADD_VARIENT";
 export const ADD_PRICE ="ADD_PRICE";
 export const ADD_IMAGE ="ADD_IMAGE";
 export const RESET_MENU ="RESET_MENU";
+export const UPDATE_DISH ="UPDATE_DISH";
