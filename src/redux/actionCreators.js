@@ -1,6 +1,8 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
 
+import { getDatabase, ref, set, push, child, onValue, get } from "firebase/database";
+
 
 
 //base url
@@ -50,13 +52,33 @@ const commentLoading = () => {
     }
 }
 
-export const fetchComments = () => {
-    return dispatch => {
-        dispatch(commentLoading());
-        axios.get(baseUrl + "Comments")
-            .then(response => response.data)
-            .then(comments => dispatch(loadComment(comments)))
-    }
+export const fetchComments = () => dispatch => {
+    dispatch(commentLoading());
+    const db = getDatabase();
+
+    const commentsPath = ref(db, 'comments/');
+
+    return onValue(commentsPath, (snapshot) => {
+        const data = snapshot.val();
+        //console.log(data)
+        dispatch(loadComment(data))
+    }, {
+        onlyOnce: true
+    });
+
+    //another metheod is get()
+    // get(commentsPath).then((snapshot) => {
+    //     if (snapshot.exists()) {
+    //         const data = snapshot.val();
+    //         //console.log(snapshot.val());
+    //         dispatch(loadComment(data))
+
+    //     } else {
+    //         console.log("No data available");
+    //     }
+    // }).catch((error) => {
+    //     console.error(error);
+    // })
 }
 
 
@@ -67,7 +89,9 @@ const commentConcat = comment => {
     }
 }
 
-export const addComment = (dishId, author, rating, comment) => {
+export const addComment = (dishId, author, rating, comment) => dispatch => {
+    const db = getDatabase();
+
     const newComment = {
         dishId: dishId,
         author: author,
@@ -75,12 +99,20 @@ export const addComment = (dishId, author, rating, comment) => {
         comment: comment
     }
     newComment.date = new Date().toISOString();
-    //newComment.ref = 'new text';
-    return dispatch => {
-        axios.post(baseUrl + "Comments", newComment)
-            .then(response => response.data)
-            .then(comment => dispatch(commentConcat(comment)))
-    }
+    //generate a new key for one object data
+    const commentKey = push(child(ref(db), 'comments')).key;
+    //comment path
+    const newCommentPath = ref(db, 'comments/' + commentKey);
+    set(newCommentPath, newComment)
+        .then(() => {
+            // Data saved successfully!
+            console.log('data saved succesfully')
+            dispatch(commentConcat(newComment));
+        })
+        .catch((error) => {
+            // The write failed...
+            console.log(error)
+        });
 }
 
 //action for default menu order
@@ -123,7 +155,7 @@ export const resetCart = () => {
 
 
 // dispatch from authcheck file from autoActionCreators folder 
-export const fetchCart = (cartItems) => {
+export const fetchCart = cartItems => {
     return {
         type: actionTypes.FETCH_CART,
         payload: cartItems

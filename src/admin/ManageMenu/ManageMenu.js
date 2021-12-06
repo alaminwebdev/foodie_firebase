@@ -5,7 +5,6 @@ import { getDatabase, ref, set, push, child, update, remove } from "firebase/dat
 
 import { Grid } from '@mui/material';
 
-import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
 
 
@@ -43,44 +42,6 @@ const ManageMenu = props => {
 
     const [fetch, setFetch] = useState(false)
 
-    // const addData = () => {
-    //     console.log('clicked')
-    //     // A post entry.
-    //     const db = getDatabase();
-    //     const postData = {
-    //         author: 'hasnaian hasib ',
-    //         uid: 'jhjhjhj',
-    //         body: 'its a body',
-    //         title: 'hgfgfhfghgh'
-    //     };
-    //     //generate a new key for one object data
-    //     const postKey = push(child(ref(db), 'contacts')).key;
-    //     //add postkey as id into object
-    //     //postData.id = postKey
-    //     set(ref(db, 'contacts/' + postKey), postData)
-    //         .then(() => {
-    //             // Data saved successfully!
-    //             //console.log('data saved succesfully')
-    //             setResponse(true);
-    //             setResponseType('success')
-    //             setResponseText('Data added successfully')
-    //             setFetch(!fetch);
-
-    //             setTimeout(() => {
-    //                 setResponse(false)
-    //             }, 2000)
-    //         })
-    //         .catch((error) => {
-    //             // The write failed...
-    //             console.log(error)
-    //             setResponse(true);
-    //             setResponseType('error')
-    //             setResponseText('Sorry ! Something Wrong.')
-    //             setFetch(!fetch);
-
-    //         });
-
-    // }
     const updateData = (id, oldData, updateData) => {
         //console.log(id, oldData, updateData)
         const db = getDatabase();

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { baseUrl } from '../../../../redux/actionCreators';
 import Varients from './Varients';
 import Card from '@mui/material/Card';
@@ -9,11 +9,29 @@ import { Grid } from '@mui/material';
 
 
 const DishItem = (props) => {
+
+    const [imgExist, setImgExist] = useState(true);
     //console.log(props);
     const loading = props.loading
     const dishes = props.dishes
     const price = props.dishes.price[0]
     //let vari = null;
+
+    const checkImage= imgUrl => {
+        var image = new Image();
+        image.onload = function () {
+            if (this.width > 0) {
+                //console.log("image exists");
+                setImgExist(true)
+            }
+        }
+        image.onerror = function () {
+            //console.log("image doesn't exist");
+            setImgExist(false)
+        }
+        image.src = imgUrl;
+    }
+   
 
     //console.log(price)
     return (
@@ -21,9 +39,10 @@ const DishItem = (props) => {
             <Card >
                 <CardMedia
                     component="img"
-                    height="194"
-                    image={dishes.image}
-                    alt=""
+                    height="300"
+                    image={imgExist? dishes.image : "http://placehold.jp/300x300.png"}
+                    alt="burger"
+                    onError={checkImage(dishes.image)}
                 />
 
                 <CardContent sx={{pb:1}}>

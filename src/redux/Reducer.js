@@ -168,11 +168,21 @@ const commentReducer = (commentState = { isLoading: true, comments: [] }, action
                 comments: []
             }
         case actionTypes.LOAD_COMMENT:
+            const updatedComments = []
+            for (const commentKey in action.payload) {
+                //console.log(action.payload[commentKey])
+                updatedComments.push({
+                    ...action.payload[commentKey],
+                    commentId: commentKey
+                })
+            }
             return {
                 ...commentState,
                 isLoading: false,
-                comments: action.payload
+                comments: updatedComments
             }
+
+        //since we use firebase db so we dont want to concat new comment beacuse redux state will auto update , thats why this code converted to comment, but now its doesn't work , so code are converted !
         case actionTypes.ADD_COMMENT:
             //new comment received in payload 
             let comment = action.payload
@@ -182,6 +192,7 @@ const commentReducer = (commentState = { isLoading: true, comments: [] }, action
                 ...commentState,
                 comments: commentState.comments.concat(comment)
             }
+
         default:
             return commentState
     }

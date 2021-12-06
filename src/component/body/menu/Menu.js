@@ -82,11 +82,6 @@ class Menu extends Component {
                         key={item.id}
                         dishes={item}
                         varients={item.varients}
-                        // name={item.name}
-                        // img={item.image}
-                        // rating={item.rating}
-                        // description={item.description}
-                        //loading={this.props.dishLoading}
                         DishSelect={() => this.onDishselect(item)}
                     />
                 );
@@ -101,7 +96,7 @@ class Menu extends Component {
                 })
                 //console.log(comments);
                 dishdetail = <DishDetail
-                    key={comments.id}
+                    key={comments.commentId}
                     eachdish={this.state.selectedDish}
                     comment_arr={comments}
                     commentLoading={this.props.commentLoading}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import DialogContentForm from './DialogContentForm';
 
@@ -26,6 +26,7 @@ import EditRoundedIcon from '@mui/icons-material/EditRounded';
 
 
 import { Grid } from '@mui/material';
+import axios from 'axios';
 
 
 
@@ -34,15 +35,33 @@ const MenuItem = props => {
     //console.log(props);
 
     const [open, setOpen] = useState(false);
+    const [imgExist, setImgExist] = useState(true);
 
     const handleClickOpen = id => {
         setOpen(true);
-        //console.log(id);
     };
+
+    const checkImage= imgUrl => {
+        var image = new Image();
+        image.onload = function () {
+            if (this.width > 0) {
+                //console.log("image exists");
+                setImgExist(true)
+            }
+        }
+        image.onerror = function () {
+            //console.log("image doesn't exist");
+            setImgExist(false)
+        }
+        image.src = imgUrl;
+    }
+   
+
 
     const handleClose = () => {
         setOpen(false);
     };
+
 
     const varients = props.item.varients.map((item) => {
         return (
@@ -59,9 +78,12 @@ const MenuItem = props => {
             <Card >
                 <CardMedia
                     component="img"
+                    width='100%'
                     height="250"
-                    image={props.item.image}
-                    alt=""
+                    image={imgExist? props.item.image : "http://placehold.jp/250x250.png" }
+                    //image={props.item.image || "http://placehold.jp/250x250.png"}
+                    alt="burger"
+                    onError={checkImage(props.item.image)}
                 />
                 <CardContent sx={{ pb: 1 }}>
                     <Typography variant="h6" component="div" >

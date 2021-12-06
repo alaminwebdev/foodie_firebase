@@ -5,7 +5,6 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import MenuReview from './MenuReview';
 import CommentForm from './CommentForm';
-import { baseUrl } from '../../../../redux/actionCreators';
 
 
 const DishDetail = props => {

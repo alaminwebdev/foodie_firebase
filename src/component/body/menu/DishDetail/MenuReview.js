@@ -7,11 +7,11 @@ import { Box, Card, Slider, Avatar, Typography } from '@mui/material';
 
 const MenuReview = props => {
     //console.log(props);
-    const review = props.review.map((eachreview) => {
+    const review = props.review.map((eachreview, index) => {
         //console.log(eachreview.author)
         return (
 
-            <Box className="mt-4 " key={eachreview.id} sx={{}}>
+            <Box className="mt-4 " key={index} sx={{}}>
                 <Card 
                     sx={{
                         display:'flex',

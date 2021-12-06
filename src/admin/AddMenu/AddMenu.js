@@ -1,27 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { resetMenu } from '../../redux/adminActionCreators';
 
 import Container from '@mui/material/Container'
-import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import StepContent from '@mui/material/StepContent';
 import Typography from '@mui/material/Typography';
+import Alert from '@mui/material/Alert';
+import Collapse from '@mui/material/Collapse';
+
 import AddIntro from './/AddItem/AddIntro';
 import AddVarient from './AddItem/AddVarient';
 import AddPrice from './AddItem/AddPrice';
 import AddImage from './AddItem/AddImage';
 import ReviewItem from './AddItem/ReviewItem';
 
-import Alert from '@mui/material/Alert';
-import Collapse from '@mui/material/Collapse';
 
 
 
-//import fireDB from '../../firebase/config'
 
-
+const mapDispatchToProps = dispatch => {
+    return {
+        resetMenu: () => dispatch(resetMenu())
+    }
+}
 
 
 const AddMenu = props => {
@@ -49,11 +54,11 @@ const AddMenu = props => {
 
         //this will push to inital step
         setTimeout(() => {
-            setResponse(false);
-            //props.resetMenu()
+            props.resetMenu()
+            setActiveStep(0);
             //this will close alert box
             setTimeout(() => {
-                setActiveStep(0);
+                setResponse(false);
             }, 1000)
 
         }, 2000)
@@ -121,4 +126,4 @@ const AddMenu = props => {
     )
 }
 
-export default AddMenu
+export default connect(null, mapDispatchToProps)(AddMenu)

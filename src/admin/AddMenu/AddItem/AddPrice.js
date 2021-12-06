@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useForm, Controller } from "react-hook-form";
+import React from 'react';
+import { useForm } from "react-hook-form";
 import { connect } from 'react-redux';
 import { addPrice } from '../../../redux/adminActionCreators';
 
@@ -8,11 +8,6 @@ import TextField from '@mui/material/TextField';
 import SendIcon from '@mui/icons-material/Send';
 import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import FormHelperText from '@mui/material/FormHelperText';
 
 const mapStateToProps = state => {
     return {
@@ -33,7 +28,7 @@ const AddPrice = props => {
     const { register, handleSubmit, control, reset, formState: { errors, isSubmitSuccessful } } = useForm();
 
     const onSubmit = data => {
-        console.log(data);
+        //console.log(data);
         props.addPrice(data)
         props.next();
     }

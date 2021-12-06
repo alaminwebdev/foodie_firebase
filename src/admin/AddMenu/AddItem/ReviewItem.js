@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { resetMenu } from '../../../redux/adminActionCreators'
+
+import { getDatabase, ref, set, push, child } from "firebase/database";
 
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
@@ -18,7 +19,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Chip from '@mui/material/Chip';
-import axios from 'axios';
 
 
 
@@ -28,16 +28,9 @@ const mapStateToProps = state => {
     }
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        resetMenu: () => dispatch(resetMenu())
-    }
-}
-
-
 const ReviewItem = props => {
     //console.log(props);
-
+    
     const style = {
         mt: 3
     }
@@ -45,18 +38,20 @@ const ReviewItem = props => {
     const handleDish = () => {
         const menu = { ...props.item }
         //console.log(menu)
-        axios.post('https://foodie-7bd7e-default-rtdb.firebaseio.com/menus.json', menu)
-            .then(response => {
-                if (response.status === 200) {
-                    props.initialStep("success", "Item added Successfully !");
-                    props.resetMenu();
-                }
-                //console.log(response);
+        const db = getDatabase();
+        //generate a new key for one object data
+        const menuKey = push(child(ref(db), 'menus')).key;
+        set(ref(db, 'menus/' + menuKey ), menu)
+            .then(() => {
+                // Data saved successfully!
+                //console.log('data saved succesfully')
+                props.initialStep("success", "Item added Successfully !");
             })
-            .catch(error => {
-                //console.log(error)
+            .catch((error) => {
+                // The write failed...
+                console.log(error)
                 props.getError("error", error.message)
-            })
+            });
     }
 
     const varients = props.item.varients.map((item) => {
@@ -133,4 +128,4 @@ const ReviewItem = props => {
     )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ReviewItem)
+export default connect(mapStateToProps, null)(ReviewItem)
