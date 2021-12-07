@@ -28,7 +28,7 @@ export const fetchDishes = () => {
     return dispatch => {
         dispatch(dishesLoading());
         //fetch for menu
-        axios.get('https://foodie-7bd7e-default-rtdb.firebaseio.com/menus.json')
+        axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE_URL}/menus.json`)
             .then(response => response.data)
             .then(dishes => dispatch(loadDishes(dishes)))
             .catch(error => {
@@ -224,7 +224,7 @@ export const fetchOrder = (token, userId) => dispatch => {
     //dispatch for order loading
     //dispatch(orderLoading());
     //fetch for custom burger
-    axios.get('https://foodie-7bd7e-default-rtdb.firebaseio.com/customorders.json?auth=' + token + queryParams)
+    axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE_URL}/customorders.json?auth=` + token + queryParams)
         .then(response => {
             //console.log(response)
             dispatch(loadOrder(response.data));
@@ -233,7 +233,7 @@ export const fetchOrder = (token, userId) => dispatch => {
             console.log(error.message)
         })
     //fetch for default burger
-    axios.get('https://foodie-7bd7e-default-rtdb.firebaseio.com/orders.json?auth=' + token + queryParams)
+    axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE_URL}/orders.json?auth=` + token + queryParams)
         .then(response => {
             //console.log(response)
             dispatch(defaultOrder(response.data));

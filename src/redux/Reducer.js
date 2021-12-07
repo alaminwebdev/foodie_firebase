@@ -80,7 +80,7 @@ const dishReducer = (dishState = { isLoading: false, dishes: [], defaultOrders: 
                 dishes: updateDish
             }
         case actionTypes.DEFAULT_ORDER:
-            console.log(action.payload);
+            //console.log(action.payload);
             const defaultOrders = [];
             for (const orderKey in action.payload) {
                 //console.log(action.payload[orderKey])

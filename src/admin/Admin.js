@@ -60,7 +60,7 @@ const Admin = props => {
                             variant="h4"
                             color="#fff"
                             sx={{ ...style }}
-                            onClick={() => handleMenuClick('/addmenu')}
+                            onClick={() => handleMenuClick('/manageorder')}
                         >
                             Manage Order
                         </Typography>
@@ -72,7 +72,7 @@ const Admin = props => {
                             variant="h4"
                             color="#fff"
                             sx={{ ...style }}
-                            onClick={() => handleMenuClick('/addmenu')}
+                            onClick={() => handleMenuClick('/manageorder')}
                         >
                             Manage Users
                         </Typography>
