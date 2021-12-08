@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
+import { defaultOrder, loadOrder } from './actionCreators';
 
 const itemConcat = info => {
     return {
@@ -63,6 +64,29 @@ export const resetMenu = () => {
     return {
         type: actionTypes.RESET_MENU,
     }
+}
+
+export const fetchAllOrder = () => dispatch => {
+
+    //fetch for custom burger
+    axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE_URL}/customorders.json`)
+        .then(response => {
+            //console.log(response)
+            dispatch(loadOrder(response.data));
+        })
+        .catch(error => {
+            console.log(error.message)
+        })
+    //fetch for default burger
+    axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE_URL}/orders.json`)
+        .then(response => {
+            //console.log(response)
+            dispatch(defaultOrder(response.data));
+        })
+        .catch(error => {
+            console.log(error.message)
+        })
+
 }
 
 

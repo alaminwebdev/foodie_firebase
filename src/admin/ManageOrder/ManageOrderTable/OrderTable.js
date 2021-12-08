@@ -1,8 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
@@ -15,10 +21,20 @@ import Typography from '@mui/material/Typography';;
 
 
 const OrderTable = props => {
-    
-    const { row } = props;
-    const [open, setOpen] = React.useState(false);
-    
+
+    const { order } = props;
+    const [open, setOpen] = useState(false);
+    const [status, setStatus] = useState('pending');
+
+    const handleStatus = (e, orderId) => {
+        setStatus(e.target.value);
+        console.log(e.target.value, orderId)
+
+    };
+
+    const handleDelete = id =>{
+        console.log( id, 'clicked')
+    }
     return (
         <>
             <TableRow>
@@ -32,42 +48,62 @@ const OrderTable = props => {
                     </IconButton>
                 </TableCell>
                 <TableCell component="th" scope="row">
-                    {row.name}
+                    {order.id}
                 </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
+                <TableCell >{order.customerInfo.address}</TableCell>
+                <TableCell >{order.customerInfo.phone}</TableCell>
+                <TableCell >
+                    <FormControl fullWidth >
+                        <InputLabel id="demo-simple-select-label" >Status</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={status}
+                            label="Status"
+                            onChange={ e => handleStatus(e, order.id)}
+                            sx={{fontSize: '0.875rem'}}
+                            size='small'
+                        >
+                            <MenuItem value='pending' dense={true}>Pending</MenuItem>
+                            <MenuItem value='ongoing' dense={true}>Ongoing</MenuItem>
+                            <MenuItem value='delivered' dense={true}>Delivered</MenuItem>
+                            <MenuItem value='canceled' dense={true}>Canceled</MenuItem>
+                        </Select>
+                    </FormControl>
+                </TableCell>
+                <TableCell align="right">
+                    <IconButton aria-label="delete" onClick={()=>handleDelete(order.id)}>
+                        <DeleteIcon />
+                    </IconButton>
+                </TableCell>
             </TableRow>
             <TableRow>
-                <TableCell sx={{ pb: 0, pt: 0, borderBottom: '0px' }} colSpan={6}>
+                <TableCell sx={{ pb: 0, pt: 0, borderBottom: '0px', }} colSpan={2} >
                     <Collapse in={open} timeout="auto" unmountOnExit>
-                        <Box sx={{ margin: 1 }}>
+                        <Box sx={{ margin: 'auto' }}>
                             <Typography variant="h6" gutterBottom component="div">
-                                History
+                                Details
                             </Typography>
-                            <Table size="small" aria-label="purchases">
+                            <Table size="small" aria-label="purchases" >
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell>Date</TableCell>
-                                        <TableCell>Customer</TableCell>
-                                        <TableCell align="right">Amount</TableCell>
-                                        <TableCell align="right">Total price ($)</TableCell>
+                                        <TableCell align="left" >Name</TableCell>
+                                        <TableCell align="right" >Quantity</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {row.history.map((historyRow) => (
-                                        <TableRow key={historyRow.date}>
-                                            <TableCell component="th" scope="row">
-                                                {historyRow.date}
+                                    {props.details.map((item, index) => (
+                                        <TableRow key={index}>
+                                            <TableCell component="th" scope="row" >
+                                                {item.dishItem || item.type}
                                             </TableCell>
-                                            <TableCell>{historyRow.customerId}</TableCell>
-                                            <TableCell align="right">{historyRow.amount}</TableCell>
-                                            <TableCell align="right">
-                                                {Math.round(historyRow.amount * row.price * 100) / 100}
-                                            </TableCell>
+                                            <TableCell align="right">{item.quantity || item.amount}</TableCell>
                                         </TableRow>
                                     ))}
+                                    <TableRow>
+                                        <TableCell align="right">Total Price :</TableCell>
+                                        <TableCell align="right" >{props.price}</TableCell>
+                                    </TableRow>
                                 </TableBody>
                             </Table>
                         </Box>

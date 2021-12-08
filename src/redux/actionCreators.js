@@ -163,6 +163,7 @@ export const fetchCart = cartItems => {
 }
 
 // dispatch from fetchOrder functoin from this folder 
+// its also dispatch from admin actioncreator with fetch all order
 export const defaultOrder = (orders) => {
     return {
         type: actionTypes.DEFAULT_ORDER,
@@ -201,8 +202,8 @@ export const resetIngredient = () => {
 }
 
 //action for fetch order default and custom burger
-
-const loadOrder = orders => {
+// its also dispatch from admin actioncreator with fetch all order
+export const loadOrder = orders => {
     return {
         type: actionTypes.LOAD_ORDER,
         payload: orders
@@ -221,10 +222,11 @@ const loadFaild = () => {
 
 export const fetchOrder = (token, userId) => dispatch => {
     const queryParams = ' &orderBy="userId"&equalTo="' + userId + '" ';
-    //dispatch for order loading
-    //dispatch(orderLoading());
+
+    //with authentication url , you have to pass token , right now its removed because admin has no authentication 
+    //axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE_URL}/customorders.json?auth=` + token + queryParams)
     //fetch for custom burger
-    axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE_URL}/customorders.json?auth=` + token + queryParams)
+    axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE_URL}/customorders.json?`  + queryParams)
         .then(response => {
             //console.log(response)
             dispatch(loadOrder(response.data));
@@ -233,7 +235,7 @@ export const fetchOrder = (token, userId) => dispatch => {
             console.log(error.message)
         })
     //fetch for default burger
-    axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE_URL}/orders.json?auth=` + token + queryParams)
+    axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE_URL}/orders.json?` + token + queryParams)
         .then(response => {
             //console.log(response)
             dispatch(defaultOrder(response.data));
