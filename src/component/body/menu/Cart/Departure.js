@@ -56,9 +56,13 @@ const Departure = props => {
             cartItems: props.cartItems,
             orderTime: new Date().toISOString(),
             totalPrice: totalPrice,
-            userId: props.userId
+            userId: props.userId,
+            status:'pending',
+            default:true
         }
-        axios.post('https://foodie-7bd7e-default-rtdb.firebaseio.com/orders.json?auth='+ props.token , Order)
+        //for authentication
+        //axios.post(`${process.env.REACT_APP_FIREBASE_DATABASE_URL}/orders.json?auth=`+ props.token , Order)
+        axios.post(`${process.env.REACT_APP_FIREBASE_DATABASE_URL}/orders.json`, Order)
             .then(response => {
                 if (response.status === 200) {
                     setResponse(true);

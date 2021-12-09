@@ -1,17 +1,19 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
+
 
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import Collapse from '@mui/material/Collapse';
 
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
+
 import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -24,17 +26,7 @@ const OrderTable = props => {
 
     const { order } = props;
     const [open, setOpen] = useState(false);
-    const [status, setStatus] = useState('pending');
 
-    const handleStatus = (e, orderId) => {
-        setStatus(e.target.value);
-        console.log(e.target.value, orderId)
-
-    };
-
-    const handleDelete = id =>{
-        console.log( id, 'clicked')
-    }
     return (
         <>
             <TableRow>
@@ -58,10 +50,10 @@ const OrderTable = props => {
                         <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={status}
+                            value={order.status}
                             label="Status"
-                            onChange={ e => handleStatus(e, order.id)}
-                            sx={{fontSize: '0.875rem'}}
+                            onChange={ e => props.status(e, order.id, order.default)}
+                            sx={{ fontSize: '0.875rem' }}
                             size='small'
                         >
                             <MenuItem value='pending' dense={true}>Pending</MenuItem>
@@ -72,7 +64,7 @@ const OrderTable = props => {
                     </FormControl>
                 </TableCell>
                 <TableCell align="right">
-                    <IconButton aria-label="delete" onClick={()=>handleDelete(order.id)}>
+                    <IconButton aria-label="delete" onClick={() => props.delete(order.id, order.default)}>
                         <DeleteIcon />
                     </IconButton>
                 </TableCell>

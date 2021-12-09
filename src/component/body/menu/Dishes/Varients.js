@@ -62,7 +62,7 @@ const Varients = (props) => {
 
         //clear state
         setQuantity(1);
-        setVarient('small')
+        setVarient(props.varients[0])
 
     }
 

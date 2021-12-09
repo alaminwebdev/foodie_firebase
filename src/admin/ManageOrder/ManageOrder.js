@@ -1,6 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux'
 import { fetchAllOrder } from '../../redux/adminActionCreators'
+import { getDatabase, ref, set, push, child, update, remove } from "firebase/database";
+
+import Alert from '@mui/material/Alert';
+import Collapse from '@mui/material/Collapse';
+
 import OrderTable from './ManageOrderTable/OrderTable';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -33,54 +38,94 @@ const mapDispatchToProps = dispatch => {
 }
 
 
-
-function createData(name, calories, fat, carbs, protein, price) {
-    return {
-        name,
-        calories,
-        fat,
-        carbs,
-        protein,
-        price,
-        history: [
-            {
-                date: '2020-01-05',
-                customerId: '11091700',
-                amount: 3,
-            },
-            {
-                date: '2020-01-02',
-                customerId: 'Anonymous',
-                amount: 1,
-            },
-        ],
-    };
-}
-
-const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0, 3.99),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3, 4.99),
-    createData('Eclair', 262, 16.0, 24, 6.0, 3.79),
-    createData('Cupcake', 305, 3.7, 67, 4.3, 2.5),
-    createData('Gingerbread', 356, 16.0, 49, 3.9, 1.5),
-];
-console.log(rows)
-
-
-
 const ManageOrder = props => {
 
+    const [response, setResponse] = useState(false);
+    const [responseText, setResponseText] = useState('')
+    const [responseType, setResponseType] = useState('success');
+
+    const [status, setStatus] = useState('pending');
+
+    //render every item delete through useEffect
+    const [fetch, setFetch] = useState(true);
+
+
+    const statusChange = (e, id, isDefault) => {
+        
+        const selectedOrder = isDefault ? props.defaultOrders.filter(item => item.id === id) : props.orders.filter(item => item.id === id)
+        //console.log(selectedOrder[0])
+        const db = getDatabase();
+        const postData = selectedOrder[0];
+
+        update(ref(db, isDefault ? 'orders/' + id : 'customorders/' + id), {
+            ...postData,
+            status: e.target.value,
+        })
+            .then(() => {
+                // Data saved successfully!
+                setResponse(true);
+                setResponseType('success')
+                console.log(postData, 'Data updated succesfully')
+                setResponseText('Data updated successfully')
+                setFetch(!fetch);
+
+                setTimeout(() => {
+                    setResponse(false)
+                }, 2000)
+            })
+            .catch((error) => {
+                // The write failed...
+                console.log(error)
+                setResponse(true);
+                setResponseType('error')
+                setResponseText('Sorry ! Something Wrong.')
+
+            });
+    }
+
+    const deleteOrder = (id, isDefault) => {
+        console.log(id, isDefault)
+
+        const db = getDatabase();
+
+        remove(ref(db, isDefault ? 'orders/' + id : 'customorders/' + id))
+            .then(() => {
+                // Data saved successfully!
+                //console.log('data saved succesfully')
+                setResponse(true);
+                setResponseType('success')
+                setResponseText('Data Deleted successfully')
+                setFetch(!fetch);
+
+                setTimeout(() => {
+                    setResponse(false)
+                }, 2000)
+            })
+            .catch((error) => {
+                // The write failed...
+                console.log(error)
+                setResponse(true);
+                setResponseType('error')
+                setResponseText('Sorry ! Something Wrong.')
+
+                setTimeout(() => {
+                    setResponse(false)
+                }, 2000)
+
+            });
+    }
+
+    //render on fist and when fetch state change
     useEffect(() => {
         props.fetchAllOrder();
-    }, [])
-
-    // props.defaultOrders.map((item)=>{
-    //     console.log(item)
-    // })
+    }, [fetch])
 
     return (
         <Container maxWidth="lg" sx={{ my: 5 }}>
             <Typography variant="h4" color="initial" sx={{ my: 5 }}>Default Order</Typography>
+            <Collapse in={response}>
+                <Alert severity={responseType} sx={{ my: 5 }}>{responseText}</Alert>
+            </Collapse>
             <TableContainer component={Paper}>
                 <Table aria-label="collapsible table">
                     <TableHead>
@@ -95,7 +140,7 @@ const ManageOrder = props => {
                     </TableHead>
                     <TableBody>
                         {props.defaultOrders.map((order) => (
-                            <OrderTable key={order.id} order={order} details={order.cartItems} price={order.totalPrice} />
+                            <OrderTable key={order.id} order={order} details={order.cartItems} price={order.totalPrice} delete={deleteOrder} status={statusChange} currentStatus={status} />
                         ))}
                     </TableBody>
                 </Table>
@@ -116,7 +161,7 @@ const ManageOrder = props => {
                     </TableHead>
                     <TableBody>
                         {props.orders.map((order) => (
-                            <OrderTable key={order.id} order={order} details={order.ingredients} price={order.orderPrice}/>
+                            <OrderTable key={order.id} order={order} details={order.ingredients} price={order.orderPrice} delete={deleteOrder} status={statusChange} currentStatus={status} />
                         ))}
                     </TableBody>
                 </Table>

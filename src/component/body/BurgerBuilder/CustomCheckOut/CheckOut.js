@@ -46,9 +46,11 @@ const CheckOut = props => {
             ingredients: props.ingredients,
             orderPrice: props.orderPrice,
             orderTime: new Date().toISOString(),
-            userId:props.userId
+            userId:props.userId,
+            status:'pending',
+            default:false
         }
-        axios.post('https://foodie-7bd7e-default-rtdb.firebaseio.com/customorders.json?auth='+ props.token, customOrder)
+        axios.post(`${process.env.REACT_APP_FIREBASE_DATABASE_URL}/customorders.json`, customOrder)
             .then(response => {
                 if (response.status === 200) {
                     setResponse(true);
