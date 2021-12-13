@@ -1,5 +1,4 @@
 import * as actionTypes from './actionTypes';
-import axios from 'axios';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from '@firebase/auth';
 import { auth } from '../firebase/config';
 
@@ -72,8 +71,8 @@ export const authAction = (email, password, mode) => dispatch => {
                 dispatch(authSuccess(userInfo.idToken, userInfo.localId))
             })
             .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
+                //const errorCode = error.code;
+                //const errorMessage = error.message;
                 console.log(error.message)
                 dispatch(authFailed(error.message))
             });

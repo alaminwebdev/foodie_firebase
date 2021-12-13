@@ -322,7 +322,6 @@ const adminReducer = ( adminState = itemInitialState,  action) => {
     //console.log(action);
     switch (action.type) {
         case actionTypes.ADD_DISH:
-            let itemName = action.payload.name;
             //console.log(itemName)
             return {
                 ...adminState,

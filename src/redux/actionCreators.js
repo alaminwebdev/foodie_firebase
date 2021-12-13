@@ -1,7 +1,7 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
 
-import { getDatabase, ref, set, push, child, onValue, get } from "firebase/database";
+import { getDatabase, ref, set, push, child, onValue } from "firebase/database";
 
 
 
