@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux'
 import { fetchAllOrder } from '../../redux/adminActionCreators'
@@ -38,6 +39,10 @@ const mapDispatchToProps = dispatch => {
 }
 
 
+
+
+
+
 const ManageOrder = props => {
 
     const [response, setResponse] = useState(false);
@@ -48,6 +53,7 @@ const ManageOrder = props => {
 
     //render every item delete through useEffect
     const [fetch, setFetch] = useState(true);
+
 
 
     const statusChange = (e, id, isDefault) => {

@@ -2,7 +2,6 @@ import React from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import { Grid, Typography } from '@mui/material';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -16,7 +15,7 @@ import dateFormat from 'dateformat';
 
 
 const Order = props => {
-    console.log(props)
+
     let cartDetailsRow = null;
     if (!props.loading) {
         cartDetailsRow = props.order.cartItems.map((item) => {
@@ -29,7 +28,6 @@ const Order = props => {
             )
         })
     }
-
     return (
         <Grid item lg={3} md={4} sm={6} xs={12}>
             
@@ -53,6 +51,14 @@ const Order = props => {
                         {props.loading ? (<Skeleton animation="wave" />) : (
                             <>
                                 Order Placed: {dateFormat(props.order.orderTime, "dd mmm , h:MM tt")}
+                                <Chip
+                                    label={props.order.status}
+                                    sx={{ ml: 1, fontWeight: 400 }}
+                                    size="small"
+
+                                    color={props.order.status === 'delivered' ? 'success' : props.order.status === 'ongoing' ? 'warning' : 'error'}
+                                    
+                                />
                             </>
                         )}
                     </Typography>

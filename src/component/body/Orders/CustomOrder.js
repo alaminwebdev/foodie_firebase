@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -17,6 +17,8 @@ import dateFormat from 'dateformat';
 
 
 const CustomOrder = props => {
+
+
     let ingrdientDetails = null;
     if (!props.loading) {
         ingrdientDetails = props.order.ingredients.map((ingredient) => {
@@ -55,9 +57,16 @@ const CustomOrder = props => {
                         {props.loading ? (<Skeleton animation="wave" />) : (
                             <>
                                 Order Placed: {dateFormat(props.order.orderTime, "dd mmm , h:MM tt")}
+                                <Chip
+                                    label={props.order.status}
+                                    sx={{ ml: 1, fontWeight: 400 }}
+                                    size="small"
+
+                                    color={props.order.status === 'delivered' ? 'success' : props.order.status === 'ongoing' ? 'warning' : 'error'}
+                                />
                             </>
                         )}
-                        
+
                     </Typography>
                     <TableContainer>
                         <Table size="small" aria-label="a dense table">

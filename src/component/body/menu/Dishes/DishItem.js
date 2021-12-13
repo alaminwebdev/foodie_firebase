@@ -8,11 +8,11 @@ import Typography from '@mui/material/Typography';
 import { Grid } from '@mui/material';
 
 
+
 const DishItem = (props) => {
 
     const [imgExist, setImgExist] = useState(true);
     //console.log(props);
-    const loading = props.loading
     const dishes = props.dishes
     const price = props.dishes.price[0]
     //let vari = null;
@@ -46,8 +46,17 @@ const DishItem = (props) => {
                 />
 
                 <CardContent sx={{pb:1}}>
-                    <Typography gutterBottom variant="h6" component="div" sx={{ cursor: 'pointer' }} onClick={props.DishSelect}>
-                        {dishes.name}
+                    <Typography 
+                        gutterBottom 
+                        variant="h6" 
+                        component="div" 
+                        sx={{ cursor: 'pointer' }} 
+                        onClick={props.DishSelect}
+                        InputProps={{
+                            'maxLength': 10
+                        }}
+                    >
+                        {dishes.name.length >20? dishes.name.substring(0,20)+'...' : dishes.name}
                     </Typography>
                     <Varients varients={dishes.varients} price={price} dishID={dishes.id} dishItem={dishes.name} />
                 </CardContent>
