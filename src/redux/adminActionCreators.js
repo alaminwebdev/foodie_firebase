@@ -2,6 +2,16 @@ import * as actionTypes from "./actionTypes";
 import axios from "axios";
 import { defaultOrder, loadOrder } from "./actionCreators";
 
+export const adminAction = (email, password) => (dispatch) => {
+    return {
+        type: actionTypes.ADMIN_ACTION,
+        payload: {
+            email: email,
+            password: password,
+        },
+    };
+};
+
 const itemConcat = (info) => {
     return {
         type: actionTypes.ADD_DISH,
@@ -68,8 +78,9 @@ export const resetMenu = () => {
 
 export const fetchAllOrder = () => (dispatch) => {
     //fetch for custom burger
-    axios
-        .get(`${process.env.REACT_APP_FIREBASE_DATABASE_URL}/customorders.json`)
+
+    // prettier-ignore
+    axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE_URL}/customorders.json`)
         .then((response) => {
             //console.log(response)
             dispatch(loadOrder(response.data));
@@ -78,8 +89,8 @@ export const fetchAllOrder = () => (dispatch) => {
             console.log(error.message);
         });
     //fetch for default burger
-    axios
-        .get(`${process.env.REACT_APP_FIREBASE_DATABASE_URL}/orders.json`)
+    // prettier-ignore
+    axios.get(`${process.env.REACT_APP_FIREBASE_DATABASE_URL}/orders.json`)
         .then((response) => {
             //console.log(response)
             dispatch(defaultOrder(response.data));

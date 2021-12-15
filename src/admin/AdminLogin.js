@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { useFormik } from "formik";
-
 import { connect } from "react-redux";
-import { authAction } from "../../../redux/authActionCreators";
-
+import { adminAction } from "../redux/adminActionCreators";
+import { useFormik } from "formik";
 import Collapse from "@mui/material/Collapse";
 import Alert from "@mui/material/Alert";
 import TextField from "@mui/material/TextField";
@@ -12,34 +10,27 @@ import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        authAction: (email, password, mode) => dispatch(authAction(email, password, mode)),
+        adminAction: (email, password) => dispatch(adminAction(email, password)),
     };
 };
 
 const mapStateToProps = (state) => {
     return {
-        authLoading: state.authState.authLoading,
-        authMessage: state.authState.authMessage,
+        //authLoading: state.authState.authLoading,
+        //authMessage: state.authState.authMessage,
     };
 };
 
-const Auth = (props) => {
-    //console.log(props);
-    const [authMode, setauthMode] = useState("login");
-    const handleAuthMode = (event, newauthMode) => {
-        setauthMode(newauthMode);
-    };
+const AdminLogin = (props) => {
+    const [response, setResponse] = useState(true);
 
     const formik = useFormik({
         initialValues: {
             email: "",
             password: "",
-            passwordConfirm: "",
         },
 
         //custom validation using formik validate
@@ -57,21 +48,14 @@ const Auth = (props) => {
                 errors.password = "Password must be 6 characters long";
             }
 
-            if (authMode === "signup") {
-                if (!values.passwordConfirm) {
-                    errors.passwordConfirm = "Required";
-                } else if (values.password !== values.passwordConfirm) {
-                    errors.passwordConfirm = "Password does not match";
-                }
-            }
             //console.log("errors", errors)
             return errors;
         },
 
         //submit values
         onSubmit: (values) => {
-            props.authAction(values.email, values.password, authMode);
-            //console.log("values", values)
+            props.adminAction(values.email, values.password);
+            //console.log("values", values);
             //alert(JSON.stringify(values, null, 2))
         },
     });
@@ -79,25 +63,13 @@ const Auth = (props) => {
     const style = {
         mt: 5,
     };
+
     return (
         <Container maxWidth="md">
-            <ToggleButtonGroup value={authMode} exclusive onChange={handleAuthMode} sx={{ ...style, textAlign: "center" }} color="secondary">
-                <ToggleButton value="login">
-                    <Typography variant="subtitle2" color="initial">
-                        Login
-                    </Typography>
-                </ToggleButton>
-                <ToggleButton value="signup">
-                    <Typography variant="subtitle2" color="initial">
-                        Sign Up
-                    </Typography>
-                </ToggleButton>
-            </ToggleButtonGroup>
-
             <form onSubmit={formik.handleSubmit}>
-                <Collapse in={Boolean(props.authMessage)}>
+                <Collapse in={response}>
                     <Alert severity="error" sx={{ mt: 3 }}>
-                        {props.authMessage}
+                        its an alert box
                     </Alert>
                 </Collapse>
 
@@ -126,30 +98,13 @@ const Auth = (props) => {
                     variant="outlined"
                 />
 
-                {authMode === "signup" ? (
-                    <>
-                        <TextField
-                            name="passwordConfirm"
-                            value={formik.values.passwordConfirm}
-                            onChange={formik.handleChange}
-                            error={formik.touched.passwordConfirm && Boolean(formik.errors.passwordConfirm)}
-                            helperText={formik.touched.passwordConfirm && formik.errors.passwordConfirm}
-                            sx={{ ...style }}
-                            fullWidth
-                            id="outlined-basic"
-                            label="Confirm Password"
-                            variant="outlined"
-                        />
-                    </>
-                ) : null}
-
                 <Button type="submit" variant="outlined" color="primary" sx={{ ...style }} endIcon={<SendIcon />}>
                     {props.authLoading ? <CircularProgress size="15px" sx={{ color: "#007FFF", mr: 1 }} /> : null}
-                    {authMode === "login" ? "Login" : "Sign Up"}
+                    Login
                 </Button>
             </form>
         </Container>
     );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Auth);
+export default connect(mapStateToProps, mapDispatchToProps)(AdminLogin);
