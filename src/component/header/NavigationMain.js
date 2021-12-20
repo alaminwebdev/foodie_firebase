@@ -51,21 +51,33 @@ const NavigationMain = (props) => {
 
     let nav = null;
     if (props.token == null) {
-        nav = (
-            <>
-                <Tooltip title="Admin" TransitionComponent={Zoom} sx={{ ...navButtonStyle, mr: 0 }}>
-                    <IconButton onClick={() => handleMenuClick(props.adminToken ? "/admin" : "/adminlogin")}>
-                        <AdminPanelSettingsRoundedIcon />
-                    </IconButton>
-                </Tooltip>
+        if (props.adminToken) {
+            nav = (
+                <>
+                    <Tooltip title="Logout" TransitionComponent={Zoom} sx={{ ...navButtonStyle, mr: 0 }}>
+                        <IconButton onClick={() => handleMenuClick("/logout")}>
+                            <LogoutRoundedIcon />
+                        </IconButton>
+                    </Tooltip>
+                </>
+            );
+        } else {
+            nav = (
+                <>
+                    <Tooltip title="Admin" TransitionComponent={Zoom} sx={{ ...navButtonStyle, mr: 0 }}>
+                        <IconButton onClick={() => handleMenuClick("/adminlogin")}>
+                            <AdminPanelSettingsRoundedIcon />
+                        </IconButton>
+                    </Tooltip>
 
-                <Tooltip title="Login" TransitionComponent={Zoom} sx={{ ...navButtonStyle, mr: 0 }}>
-                    <IconButton onClick={() => handleMenuClick("/login")}>
-                        <LoginRoundedIcon />
-                    </IconButton>
-                </Tooltip>
-            </>
-        );
+                    <Tooltip title="Login" TransitionComponent={Zoom} sx={{ ...navButtonStyle, mr: 0 }}>
+                        <IconButton onClick={() => handleMenuClick("/login")}>
+                            <LoginRoundedIcon />
+                        </IconButton>
+                    </Tooltip>
+                </>
+            );
+        }
     } else {
         nav = (
             <>

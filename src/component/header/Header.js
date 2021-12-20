@@ -22,14 +22,11 @@ const mapStateToProps = (state) => {
     return {
         token: state.authState.token,
         cartItems: state.cartState.cartItems,
-        adminToken: false, //state.adminState.adminToken
+        adminToken: state.adminState.adminToken,
     };
 };
 
 const Header = (props) => {
-    //console.log(props);
-    const { history } = props;
-
     const theme = useTheme();
     const isMobileBreakpoints = useMediaQuery(theme.breakpoints.down("sm"));
     //console.log(isMobileBreakpoints);

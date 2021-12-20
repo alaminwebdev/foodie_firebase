@@ -2,7 +2,8 @@ import * as actionTypes from "./actionTypes";
 import axios from "axios";
 import { defaultOrder, loadOrder } from "./actionCreators";
 
-export const adminAction = (email, password) => (dispatch) => {
+export const adminAction = (email, password) => {
+    //dispatch(adminLogin(email, password))
     return {
         type: actionTypes.ADMIN_ACTION,
         payload: {
@@ -10,6 +11,28 @@ export const adminAction = (email, password) => (dispatch) => {
             password: password,
         },
     };
+};
+export const adminSuccess = (token) => {
+    return {
+        type: actionTypes.ADMIN_CHECK,
+        payload: token,
+    };
+};
+export const adminLogout = () => {
+    localStorage.removeItem("adminToken");
+    localStorage.removeItem("email");
+    return {
+        type: actionTypes.ADMIN_LOGOUT,
+    };
+};
+
+export const adminCheck = () => (dispatch) => {
+    const token = localStorage.getItem("adminToken");
+    if (!token) {
+        dispatch(adminLogout());
+    } else {
+        dispatch(adminSuccess(token));
+    }
 };
 
 const itemConcat = (info) => {

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { authCheck } from "../redux/authActionCreators";
+import { adminCheck } from "../redux/adminActionCreators";
 
 import Header from "./header/Header";
 import Home from "./body/home/Home";
@@ -31,7 +32,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 const mapStateToProps = (state) => {
     return {
         token: state.authState.token,
-        adminToken: true, //state.adminState.adminToken,
+        adminToken: state.adminState.adminToken,
         //cartItems: JSON.parse(localStorage.getItem("cartItems"))
     };
 };
@@ -39,30 +40,40 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         authCheck: () => dispatch(authCheck()),
+        adminCheck: () => dispatch(adminCheck()),
     };
 };
 
 const MainComponent = (props) => {
     //const cartItems = JSON.parse(localStorage.getItem("cartItems"))
-    //console.log(cartItems)
     // Similar to componentDidMount and componentDidUpdate:
     useEffect(() => {
         props.authCheck();
+        props.adminCheck();
     });
 
     let routes = null;
     if (props.token === null) {
-        routes = (
-            <Switch>
-                <Route path="/login" exact component={Auth} />
-                <Route path="/adminlogin" exact component={AdminLogin} />
-                <Route path="/admin" exact component={Admin} />
-                <Route path="/addmenu" exact component={AddMenu} />
-                <Route path="/managemenu" exact component={ManageMenu} />
-                <Route path="/manageorder" exact component={ManageOrder} />
-                <Redirect to="/login" />
-            </Switch>
-        );
+        if (props.adminToken) {
+            routes = (
+                <Switch>
+                    <Route path="/admin" exact component={Admin} />
+                    <Route path="/addmenu" exact component={AddMenu} />
+                    <Route path="/managemenu" exact component={ManageMenu} />
+                    <Route path="/manageorder" exact component={ManageOrder} />
+                    <Route path="/logout" exact component={Logout} />
+                    <Redirect to="/admin" />
+                </Switch>
+            );
+        } else {
+            routes = (
+                <Switch>
+                    <Route path="/login" exact component={Auth} />
+                    <Route path="/adminlogin" exact component={AdminLogin} />
+                    <Redirect to="/login" />
+                </Switch>
+            );
+        }
     } else {
         routes = (
             <Switch>

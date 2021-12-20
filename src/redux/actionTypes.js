@@ -42,3 +42,5 @@ export const ADD_IMAGE = "ADD_IMAGE";
 export const RESET_MENU = "RESET_MENU";
 export const UPDATE_DISH = "UPDATE_DISH";
 export const ADMIN_ACTION = "ADMIN_ACTION";
+export const ADMIN_CHECK = "ADMIN_CHECK";
+export const ADMIN_LOGOUT = "ADMIN_LOGOUT";

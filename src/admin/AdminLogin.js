@@ -19,14 +19,13 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
     return {
-        //authLoading: state.authState.authLoading,
+        token: state.adminState.adminToken,
         //authMessage: state.authState.authMessage,
     };
 };
 
 const AdminLogin = (props) => {
     const [response, setResponse] = useState(true);
-
     const formik = useFormik({
         initialValues: {
             email: "",
@@ -55,7 +54,12 @@ const AdminLogin = (props) => {
         //submit values
         onSubmit: (values) => {
             props.adminAction(values.email, values.password);
-            //console.log("values", values);
+            if (props.token !== null) {
+                //console.log(props.token);
+                props.history.push("/admin");
+            } else {
+                console.log("You have to login first !");
+            }
             //alert(JSON.stringify(values, null, 2))
         },
     });
