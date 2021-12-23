@@ -7,7 +7,7 @@ import { adminLogout } from "../../../redux/adminActionCreators";
 const mapDispatchToProps = (dispatch) => {
     return {
         logOut: () => dispatch(logOut()),
-        adminLogout: () => dispatch(adminLogout()),
+        //adminLogout: () => dispatch(adminLogout()),
     };
 };
 
@@ -15,7 +15,7 @@ const Logout = (props) => {
     // Similar to componentDidMount and componentDidUpdate:
     useEffect(() => {
         props.logOut();
-        props.adminLogout();
+        //props.adminLogout();
     });
     return (
         <div>

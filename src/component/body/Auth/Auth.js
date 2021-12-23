@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 
 import { connect } from "react-redux";
@@ -23,6 +23,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
     return {
+        token: state.authState.token,
+        userId: state.authState.userId,
         authLoading: state.authState.authLoading,
         authMessage: state.authState.authMessage,
     };
@@ -71,6 +73,7 @@ const Auth = (props) => {
         //submit values
         onSubmit: (values) => {
             props.authAction(values.email, values.password, authMode);
+
             //console.log("values", values)
             //alert(JSON.stringify(values, null, 2))
         },
@@ -79,6 +82,12 @@ const Auth = (props) => {
     const style = {
         mt: 5,
     };
+    useEffect(() => {
+        if (props.token && props.userId) {
+            //console.log(props.userId);
+            props.history.goBack();
+        }
+    }, [props.token, props.userId]);
     return (
         <Container maxWidth="md">
             <ToggleButtonGroup value={authMode} exclusive onChange={handleAuthMode} sx={{ ...style, textAlign: "center" }} color="secondary">

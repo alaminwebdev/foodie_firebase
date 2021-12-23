@@ -52,30 +52,76 @@ const MainComponent = (props) => {
         props.adminCheck();
     });
 
-    let routes = null;
-    if (props.token === null) {
-        if (props.adminToken) {
-            routes = (
-                <Switch>
-                    <Route path="/admin" exact component={Admin} />
-                    <Route path="/addmenu" exact component={AddMenu} />
-                    <Route path="/managemenu" exact component={ManageMenu} />
-                    <Route path="/manageorder" exact component={ManageOrder} />
-                    <Route path="/logout" exact component={Logout} />
-                    <Redirect to="/admin" />
-                </Switch>
-            );
-        } else {
-            routes = (
-                <Switch>
-                    <Route path="/login" exact component={Auth} />
-                    <Route path="/adminlogin" exact component={AdminLogin} />
-                    <Redirect to="/login" />
-                </Switch>
-            );
-        }
+    //let routes = null;
+    let adminRoutes = null;
+    if (props.adminToken === null) {
+        adminRoutes = (
+            <Switch>
+                <Route path="/adminlogin" exact component={AdminLogin} />
+            </Switch>
+        );
     } else {
-        routes = (
+        adminRoutes = (
+            <Switch>
+                <Route path="/admin" exact component={Admin} />
+                <Route path="/addmenu" exact component={AddMenu} />
+                <Route path="/managemenu" exact component={ManageMenu} />
+                <Route path="/manageorder" exact component={ManageOrder} />
+                <Route path="/logout" exact component={Logout} />
+                <Redirect to="/admin" />
+                <Route path="/adminlogin" exact component={AdminLogin} />
+                {/* <Redirect to="/adminlogin" /> */}
+            </Switch>
+        );
+    }
+    // if (props.token === null) {
+    //     if (props.adminToken) {
+    //         routes = (
+    //             <Switch>
+    //                 <Route path="/admin" exact component={Admin} />
+    //                 <Route path="/addmenu" exact component={AddMenu} />
+    //                 <Route path="/managemenu" exact component={ManageMenu} />
+    //                 <Route path="/manageorder" exact component={ManageOrder} />
+    //                 <Route path="/logout" exact component={Logout} />
+    //                 <Redirect to="/admin" />
+    //             </Switch>
+    //         );
+    //     } else {
+    //         routes = (
+    //             <Switch>
+    //                 <Route path="/login" exact component={Auth} />
+    //                 <Route path="/adminlogin" exact component={AdminLogin} />
+    //                 <Redirect to="/login" />
+    //             </Switch>
+    //         );
+    //     }
+    // } else {
+    //     routes = (
+    //         <Switch>
+    //             <Route path="/" exact render={() => <Home />} />
+
+    //             <Route path="/menu" exact component={Menu} />
+    //             <Route path="/dishdetail" exact component={DishDetail} />
+    //             <Route path="/cart" exact component={Cart} />
+    //             <Route path="/departure" exact component={Departure} />
+
+    //             <Route path="/build" exact component={BurgerBuilder} />
+    //             <Route path="/checkout" exact component={CheckOut} />
+    //             <Route path="/orders" exact component={Orders} />
+
+    //             <Route path="/contact" exact component={Contact} />
+
+    //             <Route path="/logout" exact component={Logout} />
+
+    //             <Redirect to="/" />
+    //         </Switch>
+    //     );
+    // }
+
+    document.title = "Resturent";
+    return (
+        <>
+            <Header />
             <Switch>
                 <Route path="/" exact render={() => <Home />} />
 
@@ -86,22 +132,23 @@ const MainComponent = (props) => {
 
                 <Route path="/build" exact component={BurgerBuilder} />
                 <Route path="/checkout" exact component={CheckOut} />
-                <Route path="/orders" exact component={Orders} />
-
+                {props.token ? <Route path="/orders" exact component={Orders} /> : null}
                 <Route path="/contact" exact component={Contact} />
-
+                <Route path="/login" exact component={Auth} />
                 <Route path="/logout" exact component={Logout} />
 
-                <Redirect to="/" />
+                {props.adminToken ? (
+                    <>
+                        <Route path="/admin" exact component={Admin} />
+                        <Route path="/addmenu" exact component={AddMenu} />
+                        <Route path="/managemenu" exact component={ManageMenu} />
+                        <Route path="/manageorder" exact component={ManageOrder} />
+                        <Redirect to="/admin" />
+                    </>
+                ) : (
+                    <Route path="/adminlogin" exact component={AdminLogin} />
+                )}
             </Switch>
-        );
-    }
-
-    document.title = "Resturent";
-    return (
-        <>
-            <Header />
-            {routes}
         </>
     );
 };

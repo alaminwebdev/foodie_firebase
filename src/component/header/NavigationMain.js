@@ -49,86 +49,58 @@ const NavigationMain = (props) => {
         history.push(pageUrl);
     };
 
-    let nav = null;
-    if (props.token == null) {
-        if (props.adminToken) {
-            nav = (
-                <>
-                    <Tooltip title="Logout" TransitionComponent={Zoom} sx={{ ...navButtonStyle, mr: 0 }}>
-                        <IconButton onClick={() => handleMenuClick("/logout")}>
-                            <LogoutRoundedIcon />
-                        </IconButton>
-                    </Tooltip>
-                </>
-            );
-        } else {
-            nav = (
-                <>
-                    <Tooltip title="Admin" TransitionComponent={Zoom} sx={{ ...navButtonStyle, mr: 0 }}>
-                        <IconButton onClick={() => handleMenuClick("/adminlogin")}>
-                            <AdminPanelSettingsRoundedIcon />
-                        </IconButton>
-                    </Tooltip>
+    return (
+        <>
+            <Tooltip title="Home" TransitionComponent={Zoom} sx={{ ...navButtonStyle, ml: 0 }}>
+                <IconButton onClick={() => handleMenuClick("/")}>
+                    <HomeRoundedIcon />
+                </IconButton>
+            </Tooltip>
 
-                    <Tooltip title="Login" TransitionComponent={Zoom} sx={{ ...navButtonStyle, mr: 0 }}>
-                        <IconButton onClick={() => handleMenuClick("/login")}>
-                            <LoginRoundedIcon />
-                        </IconButton>
-                    </Tooltip>
-                </>
-            );
-        }
-    } else {
-        nav = (
-            <>
-                <Tooltip title="Home" TransitionComponent={Zoom} sx={{ ...navButtonStyle, ml: 0 }}>
-                    <IconButton onClick={() => handleMenuClick("/")}>
-                        <HomeRoundedIcon />
-                    </IconButton>
-                </Tooltip>
+            <Tooltip title="Top Hot Menu" TransitionComponent={Zoom} sx={{ ...navButtonStyle }}>
+                <IconButton onClick={() => handleMenuClick("/menu")}>
+                    <FastfoodIcon />
+                </IconButton>
+            </Tooltip>
 
-                <Tooltip title="Top Hot Menu" TransitionComponent={Zoom} sx={{ ...navButtonStyle }}>
-                    <IconButton onClick={() => handleMenuClick("/menu")}>
-                        <FastfoodIcon />
-                    </IconButton>
-                </Tooltip>
+            <Tooltip title="Customize Burger" TransitionComponent={Zoom} sx={{ ...navButtonStyle }}>
+                <IconButton onClick={() => handleMenuClick("/build")}>
+                    <RestaurantRoundedIcon />
+                </IconButton>
+            </Tooltip>
 
-                <Tooltip title="Customize Burger" TransitionComponent={Zoom} sx={{ ...navButtonStyle }}>
-                    <IconButton onClick={() => handleMenuClick("/build")}>
-                        <RestaurantRoundedIcon />
-                    </IconButton>
-                </Tooltip>
-
+            {props.token ? (
                 <Tooltip title="Orders" TransitionComponent={Zoom} sx={{ ...navButtonStyle }}>
                     <IconButton onClick={() => handleMenuClick("/orders")}>
                         <ViewListRoundedIcon />
                     </IconButton>
                 </Tooltip>
+            ) : null}
 
-                <Tooltip title="Your Cart" TransitionComponent={Zoom} sx={{ ...navButtonStyle, mr: 0 }}>
-                    <IconButton onClick={() => handleMenuClick("/cart")}>
-                        <StyledBadge badgeContent={props.cartLength} color="primary">
-                            <ShoppingCartRoundedIcon />
-                        </StyledBadge>
-                    </IconButton>
-                </Tooltip>
+            <Tooltip title="Your Cart" TransitionComponent={Zoom} sx={{ ...navButtonStyle, mr: 0 }}>
+                <IconButton onClick={() => handleMenuClick("/cart")}>
+                    <StyledBadge badgeContent={props.cartLength} color="primary">
+                        <ShoppingCartRoundedIcon />
+                    </StyledBadge>
+                </IconButton>
+            </Tooltip>
+            <Tooltip title="Contact For Query" TransitionComponent={Zoom} sx={{ ...navButtonStyle, mr: 0 }}>
+                <IconButton onClick={() => handleMenuClick("/contact")}>
+                    <ContactPageRoundedIcon />
+                </IconButton>
+            </Tooltip>
 
-                <Tooltip title="Contact For Query" TransitionComponent={Zoom} sx={{ ...navButtonStyle, mr: 0 }}>
-                    <IconButton onClick={() => handleMenuClick("/contact")}>
-                        <ContactPageRoundedIcon />
-                    </IconButton>
-                </Tooltip>
+            <Tooltip title={props.adminToken ? "Admin" : "AdminLogin"} TransitionComponent={Zoom} sx={{ ...navButtonStyle, mr: 0 }}>
+                <IconButton onClick={() => handleMenuClick(props.adminToken ? "/admin" : "/adminlogin")}>
+                    <AdminPanelSettingsRoundedIcon />
+                </IconButton>
+            </Tooltip>
 
-                <Tooltip title="Logout" TransitionComponent={Zoom} sx={{ ...navButtonStyle, mr: 0 }}>
-                    <IconButton onClick={() => handleMenuClick("/logout")}>
-                        <LogoutRoundedIcon />
-                    </IconButton>
-                </Tooltip>
-            </>
-        );
-    }
-
-    return <div className="navButton">{nav}</div>;
+            <Tooltip title={props.token ? "Logout" : "Login"} TransitionComponent={Zoom} sx={{ ...navButtonStyle, mr: 0 }}>
+                <IconButton onClick={() => handleMenuClick(props.token ? "/logout" : "login")}>{props.token ? <LogoutRoundedIcon /> : <LoginRoundedIcon />}</IconButton>
+            </Tooltip>
+        </>
+    );
 };
 
 export default withRouter(NavigationMain);
