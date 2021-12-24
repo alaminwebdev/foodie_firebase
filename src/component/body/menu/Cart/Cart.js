@@ -18,6 +18,8 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 // accept state as a props from intial state
 const mapStateToProps = (state) => {
     return {
+        token: state.authState.token,
+        userId: state.authState.userId,
         cartItems: state.cartState.cartItems,
     };
 };

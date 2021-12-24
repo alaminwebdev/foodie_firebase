@@ -82,12 +82,16 @@ const Auth = (props) => {
     const style = {
         mt: 5,
     };
+    const goBack = () => {
+        props.history.goBack();
+    };
+
     useEffect(() => {
         if (props.token && props.userId) {
             //console.log(props.userId);
             props.history.goBack();
         }
-    }, [props.token, props.userId]);
+    }, [props.token]);
     return (
         <Container maxWidth="md">
             <ToggleButtonGroup value={authMode} exclusive onChange={handleAuthMode} sx={{ ...style, textAlign: "center" }} color="secondary">
@@ -155,6 +159,9 @@ const Auth = (props) => {
                 <Button type="submit" variant="outlined" color="primary" sx={{ ...style }} endIcon={<SendIcon />}>
                     {props.authLoading ? <CircularProgress size="15px" sx={{ color: "#007FFF", mr: 1 }} /> : null}
                     {authMode === "login" ? "Login" : "Sign Up"}
+                </Button>
+                <Button sx={{ ...style, ml: 3 }} variant="outlined" color="primary" onClick={goBack}>
+                    Go back
                 </Button>
             </form>
         </Container>
